@@ -41,6 +41,7 @@ Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other Lite
 │   └── reports/
 ├── src/jarvis/
 ├── tests/
+├── .agents/mcp_config.json
 ├── .vscode/mcp.json
 ├── .github/workflows/
 ├── Dockerfile
@@ -162,9 +163,20 @@ Jarvis includes a local MCP server with a `search_knowledge` tool. VS Code reads
 public-only configuration from `.vscode/mcp.json`; start the `jarvis` server from the MCP
 panel, then enable its tool in Agent mode.
 
-Antigravity reads the portable workspace configuration from `.agents/mcp_config.json`.
-After cloning, open the repository as the workspace, ensure `uv` is available in `PATH`,
-and refresh the MCP Servers panel. The first launch installs the locked dependencies.
+Current Antigravity versions read the portable workspace configuration from
+`.agents/mcp_config.json`. After cloning, open the repository as the workspace, ensure
+`uv` is available in `PATH`, and refresh the MCP Servers panel. The first launch installs
+the locked dependencies.
+
+Antigravity IDE 2.1.1 and other older builds only read the global MCP configuration. For
+those versions, register the current clone without manually entering paths:
+
+```bash
+uv run jarvis install-antigravity
+```
+
+This preserves other global MCP servers and writes Jarvis with the current clone and `uv`
+paths. Refresh the MCP Servers panel or restart Antigravity afterward.
 
 Other MCP-compatible clients can launch:
 

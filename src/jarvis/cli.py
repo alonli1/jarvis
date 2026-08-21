@@ -9,7 +9,8 @@ from rich.table import Table
 
 from . import __version__
 from .answering import answer_question
-from .config import load_config
+from .antigravity import install_global_mcp
+from .config import find_repo_root, load_config
 from .index import HybridIndex
 from .literature import search_all
 from .novelty import evaluate_project, render_markdown
@@ -34,6 +35,18 @@ def doctor() -> None:
     for folder in ["knowledge", "group", "topics", "literature"]:
         ok = (cfg.root / folder).exists()
         console.print(f"{'[green]OK[/green]' if ok else '[red]MISSING[/red]'} {folder}/")
+
+
+@app.command("install-antigravity")
+def install_antigravity() -> None:
+    """Register Jarvis globally for Antigravity versions without workspace MCP discovery."""
+    try:
+        path = install_global_mcp(find_repo_root())
+    except (FileNotFoundError, TypeError, ValueError, OSError) as exc:
+        console.print(f"[red]Could not configure Antigravity:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Registered Jarvis MCP server in {path}[/green]")
+    console.print("Refresh MCP Servers or restart Antigravity.")
 
 
 @app.command()
