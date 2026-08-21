@@ -1,7 +1,7 @@
 from datetime import date
 
-from physai.models import LiteratureRecord, NoveltyClaim
-from physai.novelty import cosine_text, overlap_score
+from jarvis.models import LiteratureRecord, NoveltyClaim
+from jarvis.novelty import cosine_text, overlap_score
 
 
 def test_cosine_text_identical_is_high():

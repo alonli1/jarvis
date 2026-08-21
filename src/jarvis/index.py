@@ -41,7 +41,7 @@ class HybridIndex:
 
     @staticmethod
     def _point_id(chunk_id: str) -> str:
-        return str(uuid.uuid5(uuid.NAMESPACE_URL, f"physai:{chunk_id}"))
+        return str(uuid.uuid5(uuid.NAMESPACE_URL, f"jarvis:{chunk_id}"))
 
     def delete_source(self, source_path: str) -> None:
         self._ensure_collection()

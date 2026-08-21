@@ -1,4 +1,4 @@
-# PhysAI v1 architecture
+# Jarvis v1 architecture
 
 ## Design invariants
 

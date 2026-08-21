@@ -25,7 +25,7 @@ console = Console()
 def doctor() -> None:
     """Check the repository and show active configuration."""
     cfg = load_config()
-    console.print(f"[bold]PhysAI {__version__}[/bold]")
+    console.print(f"[bold]Jarvis {__version__}[/bold]")
     console.print(f"Repository: {cfg.root}")
     console.print(f"Default model: {cfg.assistant.default_model}")
     console.print(f"Index mode: {cfg.index.mode}")
@@ -152,7 +152,7 @@ def watch(
     if not projects:
         console.print("No active project novelty files found.")
         raise typer.Exit(code=0)
-    combined: list[str] = [f"# PhysAI daily literature watch — {date.today().isoformat()}", ""]
+    combined: list[str] = [f"# Jarvis daily literature watch — {date.today().isoformat()}", ""]
     for project_dir in projects:
         matches, errors = evaluate_project(cfg, project_dir, days, source, judge_model)
         combined += [f"# Project: {project_dir.name}", "", render_markdown(matches, errors), ""]

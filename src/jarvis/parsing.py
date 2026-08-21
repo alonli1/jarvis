@@ -107,5 +107,5 @@ def discover_documents(path: Path) -> list[Path]:
         return [path] if path.suffix.lower() in SUPPORTED_SUFFIXES else []
     return sorted(
         p for p in path.rglob("*")
-        if p.is_file() and p.suffix.lower() in SUPPORTED_SUFFIXES and ".physai" not in p.parts
+        if p.is_file() and p.suffix.lower() in SUPPORTED_SUFFIXES and ".jarvis" not in p.parts
     )

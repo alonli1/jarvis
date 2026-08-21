@@ -1,4 +1,4 @@
-from physai.parsing import chunk_text
+from jarvis.parsing import chunk_text
 
 
 def test_chunk_text_overlap_and_content():

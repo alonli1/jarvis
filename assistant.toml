@@ -1,13 +1,13 @@
 [assistant]
-name = "Group Physics Assistant"
+name = "Jarvis"
 default_model = "ollama/qwen3:14b"
 max_context_chunks = 10
 
 [index]
 mode = "local"
-path = ".physai/qdrant"
+path = ".jarvis/qdrant"
 url = "http://localhost:6333"
-collection = "physai_chunks"
+collection = "jarvis_chunks"
 dense_model = "BAAI/bge-small-en-v1.5"
 sparse_model = "Qdrant/bm25"
 dense_limit = 30
@@ -26,7 +26,7 @@ local_default_max_visibility = "confidential"
 [literature]
 default_days = 2
 max_results_per_query = 40
-user_agent = "PhysAI/0.1 research-assistant"
+user_agent = "Jarvis/0.1 research-assistant"
 
 [novelty]
 high_threshold = 0.62

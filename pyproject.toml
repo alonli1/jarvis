@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "physai-research-assistant"
+name = "jarvis-research-assistant"
 version = "0.1.0"
 description = "Model-agnostic scientific RAG and literature novelty monitor for physics research groups"
 readme = "README.md"
@@ -31,10 +31,10 @@ dev = [
 ]
 
 [project.scripts]
-physai = "physai.cli:app"
+jarvis = "jarvis.cli:app"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/physai"]
+packages = ["src/jarvis"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
