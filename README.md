@@ -162,6 +162,10 @@ Jarvis includes a local MCP server with a `search_knowledge` tool. VS Code reads
 public-only configuration from `.vscode/mcp.json`; start the `jarvis` server from the MCP
 panel, then enable its tool in Agent mode.
 
+Antigravity reads the portable workspace configuration from `.agents/mcp_config.json`.
+After cloning, open the repository as the workspace, ensure `uv` is available in `PATH`,
+and refresh the MCP Servers panel. The first launch installs the locked dependencies.
+
 Other MCP-compatible clients can launch:
 
 ```bash
