@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
-from pathlib import Path
-import shutil
 
 import typer
 import yaml
@@ -15,9 +13,11 @@ from .config import load_config
 from .index import HybridIndex
 from .literature import search_all
 from .novelty import evaluate_project, render_markdown
+from .retrieval import render_retrieval_prompt, retrieve_hits
 
-
-app = typer.Typer(no_args_is_help=True, help="Model-agnostic scientific assistant for physics research groups")
+app = typer.Typer(
+    no_args_is_help=True, help="Model-agnostic scientific assistant for physics research groups"
+)
 console = Console()
 
 
@@ -37,7 +37,11 @@ def doctor() -> None:
 
 
 @app.command()
-def ingest(path: str | None = typer.Argument(None, help="File/folder to ingest; defaults to knowledge + group")) -> None:
+def ingest(
+    path: str | None = typer.Argument(
+        None, help="File/folder to ingest; defaults to knowledge + group"
+    ),
+) -> None:
     """Build/update the local scientific retrieval index."""
     cfg = load_config()
     index = HybridIndex(cfg)
@@ -55,7 +59,9 @@ def ingest(path: str | None = typer.Argument(None, help="File/folder to ingest; 
 def ask(
     question: str = typer.Argument(...),
     model: str | None = typer.Option(None, "--model"),
-    allow_private: bool = typer.Option(False, "--allow-private", help="Allow group/confidential context to external models"),
+    allow_private: bool = typer.Option(
+        False, "--allow-private", help="Allow group/confidential context to external models"
+    ),
 ) -> None:
     """Answer a question using retrieved group knowledge and a selected LLM."""
     cfg = load_config()
@@ -68,6 +74,21 @@ def ask(
             c = hit.chunk
             loc = c.source_path + (f":p{c.page}" if c.page else "")
             console.print(f"[S{i}] {loc} (score={hit.score:.3f}, visibility={c.visibility})")
+
+
+@app.command()
+def retrieve(
+    question: str = typer.Argument(...),
+    limit: int | None = typer.Option(None, "--limit", min=1, max=50),
+    max_visibility: str = typer.Option("public", "--max-visibility"),
+) -> None:
+    """Retrieve cited context for a web chat or another AI client without calling an LLM."""
+    visibility = max_visibility.lower()
+    if visibility not in {"public", "group", "confidential"}:
+        raise typer.BadParameter("--max-visibility must be public, group, or confidential")
+    cfg = load_config()
+    hits = retrieve_hits(cfg, question, limit=limit, max_visibility=visibility)
+    console.print(render_retrieval_prompt(question, hits), markup=False)
 
 
 @app.command("literature")
@@ -85,7 +106,9 @@ def literature_search(
     table.add_column("Title")
     table.add_column("ID")
     for r in records:
-        table.add_row(str(r.published or ""), r.source, r.title[:90], r.arxiv_id or r.doi or r.source_id)
+        table.add_row(
+            str(r.published or ""), r.source, r.title[:90], r.arxiv_id or r.doi or r.source_id
+        )
     console.print(table)
     if errors:
         console.print("[yellow]Some sources failed:[/yellow]")

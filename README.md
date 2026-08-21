@@ -12,6 +12,8 @@ Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other Lite
 - Keeps source/page metadata for citations.
 - Builds hybrid dense + sparse retrieval with Qdrant/FastEmbed.
 - Lets each researcher select a different LLM through LiteLLM.
+- Exports cited retrieval context for use with web AI subscriptions, without a model API.
+- Exposes local retrieval to compatible IDE agents through MCP.
 - Enforces a basic privacy boundary: external models see public material by default; local models can see group/confidential material.
 - Searches arXiv, INSPIRE-HEP, OpenAlex, and Semantic Scholar.
 - Represents manuscript novelty claims in YAML.
@@ -39,6 +41,7 @@ Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other Lite
 │   └── reports/
 ├── src/jarvis/
 ├── tests/
+├── .vscode/mcp.json
 ├── .github/workflows/
 ├── Dockerfile
 └── docker-compose.yml
@@ -137,6 +140,37 @@ jarvis ask "Critique our current draft." --allow-private
 ```
 
 Use `--allow-private` only when the selected provider is approved for unpublished group material.
+
+### Use a web AI without an API
+
+Generate a cited prompt and paste it into the provider's web chat:
+
+```bash
+uv run jarvis retrieve \
+  "What automated one-loop matching methods support gravity?"
+```
+
+Retrieval defaults to public documents. Broader access must be explicit:
+
+```bash
+uv run jarvis retrieve "Summarize our draft" --max-visibility group
+```
+
+### Use Jarvis from an IDE agent
+
+Jarvis includes a local MCP server with a `search_knowledge` tool. VS Code reads the
+public-only configuration from `.vscode/mcp.json`; start the `jarvis` server from the MCP
+panel, then enable its tool in Agent mode.
+
+Other MCP-compatible clients can launch:
+
+```bash
+uv run jarvis-mcp
+```
+
+The MCP server defaults to public documents. To permit a trusted agent to retrieve more,
+set `JARVIS_MCP_MAX_VISIBILITY` to `group` or `confidential` in that client's MCP environment.
+Retrieved confidential text may still be sent to the IDE agent's model provider.
 
 ## 4. Define topics
 

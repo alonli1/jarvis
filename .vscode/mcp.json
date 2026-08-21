@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "jarvis": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "--directory", "${workspaceFolder}", "jarvis-mcp"],
+      "env": {
+        "JARVIS_MCP_MAX_VISIBILITY": "public"
+      }
+    }
+  }
+}

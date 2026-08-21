@@ -5,6 +5,7 @@ __pycache__/
 .ruff_cache/
 .env
 .DS_Store
+:memory:.ses
 .jarvis/
 qdrant_storage/
 *.egg-info/

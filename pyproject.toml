@@ -21,6 +21,7 @@ dependencies = [
   "pypdf>=5.0",
   "qdrant-client[fastembed]>=1.14.2",
   "litellm>=1.60",
+  "mcp>=2,<3",
 ]
 
 [project.optional-dependencies]
@@ -32,6 +33,7 @@ dev = [
 
 [project.scripts]
 jarvis = "jarvis.cli:app"
+jarvis-mcp = "jarvis.mcp_server:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/jarvis"]
