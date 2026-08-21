@@ -1,0 +1,20 @@
+name: Automated EFT matching
+description: >
+  Automated perturbative matching between ultraviolet quantum field theories
+  and low-energy effective field theories, with emphasis on functional and
+  one-loop matching.
+keywords:
+  - effective field theory matching
+  - EFT matching
+  - one-loop matching
+  - functional matching
+  - covariant derivative expansion
+  - universal one-loop effective action
+  - Matchete
+  - Matchmakereft
+arxiv_categories:
+  - hep-th
+  - hep-ph
+related_topics:
+  - quantum_gravity
+  - curved_spacetime

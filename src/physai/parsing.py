@@ -1,0 +1,111 @@
+from __future__ import annotations
+
+import hashlib
+import re
+from pathlib import Path
+from typing import Iterable
+
+import yaml
+from pypdf import PdfReader
+
+from .models import Chunk
+
+
+SUPPORTED_SUFFIXES = {".pdf", ".tex", ".md", ".txt"}
+
+
+def default_visibility(path: Path) -> str:
+    parts = {p.lower() for p in path.parts}
+    return "group" if "group" in parts else "public"
+
+
+def load_sidecar(path: Path) -> dict:
+    sidecar = path.with_name(path.name + ".meta.yaml")
+    if not sidecar.exists():
+        return {}
+    with sidecar.open("r", encoding="utf-8") as f:
+        return yaml.safe_load(f) or {}
+
+
+def stable_chunk_id(source_path: str, page: int | None, index: int, text: str) -> str:
+    payload = f"{source_path}|{page}|{index}|{text[:250]}".encode("utf-8", errors="ignore")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def chunk_text(text: str, size: int, overlap: int) -> list[str]:
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    if not text:
+        return []
+    if len(text) <= size:
+        return [text]
+    chunks: list[str] = []
+    start = 0
+    while start < len(text):
+        end = min(len(text), start + size)
+        if end < len(text):
+            cut = max(text.rfind("\n\n", start, end), text.rfind(". ", start, end))
+            if cut > start + size // 2:
+                end = cut + 1
+        chunks.append(text[start:end].strip())
+        if end >= len(text):
+            break
+        start = max(start + 1, end - overlap)
+    return [c for c in chunks if c]
+
+
+def _tex_to_text(raw: str) -> str:
+    raw = re.sub(r"(?<!\\)%.*", "", raw)
+    raw = re.sub(r"\\(?:begin|end)\{[^}]+\}", "\n", raw)
+    raw = re.sub(r"\\(?:section|subsection|subsubsection)\*?\{([^}]*)\}", r"\n\n\1\n", raw)
+    raw = re.sub(r"\\cite\{([^}]*)\}", r" [cite:\1] ", raw)
+    raw = re.sub(r"\\label\{([^}]*)\}", r" [label:\1] ", raw)
+    return raw
+
+
+def iter_document_chunks(path: Path, repo_root: Path, chunk_chars: int, overlap: int) -> Iterable[Chunk]:
+    sidecar = load_sidecar(path)
+    vis = sidecar.get("visibility", default_visibility(path))
+    title = sidecar.get("title", path.stem)
+    tags = sidecar.get("tags", [])
+    rel = str(path.resolve().relative_to(repo_root.resolve()))
+
+    if path.suffix.lower() == ".pdf":
+        reader = PdfReader(str(path))
+        for page_no, page in enumerate(reader.pages, start=1):
+            text = page.extract_text() or ""
+            for idx, piece in enumerate(chunk_text(text, chunk_chars, overlap)):
+                yield Chunk(
+                    id=stable_chunk_id(rel, page_no, idx, piece),
+                    text=piece,
+                    source_path=rel,
+                    title=title,
+                    page=page_no,
+                    visibility=vis,
+                    tags=tags,
+                    metadata={"format": "pdf"},
+                )
+        return
+
+    raw = path.read_text(encoding="utf-8", errors="ignore")
+    if path.suffix.lower() == ".tex":
+        raw = _tex_to_text(raw)
+    for idx, piece in enumerate(chunk_text(raw, chunk_chars, overlap)):
+        yield Chunk(
+            id=stable_chunk_id(rel, None, idx, piece),
+            text=piece,
+            source_path=rel,
+            title=title,
+            visibility=vis,
+            tags=tags,
+            metadata={"format": path.suffix.lower().lstrip(".")},
+        )
+
+
+def discover_documents(path: Path) -> list[Path]:
+    if path.is_file():
+        return [path] if path.suffix.lower() in SUPPORTED_SUFFIXES else []
+    return sorted(
+        p for p in path.rglob("*")
+        if p.is_file() and p.suffix.lower() in SUPPORTED_SUFFIXES and ".physai" not in p.parts
+    )

@@ -1,0 +1,7 @@
+# Metadata-only references can be added here when document bytes should not be
+# committed to Git. Example:
+# - id: birrell-davies-1982
+#   title: Quantum Fields in Curved Space
+#   type: book
+#   availability: local-only
+[]

@@ -1,0 +1,5 @@
+projects:
+  - id: example_project
+    name: Example inverse EFT project
+    manuscript_path: group/manuscripts/example_project
+    status: example

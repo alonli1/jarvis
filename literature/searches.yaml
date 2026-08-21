@@ -1,0 +1,8 @@
+searches:
+  - name: automated_matching
+    query: '"one-loop matching" effective field theory'
+    sources: [arxiv, inspire, openalex, semantic_scholar]
+
+  - name: inverse_matching
+    query: '"inverse matching" effective field theory'
+    sources: [arxiv, inspire, openalex, semantic_scholar]

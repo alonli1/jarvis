@@ -1,0 +1,63 @@
+name: daily-literature-watch
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *"
+      timezone: "Asia/Jerusalem"
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Install
+        run: uv sync
+
+      - name: Run literature watch
+        env:
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+          SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: uv run physai watch --days 2
+
+      - name: Locate report
+        id: report
+        shell: bash
+        run: |
+          REPORT="literature/reports/$(date +%F)-daily.md"
+          echo "path=$REPORT" >> "$GITHUB_OUTPUT"
+          echo "title=Literature watch $(date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Commit report
+        shell: bash
+        run: |
+          git config user.name "physai-bot"
+          git config user.email "physai-bot@users.noreply.github.com"
+          git add literature/reports/
+          if git diff --cached --quiet; then
+            echo "No report changes to commit"
+          else
+            git commit -m "literature watch: $(date +%F)"
+            git push
+          fi
+
+      - name: Open GitHub issue for report
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT: ${{ steps.report.outputs.path }}
+          TITLE: ${{ steps.report.outputs.title }}
+        shell: bash
+        run: |
+          gh issue create --title "$TITLE" --body-file "$REPORT" --label "literature-watch" || \
+          gh issue create --title "$TITLE" --body-file "$REPORT"
