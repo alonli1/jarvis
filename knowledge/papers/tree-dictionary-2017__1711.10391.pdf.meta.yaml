@@ -1,0 +1,23 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Effective description of general extensions of the Standard Model: the complete
+  tree-level dictionary'
+tags:
+- eft
+- uv_ir_dictionary
+- inverse_matching
+- uv_completion
+- smeft
+- inverse_uv_reconstruction
+- smeft_uv_dictionary
+reference_id: tree-dictionary-2017
+tier: T0
+authors:
+- J. de Blas
+- J. C. Criado
+- M. Pérez-Victoria
+- J. Santiago
+year: 2017
+arxiv: '1711.10391'
+doi: null
+url: https://arxiv.org/abs/1711.10391

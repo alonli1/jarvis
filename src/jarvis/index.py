@@ -9,6 +9,7 @@ from qdrant_client import QdrantClient, models
 from .config import Config
 from .models import Chunk, SearchHit, Visibility
 from .parsing import discover_documents, iter_document_chunks
+from .taxonomy import normalize_tag
 
 
 class HybridIndex:
@@ -58,7 +59,14 @@ class HybridIndex:
         if not chunks:
             return
         self._ensure_collection()
-        texts = [c.text for c in chunks]
+        texts = [
+            "\n".join(
+                part
+                for part in (c.title or "", f"Research tags: {', '.join(c.tags)}", c.text)
+                if part
+            )
+            for c in chunks
+        ]
         dense_vectors = list(self.dense.embed(texts))
         sparse_vectors = list(self.sparse.embed(texts))
         points = []
@@ -95,9 +103,16 @@ class HybridIndex:
             total_chunks += len(chunks)
         return len(docs), total_chunks
 
-    def search(self, query: str, k: int | None = None, max_visibility: str = "public") -> list[SearchHit]:
+    def search(
+        self,
+        query: str,
+        k: int | None = None,
+        max_visibility: str = "public",
+        tags: list[str] | None = None,
+    ) -> list[SearchHit]:
         self._ensure_collection()
         k = k or self.config.retrieval.final_k
+        tags = [normalize_tag(tag) for tag in tags or []]
         dense_query = next(iter(self.dense.embed([query])))
         sparse_query = next(iter(self.sparse.embed([query])))
         result = self.client.query_points(
@@ -117,6 +132,16 @@ class HybridIndex:
                 ),
             ],
             query=models.RrfQuery(rrf=models.Rrf()),
+            query_filter=(
+                models.Filter(
+                    must=[
+                        models.FieldCondition(key="tags", match=models.MatchValue(value=tag))
+                        for tag in tags
+                    ]
+                )
+                if tags
+                else None
+            ),
             limit=max(k * 3, k),
             with_payload=True,
         )

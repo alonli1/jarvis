@@ -35,6 +35,10 @@ def configured_max_visibility() -> str:
 async def search_knowledge(
     query: Annotated[str, Field(min_length=1, description="Scientific question or search query.")],
     limit: Annotated[int, Field(ge=1, le=50, description="Maximum retrieved sources.")] = 10,
+    tags: Annotated[
+        list[str] | None,
+        Field(description="Optional controlled research tags; all supplied tags must match."),
+    ] = None,
 ) -> dict[str, object]:
     """Search the local Jarvis index and return source text, metadata, and citation IDs."""
     hits = retrieve_hits(
@@ -42,6 +46,7 @@ async def search_knowledge(
         query,
         limit=limit,
         max_visibility=configured_max_visibility(),
+        tags=tags,
     )
     return retrieval_result(query, hits)
 

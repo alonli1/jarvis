@@ -1,0 +1,45 @@
+version: 1
+description: Controlled research tags used for retrieval and literature graphs.
+research_tags:
+  automated_eft_matching:
+    label: Automated EFT matching
+    any: [automation, automated_matching, matching_tools, matchete, matchmakereft]
+    phrases: [automated matching, automated eft matching]
+  inverse_uv_reconstruction:
+    label: Inverse UV reconstruction
+    any: [inverse_matching, uv_ir_dictionary, uv_reconstruction]
+    phrases: [inverse eft matching, inverse matching, uv reconstruction]
+  gravitational_eft:
+    label: Gravitational EFT
+    any: [gravitational_eft, gravity_eft]
+    all: [gravity, eft]
+    phrases: [gravitational eft, eft of gravity, gravitational effective field theory]
+  one_loop_effective_action:
+    label: One-loop effective actions
+    any: [one_loop_matching, uolea, functional_methods, cde, covariant_derivative_expansion]
+    phrases: [one-loop matching, one loop matching, universal one-loop effective action]
+  curved_spacetime_qft:
+    label: QFT in curved spacetime
+    any: [curved_spacetime, heat_kernel, curvature_expansion]
+    phrases: [curved spacetime, heat kernel, curvature expansion]
+  spin_2_consistency:
+    label: Spin-2 consistency and emergent gravity
+    any: [spin2, massive_gravity, emergent_gravity, diffeomorphism_invariance]
+    phrases: [spin-2, spin 2, massive gravity, emergent gravity]
+  classical_gravity_observables:
+    label: Classical gravity observables
+    any: [binary_dynamics, post_minkowskian, worldline, nrgr, classical_gravity]
+    phrases: [post-minkowskian, binary dynamics, classical gravity observables]
+  quantum_gravity_rg:
+    label: Quantum-gravity renormalization group
+    any: [asymptotic_safety, frg, quantum_gravity_rg]
+    phrases: [asymptotic safety, functional renormalization group]
+  computational_qft_tools:
+    label: Computational QFT tools
+    any: [symbolic_computation, tensor_reduction, amplitude_tools, matching_tools, automation]
+    phrases: [symbolic computation, computational qft, matching software]
+  smeft_uv_dictionary:
+    label: SMEFT UV dictionaries
+    any: [uv_ir_dictionary, tree_matching, operator_basis]
+    all: [smeft, matching]
+    phrases: [smeft uv dictionary, smeft matching]

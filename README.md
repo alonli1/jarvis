@@ -105,7 +105,10 @@ uv run jarvis ingest
 
 Add `--tier T1` or `--tier T2` explicitly for broader downloads. The downloader derives
 all paths from the clone, validates PDF responses, and never downloads entries marked as
-metadata-only. The 21 continuous-discovery queries live in `literature/searches.yaml`.
+metadata-only. It also writes a small `.meta.yaml` sidecar for each PDF with source IDs,
+visibility, and controlled research tags. Downloaded PDFs stay local because arXiv paper
+licenses vary; every clone can reproduce them with the command above. The 21
+continuous-discovery queries live in `literature/searches.yaml`.
 
 You can also index one path only:
 
@@ -221,6 +224,19 @@ arxiv_categories: [hep-th, hep-ph]
 
 These files can be extended by any group member through a normal pull request.
 
+`topics/taxonomy.yaml` defines the controlled tags used by PDF metadata, retrieval, and
+relationship graphs. Add canonical tags to a manuscript's `novelty.yaml`:
+
+```yaml
+tags: [inverse_uv_reconstruction, gravitational_eft, automated_eft_matching]
+```
+
+Require one or more tags during retrieval (multiple tags use AND semantics):
+
+```bash
+jarvis retrieve "one-loop heavy fields" --tag gravitational_eft --tag one_loop_effective_action
+```
+
 ## 5. Define an active manuscript and its novelty claims
 
 Create a project folder:
@@ -309,7 +325,23 @@ Example:
 jarvis novelty build --days 3 --judge-model anthropic/claude-sonnet-4-5-20250929
 ```
 
-## 8. Daily GitHub Actions watch
+## 8. Explore literature relationships
+
+Build the local graph and create a GitHub-renderable Mermaid neighborhood report:
+
+```bash
+jarvis graph-build
+jarvis graph example_project
+jarvis graph uolea-2015 --limit 20
+```
+
+The graph connects papers by controlled-tag/topic similarity, connects manuscripts to
+papers by claim-relevant tags, and includes directed citation edges when a reference has
+a `cites` list. Scores are local relevance signals, not global citation importance. The
+generated JSON cache stays in `.jarvis/literature_graph.json`; Markdown views are written
+to `literature/reports/`.
+
+## 9. Daily GitHub Actions watch
 
 `.github/workflows/literature-watch.yml` runs once per day using the repository's configured timezone and can open/update a GitHub issue with the generated report.
 
@@ -317,7 +349,7 @@ Required repository secret for model adjudication (optional): your provider API 
 
 The workflow works without an LLM judge; in that mode it produces the deterministic retrieval/similarity report.
 
-## 9. Shared group deployment
+## 10. Shared group deployment
 
 Local mode is the default:
 
@@ -343,7 +375,7 @@ url = "http://localhost:6333"
 
 Do not expose an unauthenticated Qdrant instance to the public internet.
 
-## 10. Recommended Git strategy
+## 11. Recommended Git strategy
 
 Commit:
 
@@ -363,19 +395,20 @@ Do **not** commit:
 
 For copyrighted or private material, store metadata in Git and keep bytes in an approved private storage location.
 
-## 11. Current limitations of v1
+## 12. Current limitations of v1
 
 - PDF math extraction depends on the PDF text layer. For difficult scientific PDFs, integrate Docling/GROBID as a preprocessing stage.
-- Citation-graph expansion is scaffolded through literature IDs but is not yet a full graph database.
+- External citation-neighborhood enrichment is not automatic; the local graph uses
+  curated tags and any explicit `cites` relationships in the manifest.
 - Novelty risk is triage, not a proof of novelty.
 - Exact equation-level semantic retrieval will benefit from a later math-aware parser/normalizer.
 - GitHub issue publication is implemented in the workflow using `gh`; local `jarvis watch` only writes reports.
 
-## 12. Suggested v2 milestones
+## 13. Suggested v2 milestones
 
 1. LaTeX AST parsing and equation-aware chunking.
 2. Docling + GROBID structured PDF ingestion.
-3. Citation-neighborhood expansion from seed papers.
+3. Optional citation/bibliographic-coupling enrichment from OpenAlex or Semantic Scholar.
 4. Persistent scholarly knowledge graph.
 5. Zotero connector.
 6. Project-specific "referee" mode.

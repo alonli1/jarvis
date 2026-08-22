@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: One-loop Matching and Running with Covariant Derivative Expansion
+tags:
+- eft
+- one_loop_matching
+- cde
+- functional_methods
+- one_loop_effective_action
+reference_id: hlm-cde-2016
+tier: T0
+authors:
+- Brian Henning
+- Xiaochuan Lu
+- Hitoshi Murayama
+year: 2016
+arxiv: '1604.01019'
+doi: null
+url: https://arxiv.org/abs/1604.01019

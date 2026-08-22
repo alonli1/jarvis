@@ -1,0 +1,16 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Gravity-Matter Feynman Rules for any Valence
+tags:
+- gravity
+- feynman_rules
+- matter
+- arbitrary_valence
+reference_id: prinz-gravity-matter-2020
+tier: T0
+authors:
+- David Prinz
+year: 2020
+arxiv: '2004.09543'
+doi: null
+url: https://arxiv.org/abs/2004.09543

@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: The Functional Renormalization Group in Quantum Gravity
+tags:
+- quantum_gravity
+- frg
+- asymptotic_safety
+- renormalization_group
+- quantum_gravity_rg
+reference_id: saueressig-frg-2023
+tier: T0
+authors:
+- Frank Saueressig
+year: 2023
+arxiv: '2302.14152'
+doi: null
+url: https://arxiv.org/abs/2302.14152

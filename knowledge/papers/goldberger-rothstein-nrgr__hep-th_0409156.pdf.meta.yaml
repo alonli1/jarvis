@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: An Effective Field Theory of Gravity for Extended Objects
+tags:
+- gravity
+- eft
+- binary_dynamics
+- worldline
+- post_newtonian
+- gravitational_eft
+- classical_gravity_observables
+reference_id: goldberger-rothstein-nrgr
+tier: T0
+authors:
+- Walter D. Goldberger
+- Ira Z. Rothstein
+year: 2004
+arxiv: hep-th/0409156
+doi: null
+url: https://arxiv.org/abs/hep-th/0409156

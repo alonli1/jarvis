@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: The Universal One-Loop Effective Action with Gravity
+tags:
+- gravity
+- uolea
+- one_loop_matching
+- curved_spacetime
+- one_loop_effective_action
+- curved_spacetime_qft
+reference_id: uolea-gravity-2023
+tier: T0
+authors:
+- Sophie Larue
+- Jérémie Quevillon
+year: 2023
+arxiv: '2303.10203'
+doi: null
+url: https://arxiv.org/abs/2303.10203

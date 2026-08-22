@@ -1,0 +1,18 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Field redefinitions in effective theories at higher orders
+tags:
+- eft
+- field_redefinitions
+- operator_redundancy
+- matching
+- inverse_uv_reconstruction
+reference_id: field-redefs-2018
+tier: T0
+authors:
+- Juan Carlos Criado
+- Manuel Pérez-Victoria
+year: 2018
+arxiv: '1811.09413'
+doi: null
+url: https://arxiv.org/abs/1811.09413

@@ -1,0 +1,18 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Self-Interaction and Gauge Invariance
+tags:
+- spin2
+- gravity
+- self_coupling
+- gauge_invariance
+- emergent_gravity
+- spin_2_consistency
+reference_id: deser-self-interaction
+tier: T0
+authors:
+- Stanley Deser
+year: 1970
+arxiv: gr-qc/0411023
+doi: 10.1007/BF00759198
+url: https://arxiv.org/abs/gr-qc/0411023

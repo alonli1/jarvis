@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Heat kernel expansion: user''s manual'
+tags:
+- heat_kernel
+- curved_spacetime
+- one_loop_effective_action
+- gravity
+- curved_spacetime_qft
+reference_id: vassilevich-heat-kernel-2003
+tier: T0
+authors:
+- D. V. Vassilevich
+year: 2003
+arxiv: hep-th/0306138
+doi: null
+url: https://arxiv.org/abs/hep-th/0306138

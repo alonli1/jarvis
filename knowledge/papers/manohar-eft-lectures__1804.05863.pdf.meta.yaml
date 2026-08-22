@@ -1,0 +1,16 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Introduction to Effective Field Theories
+tags:
+- eft
+- matching
+- running
+- power_counting
+reference_id: manohar-eft-lectures
+tier: T0
+authors:
+- Aneesh V. Manohar
+year: 2018
+arxiv: '1804.05863'
+doi: null
+url: https://arxiv.org/abs/1804.05863

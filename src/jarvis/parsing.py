@@ -9,6 +9,7 @@ import yaml
 from pypdf import PdfReader
 
 from .models import Chunk
+from .taxonomy import expanded_tags, load_taxonomy
 
 SUPPORTED_SUFFIXES = {".pdf", ".tex", ".md", ".txt"}
 REFERENCE_MANIFEST = "references.yaml"
@@ -63,11 +64,12 @@ def _tex_to_text(raw: str) -> str:
     return raw
 
 
-def _reference_chunks(path: Path, rel: str) -> Iterable[Chunk]:
+def _reference_chunks(path: Path, rel: str, repo_root: Path) -> Iterable[Chunk]:
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     references = data.get("references", []) if isinstance(data, dict) else data
     if not isinstance(references, list):
         raise TypeError(f"{path} must contain a references list")
+    taxonomy = load_taxonomy(repo_root)
 
     for index, reference in enumerate(references):
         if not isinstance(reference, dict) or not reference.get("title"):
@@ -78,11 +80,17 @@ def _reference_chunks(path: Path, rel: str) -> Iterable[Chunk]:
             raise TypeError(f"Reference {index} in {path} must use lists for authors and topics")
         authors = [str(author) for author in authors]
         topics = [str(topic) for topic in topics]
+        tags = expanded_tags(
+            topics,
+            taxonomy,
+            f"{reference['title']} {reference.get('why', '')}",
+        )
         lines = [
             str(reference["title"]),
             f"Authors: {', '.join(authors)}",
             f"Year: {reference.get('year', '')}",
             f"Topics: {', '.join(topics)}",
+            f"Research tags: {', '.join(tag for tag in tags if tag not in topics)}",
             f"Corpus role: {reference.get('why', '')}",
         ]
         lines.extend(
@@ -103,7 +111,7 @@ def _reference_chunks(path: Path, rel: str) -> Iterable[Chunk]:
             source_path=rel,
             title=str(reference["title"]),
             visibility="public",
-            tags=topics,
+            tags=tags,
             metadata=metadata,
         )
 
@@ -113,13 +121,20 @@ def iter_document_chunks(
 ) -> Iterable[Chunk]:
     rel = str(path.resolve().relative_to(repo_root.resolve()))
     if path.name == REFERENCE_MANIFEST:
-        yield from _reference_chunks(path, rel)
+        yield from _reference_chunks(path, rel, repo_root)
         return
 
     sidecar = load_sidecar(path)
     vis = sidecar.get("visibility", default_visibility(path))
     title = sidecar.get("title", path.stem)
     tags = sidecar.get("tags", [])
+    if not isinstance(tags, list):
+        raise TypeError(f"tags in {path.name}.meta.yaml must be a list")
+    extra_metadata = {
+        key: value
+        for key, value in sidecar.items()
+        if key not in {"visibility", "title", "tags"}
+    }
 
     if path.suffix.lower() == ".pdf":
         reader = PdfReader(str(path))
@@ -134,7 +149,7 @@ def iter_document_chunks(
                     page=page_no,
                     visibility=vis,
                     tags=tags,
-                    metadata={"format": "pdf"},
+                    metadata={"format": "pdf", **extra_metadata},
                 )
         return
 
@@ -149,7 +164,7 @@ def iter_document_chunks(
             title=title,
             visibility=vis,
             tags=tags,
-            metadata={"format": path.suffix.lower().lstrip(".")},
+            metadata={"format": path.suffix.lower().lstrip("."), **extra_metadata},
         )
 
 

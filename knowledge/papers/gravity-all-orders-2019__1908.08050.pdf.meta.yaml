@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Effective Field Theory of Gravity to All Orders
+tags:
+- gravity
+- eft
+- operator_basis
+- hilbert_series
+- gravitational_eft
+- smeft_uv_dictionary
+reference_id: gravity-all-orders-2019
+tier: T0
+authors:
+- Marvin Ruhdorfer
+- Javi Serra
+- Andreas Weiler
+year: 2019
+arxiv: '1908.08050'
+doi: null
+url: https://arxiv.org/abs/1908.08050

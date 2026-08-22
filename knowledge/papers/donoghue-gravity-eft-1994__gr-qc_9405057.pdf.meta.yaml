@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'General relativity as an effective field theory: The leading quantum corrections'
+tags:
+- gravity
+- eft
+- quantum_gravity
+- low_energy
+- gravitational_eft
+reference_id: donoghue-gravity-eft-1994
+tier: T0
+authors:
+- John F. Donoghue
+year: 1994
+arxiv: gr-qc/9405057
+doi: null
+url: https://arxiv.org/abs/gr-qc/9405057

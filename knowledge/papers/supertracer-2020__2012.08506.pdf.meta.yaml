@@ -1,0 +1,23 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'SuperTracer: A Calculator of Functional Supertraces for One-Loop EFT Matching'
+tags:
+- eft
+- automation
+- one_loop_matching
+- functional_methods
+- automated_eft_matching
+- one_loop_effective_action
+- computational_qft_tools
+reference_id: supertracer-2020
+tier: T0
+authors:
+- Javier Fuentes-Martín
+- Matthias König
+- Julie Pagès
+- Anders Eller Thomsen
+- Felix Wilsch
+year: 2020
+arxiv: '2012.08506'
+doi: null
+url: https://arxiv.org/abs/2012.08506

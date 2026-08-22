@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Functional Prescription for Effective Field Theory Matching
+tags:
+- eft
+- one_loop_matching
+- functional_methods
+- method_of_regions
+- one_loop_effective_action
+reference_id: functional-prescription-2020
+tier: T0
+authors:
+- Timothy Cohen
+- Xiaochuan Lu
+- Zhengkang Zhang
+year: 2020
+arxiv: '2011.02484'
+doi: null
+url: https://arxiv.org/abs/2011.02484

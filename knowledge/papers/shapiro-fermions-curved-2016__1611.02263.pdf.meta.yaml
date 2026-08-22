@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Covariant derivative of fermions and all that
+tags:
+- curved_spacetime
+- fermions
+- spin_connection
+- gravity
+- curved_spacetime_qft
+reference_id: shapiro-fermions-curved-2016
+tier: T0
+authors:
+- Ilya L. Shapiro
+year: 2016
+arxiv: '1611.02263'
+doi: null
+url: https://arxiv.org/abs/1611.02263

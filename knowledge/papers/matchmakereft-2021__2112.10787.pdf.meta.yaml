@@ -1,0 +1,22 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Matchmakereft: automated tree-level and one-loop matching'
+tags:
+- eft
+- automation
+- matching
+- background_field_method
+- automated_eft_matching
+- one_loop_effective_action
+- computational_qft_tools
+reference_id: matchmakereft-2021
+tier: T0
+authors:
+- Adrian Carmona
+- Achilleas Lazopoulos
+- Pablo Olgoso
+- Jose Santiago
+year: 2021
+arxiv: '2112.10787'
+doi: null
+url: https://arxiv.org/abs/2112.10787

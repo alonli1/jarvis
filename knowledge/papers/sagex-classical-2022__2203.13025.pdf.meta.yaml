@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'SAGEX Review on Scattering Amplitudes, Chapter 14: Classical Gravity from
+  Scattering Amplitudes'
+tags:
+- gravity
+- amplitudes
+- classical_limit
+- observables
+reference_id: sagex-classical-2022
+tier: T0
+authors:
+- David A. Kosower
+- Ricardo Monteiro
+- Donal O'Connell
+year: 2022
+arxiv: '2203.13025'
+doi: null
+url: https://arxiv.org/abs/2203.13025

@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: The effective field theorist's approach to gravitational dynamics
+tags:
+- gravity
+- eft
+- binary_dynamics
+- post_newtonian
+- observables
+- gravitational_eft
+- classical_gravity_observables
+reference_id: porto-review-2016
+tier: T0
+authors:
+- Rafael A. Porto
+year: 2016
+arxiv: '1601.04914'
+doi: null
+url: https://arxiv.org/abs/1601.04914

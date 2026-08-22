@@ -1,0 +1,16 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Covariant derivative expansion for the renormalization of gravity
+tags:
+- gravity
+- cde
+- renormalization
+- one_loop_effective_action
+reference_id: alonso-cde-gravity-2019
+tier: T0
+authors:
+- Rodrigo Alonso
+year: 2019
+arxiv: '1912.09671'
+doi: null
+url: https://arxiv.org/abs/1912.09671

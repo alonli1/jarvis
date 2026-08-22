@@ -1,0 +1,21 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'SAGEX Review on Scattering Amplitudes, Chapter 13: Post-Minkowskian expansion
+  from Scattering Amplitudes'
+tags:
+- gravity
+- amplitudes
+- post_minkowskian
+- scattering_angle
+- classical_gravity_observables
+reference_id: sagex-pm-2022
+tier: T0
+authors:
+- N. E. J. Bjerrum-Bohr
+- Poul H. Damgaard
+- Ludovic Planté
+- Pierre Vanhove
+year: 2022
+arxiv: '2203.13024'
+doi: null
+url: https://arxiv.org/abs/2203.13024

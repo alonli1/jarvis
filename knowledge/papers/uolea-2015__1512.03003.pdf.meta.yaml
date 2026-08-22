@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: The Universal One-Loop Effective Action
+tags:
+- eft
+- one_loop_matching
+- uolea
+- functional_methods
+- one_loop_effective_action
+reference_id: uolea-2015
+tier: T0
+authors:
+- Aleksandra Drozd
+- John Ellis
+- Jérémie Quevillon
+- Tevong You
+year: 2015
+arxiv: '1512.03003'
+doi: null
+url: https://arxiv.org/abs/1512.03003

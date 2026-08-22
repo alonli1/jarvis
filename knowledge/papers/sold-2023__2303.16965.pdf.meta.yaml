@@ -1,0 +1,24 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Towards the one loop IR/UV dictionary in the SMEFT: one loop generated operators
+  from new scalars and fermions'
+tags:
+- eft
+- uv_ir_dictionary
+- inverse_matching
+- automation
+- sold
+- automated_eft_matching
+- inverse_uv_reconstruction
+- computational_qft_tools
+- smeft_uv_dictionary
+reference_id: sold-2023
+tier: T0
+authors:
+- Guilherme Guedes
+- Pablo Olgoso
+- Jose Santiago
+year: 2023
+arxiv: '2303.16965'
+doi: null
+url: https://arxiv.org/abs/2303.16965

@@ -13,8 +13,15 @@ from .antigravity import install_global_mcp
 from .config import find_repo_root, load_config
 from .index import HybridIndex
 from .literature import search_all
+from .literature_graph import (
+    build_graph,
+    find_node,
+    render_graph_markdown,
+    save_graph,
+)
 from .novelty import evaluate_project, render_markdown
 from .retrieval import render_retrieval_prompt, retrieve_hits
+from .taxonomy import normalize_tag
 
 app = typer.Typer(
     no_args_is_help=True, help="Model-agnostic scientific assistant for physics research groups"
@@ -94,13 +101,16 @@ def retrieve(
     question: str = typer.Argument(...),
     limit: int | None = typer.Option(None, "--limit", min=1, max=50),
     max_visibility: str = typer.Option("public", "--max-visibility"),
+    tag: list[str] | None = typer.Option(  # noqa: B008
+        None, "--tag", help="Require a research tag."
+    ),
 ) -> None:
     """Retrieve cited context for a web chat or another AI client without calling an LLM."""
     visibility = max_visibility.lower()
     if visibility not in {"public", "group", "confidential"}:
         raise typer.BadParameter("--max-visibility must be public, group, or confidential")
     cfg = load_config()
-    hits = retrieve_hits(cfg, question, limit=limit, max_visibility=visibility)
+    hits = retrieve_hits(cfg, question, limit=limit, max_visibility=visibility, tags=tag)
     console.print(render_retrieval_prompt(question, hits), markup=False)
 
 
@@ -129,6 +139,49 @@ def literature_search(
             console.print(f"- {name}: {err}")
 
 
+@app.command("graph-build")
+def graph_build(
+    neighbors: int = typer.Option(8, "--neighbors", min=1, max=50),
+) -> None:
+    """Build the local literature/manuscript relationship graph."""
+    cfg = load_config()
+    graph = build_graph(cfg.root, neighbors=neighbors)
+    path = save_graph(cfg.root, graph)
+    console.print(
+        f"[green]Built[/green] {len(graph['nodes'])} nodes / "
+        f"{len(graph['edges'])} relationships in {path}"
+    )
+
+
+@app.command("graph")
+def graph_report(
+    query: str = typer.Argument(..., help="Paper ID, manuscript ID, or unique title text."),
+    limit: int = typer.Option(12, "--limit", min=1, max=50),
+    output: str | None = typer.Option(None, "--output"),
+) -> None:
+    """Create a Mermaid neighborhood graph for a paper or manuscript."""
+    cfg = load_config()
+    graph = build_graph(cfg.root, neighbors=max(8, limit))
+    save_graph(cfg.root, graph)
+    try:
+        origin = find_node(graph, query)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    destination = (
+        cfg.root / output
+        if output
+        else cfg.root
+        / "literature"
+        / "reports"
+        / f"graph-{normalize_tag(origin['id'])}.md"
+    )
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(
+        render_graph_markdown(graph, origin, limit=limit), encoding="utf-8"
+    )
+    console.print(f"[green]Saved graph:[/green] {destination}")
+
+
 @app.command("init-project")
 def init_project(name: str = typer.Argument(...)) -> None:
     """Create an active manuscript folder with a novelty-claim template."""
@@ -140,6 +193,7 @@ def init_project(name: str = typer.Argument(...)) -> None:
         raise typer.BadParameter(f"{novelty} already exists")
     data = {
         "project": name,
+        "tags": [],
         "claims": [
             {
                 "id": f"{name.upper().replace('-', '_')}-01",

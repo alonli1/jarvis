@@ -12,3 +12,5 @@ qdrant_storage/
 dist/
 build/
 literature/reports/*.tmp
+# Downloaded locally from their official sources; licenses vary by paper.
+knowledge/papers/*.pdf

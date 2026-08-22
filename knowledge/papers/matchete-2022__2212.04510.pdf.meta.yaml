@@ -1,0 +1,24 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'A Proof of Concept for Matchete: An Automated Tool for Matching Effective
+  Theories'
+tags:
+- eft
+- automation
+- matching
+- functional_methods
+- automated_eft_matching
+- one_loop_effective_action
+- computational_qft_tools
+reference_id: matchete-2022
+tier: T0
+authors:
+- Javier Fuentes-Martín
+- Matthias König
+- Julie Pagès
+- Anders Eller Thomsen
+- Felix Wilsch
+year: 2022
+arxiv: '2212.04510'
+doi: null
+url: https://arxiv.org/abs/2212.04510

@@ -1,5 +1,9 @@
 project: example_project
 description: Example only; replace these claims with the actual manuscript claims.
+tags:
+  - inverse_uv_reconstruction
+  - gravitational_eft
+  - automated_eft_matching
 claims:
   - id: EXAMPLE-01
     claim: >

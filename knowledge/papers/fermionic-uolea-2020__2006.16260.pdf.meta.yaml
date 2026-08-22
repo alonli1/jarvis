@@ -1,0 +1,21 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: The Fermionic Universal One-Loop Effective Action
+tags:
+- eft
+- one_loop_matching
+- fermions
+- uolea
+- one_loop_effective_action
+reference_id: fermionic-uolea-2020
+tier: T0
+authors:
+- John Ellis
+- Jérémie Quevillon
+- Théo Vuong
+- Tevong You
+- Zhengkang Zhang
+year: 2020
+arxiv: '2006.16260'
+doi: null
+url: https://arxiv.org/abs/2006.16260

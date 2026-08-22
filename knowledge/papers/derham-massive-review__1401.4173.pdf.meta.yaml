@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Massive Gravity
+tags:
+- spin2
+- massive_gravity
+- stueckelberg
+- ghosts
+- spin_2_consistency
+reference_id: derham-massive-review
+tier: T0
+authors:
+- Claudia de Rham
+year: 2014
+arxiv: '1401.4173'
+doi: null
+url: https://arxiv.org/abs/1401.4173
