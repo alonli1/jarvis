@@ -327,19 +327,38 @@ jarvis novelty build --days 3 --judge-model anthropic/claude-sonnet-4-5-20250929
 
 ## 8. Explore literature relationships
 
-Build the local graph and create a GitHub-renderable Mermaid neighborhood report:
+Fetch citation data, build the local graph, and create an interactive neighborhood view:
 
 ```bash
+jarvis citations-sync
 jarvis graph-build
 jarvis graph example_project
 jarvis graph uolea-2015 --limit 20
 ```
 
-The graph connects papers by controlled-tag/topic similarity, connects manuscripts to
-papers by claim-relevant tags, and includes directed citation edges when a reference has
-a `cites` list. Scores are local relevance signals, not global citation importance. The
-generated JSON cache stays in `.jarvis/literature_graph.json`; Markdown views are written
-to `literature/reports/`.
+By default, `citations-sync` extracts exact arXiv IDs and DOIs from the downloaded PDFs,
+so it needs no API. It writes the reproducible result to `literature/citations.yaml`.
+For broader Semantic Scholar coverage, use one batched request:
+
+```bash
+jarvis citations-sync --source semantic-scholar
+```
+
+Set `SEMANTIC_SCHOLAR_API_KEY`; the anonymous endpoint is often rate-limited.
+
+The graph includes directed citations, bibliographic coupling (shared references),
+controlled-tag/topic similarity, and manuscript relevance. The self-contained HTML view
+works offline and supports force layout, zoom, pan, dragging, search, relationship
+filters, citation-scaled nodes, year colors, and a details panel. For a static Mermaid
+report instead:
+
+```bash
+jarvis graph example_project --format markdown
+```
+
+The generated JSON cache stays in `.jarvis/literature_graph.json`; views are written to
+`literature/reports/`. Scores are local relevance signals, not global scholarly
+importance.
 
 ## 9. Daily GitHub Actions watch
 
@@ -398,8 +417,7 @@ For copyrighted or private material, store metadata in Git and keep bytes in an 
 ## 12. Current limitations of v1
 
 - PDF math extraction depends on the PDF text layer. For difficult scientific PDFs, integrate Docling/GROBID as a preprocessing stage.
-- External citation-neighborhood enrichment is not automatic; the local graph uses
-  curated tags and any explicit `cites` relationships in the manifest.
+- Citation coverage depends on exact arXiv/DOI resolution in Semantic Scholar.
 - Novelty risk is triage, not a proof of novelty.
 - Exact equation-level semantic retrieval will benefit from a later math-aware parser/normalizer.
 - GitHub issue publication is implemented in the workflow using `gh`; local `jarvis watch` only writes reports.
@@ -408,7 +426,7 @@ For copyrighted or private material, store metadata in Git and keep bytes in an 
 
 1. LaTeX AST parsing and equation-aware chunking.
 2. Docling + GROBID structured PDF ingestion.
-3. Optional citation/bibliographic-coupling enrichment from OpenAlex or Semantic Scholar.
+3. Co-citation enrichment beyond the curated corpus.
 4. Persistent scholarly knowledge graph.
 5. Zotero connector.
 6. Project-specific "referee" mode.

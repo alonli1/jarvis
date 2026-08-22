@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 
+import httpx
 import typer
 import yaml
 from rich.console import Console
@@ -10,7 +11,9 @@ from rich.table import Table
 from . import __version__
 from .answering import answer_question
 from .antigravity import install_global_mcp
+from .citations import sync_citations, sync_pdf_citations
 from .config import find_repo_root, load_config
+from .graph_view import render_graph_html
 from .index import HybridIndex
 from .literature import search_all
 from .literature_graph import (
@@ -151,34 +154,65 @@ def graph_build(
         f"[green]Built[/green] {len(graph['nodes'])} nodes / "
         f"{len(graph['edges'])} relationships in {path}"
     )
+    if not graph.get("citation_source"):
+        console.print("[yellow]No citation cache; run `jarvis citations-sync`.[/yellow]")
+
+
+@app.command("citations-sync")
+def citations_sync(
+    source: str = typer.Option("pdf", "--source", help="pdf or semantic-scholar"),
+) -> None:
+    """Extract local PDF citations or fetch them from Semantic Scholar."""
+    cfg = load_config()
+    source = source.lower()
+    if source not in {"pdf", "semantic-scholar"}:
+        raise typer.BadParameter("--source must be pdf or semantic-scholar")
+    try:
+        if source == "pdf":
+            path, resolved, unresolved = sync_pdf_citations(cfg.root)
+        else:
+            path, resolved, unresolved = sync_citations(
+                cfg.root, cfg.literature.user_agent
+            )
+    except (httpx.HTTPError, ValueError) as exc:
+        console.print(f"[red]Citation sync failed:[/red] {exc}")
+        console.print("Set SEMANTIC_SCHOLAR_API_KEY if the public endpoint is rate-limited.")
+        raise typer.Exit(code=1) from exc
+    console.print(
+        f"[green]Saved[/green] {resolved} papers to {path}; {unresolved} unresolved."
+    )
 
 
 @app.command("graph")
 def graph_report(
     query: str = typer.Argument(..., help="Paper ID, manuscript ID, or unique title text."),
-    limit: int = typer.Option(12, "--limit", min=1, max=50),
+    limit: int = typer.Option(40, "--limit", min=1, max=75),
+    output_format: str = typer.Option("html", "--format", help="html or markdown"),
     output: str | None = typer.Option(None, "--output"),
 ) -> None:
-    """Create a Mermaid neighborhood graph for a paper or manuscript."""
+    """Create an interactive HTML or Mermaid graph for a paper or manuscript."""
+    output_format = output_format.lower()
+    if output_format not in {"html", "markdown"}:
+        raise typer.BadParameter("--format must be html or markdown")
     cfg = load_config()
-    graph = build_graph(cfg.root, neighbors=max(8, limit))
+    graph = build_graph(cfg.root, manuscript_neighbors=limit)
     save_graph(cfg.root, graph)
     try:
         origin = find_node(graph, query)
     except ValueError as exc:
         raise typer.BadParameter(str(exc)) from exc
+    suffix = "html" if output_format == "html" else "md"
     destination = (
         cfg.root / output
         if output
         else cfg.root
         / "literature"
         / "reports"
-        / f"graph-{normalize_tag(origin['id'])}.md"
+        / f"graph-{normalize_tag(origin['id'])}.{suffix}"
     )
     destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(
-        render_graph_markdown(graph, origin, limit=limit), encoding="utf-8"
-    )
+    renderer = render_graph_html if output_format == "html" else render_graph_markdown
+    destination.write_text(renderer(graph, origin, limit=limit), encoding="utf-8")
     console.print(f"[green]Saved graph:[/green] {destination}")
 
 

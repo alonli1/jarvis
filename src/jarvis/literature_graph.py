@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 
 import yaml
 
+from .citations import manifest_identifiers
 from .taxonomy import classify_tags, load_taxonomy, normalize_tag
 
 
@@ -18,10 +20,14 @@ def _similarity(left: set[str], right: set[str]) -> tuple[float, list[str]]:
     return (len(shared) / len(left | right) if shared else 0.0), shared
 
 
-def _paper_nodes(root: Path, taxonomy: dict[str, dict]) -> list[dict]:
+def _paper_nodes(
+    root: Path, taxonomy: dict[str, dict], citations: dict[str, dict]
+) -> list[dict]:
     references = _load_yaml(root / "knowledge" / "references.yaml").get("references", [])
     nodes = []
     for reference in references:
+        citation = citations.get(reference["id"], {})
+        identifiers = manifest_identifiers(reference) + citation.get("identifiers", [])
         topics = [normalize_tag(str(tag)) for tag in reference.get("topics", [])]
         research_tags = classify_tags(topics, taxonomy)
         nodes.append(
@@ -34,6 +40,10 @@ def _paper_nodes(root: Path, taxonomy: dict[str, dict]) -> list[dict]:
                 "topics": topics,
                 "tags": research_tags,
                 "url": reference.get("url"),
+                "citation_count": citation.get("citation_count"),
+                "reference_count": citation.get("reference_count"),
+                "semantic_scholar_id": citation.get("semantic_scholar_id"),
+                "identifiers": list(dict.fromkeys(identifiers)),
             }
         )
     return nodes
@@ -65,9 +75,27 @@ def _manuscript_nodes(root: Path, taxonomy: dict[str, dict]) -> list[dict]:
     return nodes
 
 
-def build_graph(root: Path, neighbors: int = 8) -> dict:
+def _keep_neighbors(candidates: list[dict], nodes: list[dict], limit: int) -> list[dict]:
+    kept: set[tuple[str, str]] = set()
+    for node in nodes:
+        adjacent = [
+            edge
+            for edge in candidates
+            if node["id"] in {edge["source"], edge["target"]}
+        ]
+        for edge in sorted(adjacent, key=lambda item: item["score"], reverse=True)[:limit]:
+            kept.add((edge["source"], edge["target"]))
+    return [edge for edge in candidates if (edge["source"], edge["target"]) in kept]
+
+
+def build_graph(
+    root: Path, neighbors: int = 8, manuscript_neighbors: int | None = None
+) -> dict:
     taxonomy = load_taxonomy(root)
-    papers = _paper_nodes(root, taxonomy)
+    citation_path = root / "literature" / "citations.yaml"
+    citation_data = _load_yaml(citation_path) if citation_path.exists() else {}
+    citations = citation_data.get("papers", {})
+    papers = _paper_nodes(root, taxonomy, citations)
     manuscripts = _manuscript_nodes(root, taxonomy)
     candidates: list[dict] = []
 
@@ -89,16 +117,55 @@ def build_graph(root: Path, neighbors: int = 8) -> dict:
                     }
                 )
 
-    kept: set[tuple[str, str]] = set()
-    for node in papers:
-        adjacent = [
-            edge
-            for edge in candidates
-            if node["id"] in {edge["source"], edge["target"]}
-        ]
-        for edge in sorted(adjacent, key=lambda item: item["score"], reverse=True)[:neighbors]:
-            kept.add((edge["source"], edge["target"]))
-    edges = [edge for edge in candidates if (edge["source"], edge["target"]) in kept]
+    edges = _keep_neighbors(candidates, papers, neighbors)
+
+    identifier_to_local = {
+        identifier: paper["id"]
+        for paper in papers
+        for identifier in paper["identifiers"]
+    }
+    citation_pairs: set[tuple[str, str]] = set()
+    for source_id, citation in citations.items():
+        source = f"paper:{source_id}"
+        for cited_identifier in citation.get("references", []):
+            if target := identifier_to_local.get(cited_identifier):
+                if source == target or (source, target) in citation_pairs:
+                    continue
+                citation_pairs.add((source, target))
+                edges.append(
+                    {
+                        "source": source,
+                        "target": target,
+                        "kind": "cites",
+                        "score": 1.0,
+                        "shared_tags": [],
+                        "shared_topics": [],
+                    }
+                )
+
+    coupling = []
+    for index, left in enumerate(papers):
+        left_refs = set(citations.get(left["id"].removeprefix("paper:"), {}).get("references", []))
+        if not left_refs:
+            continue
+        for right in papers[index + 1 :]:
+            right_refs = set(
+                citations.get(right["id"].removeprefix("paper:"), {}).get("references", [])
+            )
+            shared = len(left_refs & right_refs)
+            if shared >= 2:
+                coupling.append(
+                    {
+                        "source": left["id"],
+                        "target": right["id"],
+                        "kind": "bibliographic_coupling",
+                        "score": round(shared / math.sqrt(len(left_refs) * len(right_refs)), 4),
+                        "shared_references": shared,
+                        "shared_tags": [],
+                        "shared_topics": [],
+                    }
+                )
+    edges.extend(_keep_neighbors(coupling, papers, max(2, neighbors // 2)))
 
     for manuscript in manuscripts:
         manuscript_tags = set(manuscript["tags"])
@@ -130,27 +197,36 @@ def build_graph(root: Path, neighbors: int = 8) -> dict:
             if match:
                 selected.append(match)
         selected.extend(edge for edge in ranked if edge not in selected)
-        edges.extend(selected[:neighbors])
+        edges.extend(selected[: manuscript_neighbors or neighbors])
 
     references = _load_yaml(root / "knowledge" / "references.yaml").get("references", [])
     known = {reference["id"] for reference in references}
     for reference in references:
         for cited in reference.get("cites", []):
             if cited in known:
-                edges.append(
-                    {
-                        "source": f"paper:{reference['id']}",
-                        "target": f"paper:{cited}",
-                        "kind": "cites",
-                        "score": 1.0,
-                        "shared_tags": [],
-                        "shared_topics": [],
-                    }
-                )
+                edge = {
+                    "source": f"paper:{reference['id']}",
+                    "target": f"paper:{cited}",
+                    "kind": "cites",
+                    "score": 1.0,
+                    "shared_tags": [],
+                    "shared_topics": [],
+                }
+                if edge not in edges:
+                    edges.append(edge)
+
+    incoming = {paper["id"]: 0 for paper in papers}
+    for edge in edges:
+        if edge["kind"] == "cites":
+            incoming[edge["target"]] += 1
+    for paper in papers:
+        paper["corpus_citation_count"] = incoming[paper["id"]]
 
     return {
-        "version": 1,
-        "method": "controlled-tag similarity plus explicit citations",
+        "version": 2,
+        "method": "controlled-tag similarity, direct citations, and bibliographic coupling",
+        "citation_source": citation_data.get("source"),
+        "citations_updated_at": citation_data.get("updated_at"),
         "nodes": papers + manuscripts,
         "edges": edges,
     }
