@@ -2,16 +2,16 @@ from __future__ import annotations
 
 import hashlib
 import re
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 import yaml
 from pypdf import PdfReader
 
 from .models import Chunk
 
-
 SUPPORTED_SUFFIXES = {".pdf", ".tex", ".md", ".txt"}
+REFERENCE_MANIFEST = "references.yaml"
 
 
 def default_visibility(path: Path) -> str:
@@ -63,12 +63,63 @@ def _tex_to_text(raw: str) -> str:
     return raw
 
 
-def iter_document_chunks(path: Path, repo_root: Path, chunk_chars: int, overlap: int) -> Iterable[Chunk]:
+def _reference_chunks(path: Path, rel: str) -> Iterable[Chunk]:
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    references = data.get("references", []) if isinstance(data, dict) else data
+    if not isinstance(references, list):
+        raise TypeError(f"{path} must contain a references list")
+
+    for index, reference in enumerate(references):
+        if not isinstance(reference, dict) or not reference.get("title"):
+            raise ValueError(f"Invalid reference at index {index} in {path}")
+        authors = reference.get("authors", [])
+        topics = reference.get("topics", [])
+        if not isinstance(authors, list) or not isinstance(topics, list):
+            raise TypeError(f"Reference {index} in {path} must use lists for authors and topics")
+        authors = [str(author) for author in authors]
+        topics = [str(topic) for topic in topics]
+        lines = [
+            str(reference["title"]),
+            f"Authors: {', '.join(authors)}",
+            f"Year: {reference.get('year', '')}",
+            f"Topics: {', '.join(topics)}",
+            f"Corpus role: {reference.get('why', '')}",
+        ]
+        lines.extend(
+            f"{label}: {reference[key]}"
+            for key, label in (("arxiv", "arXiv"), ("doi", "DOI"), ("url", "URL"))
+            if reference.get(key)
+        )
+        text = "\n".join(lines)
+        metadata = {
+            key: reference[key]
+            for key in ("id", "tier", "type", "year", "arxiv", "doi", "url", "ingest_policy")
+            if reference.get(key) is not None
+        }
+        metadata["format"] = "reference_manifest"
+        yield Chunk(
+            id=stable_chunk_id(rel, None, index, text),
+            text=text,
+            source_path=rel,
+            title=str(reference["title"]),
+            visibility="public",
+            tags=topics,
+            metadata=metadata,
+        )
+
+
+def iter_document_chunks(
+    path: Path, repo_root: Path, chunk_chars: int, overlap: int
+) -> Iterable[Chunk]:
+    rel = str(path.resolve().relative_to(repo_root.resolve()))
+    if path.name == REFERENCE_MANIFEST:
+        yield from _reference_chunks(path, rel)
+        return
+
     sidecar = load_sidecar(path)
     vis = sidecar.get("visibility", default_visibility(path))
     title = sidecar.get("title", path.stem)
     tags = sidecar.get("tags", [])
-    rel = str(path.resolve().relative_to(repo_root.resolve()))
 
     if path.suffix.lower() == ".pdf":
         reader = PdfReader(str(path))
@@ -104,8 +155,15 @@ def iter_document_chunks(path: Path, repo_root: Path, chunk_chars: int, overlap:
 
 def discover_documents(path: Path) -> list[Path]:
     if path.is_file():
-        return [path] if path.suffix.lower() in SUPPORTED_SUFFIXES else []
+        return (
+            [path]
+            if path.suffix.lower() in SUPPORTED_SUFFIXES or path.name == REFERENCE_MANIFEST
+            else []
+        )
     return sorted(
-        p for p in path.rglob("*")
-        if p.is_file() and p.suffix.lower() in SUPPORTED_SUFFIXES and ".jarvis" not in p.parts
+        p
+        for p in path.rglob("*")
+        if p.is_file()
+        and (p.suffix.lower() in SUPPORTED_SUFFIXES or p.name == REFERENCE_MANIFEST)
+        and ".jarvis" not in p.parts
     )

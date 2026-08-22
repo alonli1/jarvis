@@ -1,4 +1,4 @@
-from jarvis.parsing import chunk_text
+from jarvis.parsing import chunk_text, discover_documents, iter_document_chunks
 
 
 def test_chunk_text_overlap_and_content():
@@ -6,3 +6,32 @@ def test_chunk_text_overlap_and_content():
     chunks = chunk_text(text, size=200, overlap=30)
     assert len(chunks) >= 2
     assert all(chunks)
+
+
+def test_reference_manifest_creates_one_searchable_chunk_per_reference(tmp_path):
+    manifest = tmp_path / "knowledge" / "references.yaml"
+    manifest.parent.mkdir()
+    manifest.write_text(
+        """references:
+  - id: test-paper
+    tier: T0
+    type: paper
+    title: A Test of Gravity Matching
+    authors: [A. Researcher]
+    year: 2026
+    arxiv: "2601.00001"
+    doi: null
+    url: https://arxiv.org/abs/2601.00001
+    topics: [gravity, matching]
+    ingest_policy: download_arxiv
+    why: Core test reference.
+"""
+    )
+
+    assert discover_documents(tmp_path / "knowledge") == [manifest]
+    chunks = list(iter_document_chunks(manifest, tmp_path, chunk_chars=100, overlap=10))
+    assert len(chunks) == 1
+    assert chunks[0].title == "A Test of Gravity Matching"
+    assert chunks[0].tags == ["gravity", "matching"]
+    assert chunks[0].metadata["tier"] == "T0"
+    assert chunks[0].metadata["format"] == "reference_manifest"

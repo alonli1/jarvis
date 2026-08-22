@@ -8,7 +8,7 @@ Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other Lite
 
 ## What v1 already does
 
-- Ingests PDF, LaTeX, Markdown, and text files.
+- Ingests PDF, LaTeX, Markdown, text, and curated reference manifests.
 - Keeps source/page metadata for citations.
 - Builds hybrid dense + sparse retrieval with Qdrant/FastEmbed.
 - Lets each researcher select a different LLM through LiteLLM.
@@ -38,7 +38,9 @@ Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other Lite
 │   └── projects.yaml
 ├── literature/
 │   ├── searches.yaml
-│   └── reports/
+│   ├── reports/
+│   └── seed/
+├── scripts/
 ├── src/jarvis/
 ├── tests/
 ├── .agents/mcp_config.json
@@ -91,6 +93,19 @@ Then run:
 ```bash
 jarvis ingest
 ```
+
+The included `knowledge/references.yaml` seeds discovery with 75 curated references. Its
+metadata is indexed without downloading paywalled material. To download official arXiv
+copies of the T0 sources before ingesting again:
+
+```bash
+uv run python scripts/download_open_arxiv.py --tier T0
+uv run jarvis ingest
+```
+
+Add `--tier T1` or `--tier T2` explicitly for broader downloads. The downloader derives
+all paths from the clone, validates PDF responses, and never downloads entries marked as
+metadata-only. The 21 continuous-discovery queries live in `literature/searches.yaml`.
 
 You can also index one path only:
 

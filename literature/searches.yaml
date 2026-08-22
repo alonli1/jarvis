@@ -1,8 +1,111 @@
-searches:
-  - name: automated_matching
-    query: '"one-loop matching" effective field theory'
-    sources: [arxiv, inspire, openalex, semantic_scholar]
-
-  - name: inverse_matching
-    query: '"inverse matching" effective field theory'
-    sources: [arxiv, inspire, openalex, semantic_scholar]
+# JSON-style YAML; valid YAML 1.2
+{
+  "version": "2026-08-21-v1",
+  "searches": [
+    {
+      "id": "automated-matching-gravity",
+      "priority": "critical",
+      "query": "automated EFT matching gravity one-loop graviton"
+    },
+    {
+      "id": "functional-matching-gravity",
+      "priority": "critical",
+      "query": "functional matching gravitational EFT curved spacetime one loop"
+    },
+    {
+      "id": "spin2-matching",
+      "priority": "critical",
+      "query": "one-loop matching spin-2 field automated EFT"
+    },
+    {
+      "id": "inverse-eft",
+      "priority": "critical",
+      "query": "inverse EFT matching UV reconstruction UV IR dictionary"
+    },
+    {
+      "id": "automated-uv-completion",
+      "priority": "critical",
+      "query": "automated UV completion effective field theory reconstruction"
+    },
+    {
+      "id": "matchete-gravity",
+      "priority": "critical",
+      "query": "Matchete gravity graviton matching"
+    },
+    {
+      "id": "sold-dictionary",
+      "priority": "high",
+      "query": "SOLD SMEFT one-loop dictionary UV IR"
+    },
+    {
+      "id": "curved-heavy-fields",
+      "priority": "high",
+      "query": "integrating out heavy fields curved spacetime effective action gravity"
+    },
+    {
+      "id": "heat-kernel-matching",
+      "priority": "high",
+      "query": "heat kernel effective field theory matching gravity heavy field"
+    },
+    {
+      "id": "fermion-gravity-matching",
+      "priority": "high",
+      "query": "heavy fermion graviton one-loop effective action matching"
+    },
+    {
+      "id": "gravity-uolea",
+      "priority": "high",
+      "query": "universal one-loop effective action gravity spin 2"
+    },
+    {
+      "id": "gravitational-operator-basis",
+      "priority": "high",
+      "query": "gravitational EFT operator basis higher curvature arbitrary dimension"
+    },
+    {
+      "id": "pm-higher-curvature",
+      "priority": "high",
+      "query": "post-Minkowskian higher curvature EFT scattering angle"
+    },
+    {
+      "id": "gravity-eft-observables",
+      "priority": "high",
+      "query": "gravitational EFT Wilson coefficients scattering angle periastron Shapiro"
+    },
+    {
+      "id": "emergent-graviton",
+      "priority": "high",
+      "query": "emergent graviton composite spin-2 low energy general relativity"
+    },
+    {
+      "id": "preferred-metric",
+      "priority": "high",
+      "query": "preferred metric ultraviolet gravity EFT emergent diffeomorphism invariance"
+    },
+    {
+      "id": "lorentz-breaking-gravity",
+      "priority": "high",
+      "query": "Lorentz violating gravity EFT UV completion matching"
+    },
+    {
+      "id": "gravity-symmetry-breaking",
+      "priority": "medium",
+      "query": "gravitational Higgs mechanism diffeomorphism symmetry breaking spin-2"
+    },
+    {
+      "id": "frg-gravity-automation",
+      "priority": "high",
+      "query": "functional renormalization group gravity symbolic automation"
+    },
+    {
+      "id": "onshell-matching",
+      "priority": "medium",
+      "query": "on-shell EFT matching automation loop amplitudes"
+    },
+    {
+      "id": "matching-tools",
+      "priority": "medium",
+      "query": "new automated effective field theory matching software one loop"
+    }
+  ]
+}
