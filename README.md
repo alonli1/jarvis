@@ -324,7 +324,7 @@ The v1 score is deliberately interpretable. It combines:
 
 - lexical overlap with claim keywords;
 - title/abstract token similarity;
-- recency/source metadata;
+- a configurable recent-publication search window (publication/source metadata is reported, not scored);
 - optional LLM adjudication if `--judge-model` is supplied.
 
 The system does **not** label a paper "novel" or "not novel". It ranks literature as `LOW`, `MEDIUM`, `HIGH`, or `CRITICAL` overlap risk and records why.
@@ -384,7 +384,7 @@ importance.
 
 ## 9. Daily GitHub Actions watch
 
-`.github/workflows/literature-watch.yml` runs once per day using the repository's configured timezone and can open/update a GitHub issue with the generated report.
+`.github/workflows/literature-watch.yml` runs once per day using the repository's configured timezone and can open a GitHub issue with the generated report.
 
 Required repository secret for model adjudication (optional): your provider API key.
 

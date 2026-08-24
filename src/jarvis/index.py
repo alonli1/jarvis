@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
 import uuid
+from pathlib import Path
 
 from fastembed import SparseTextEmbedding, TextEmbedding
 from qdrant_client import QdrantClient, models
@@ -113,6 +113,19 @@ class HybridIndex:
         self._ensure_collection()
         k = k or self.config.retrieval.final_k
         tags = [normalize_tag(tag) for tag in tags or []]
+        max_level = Visibility.parse(max_visibility)
+        conditions = [
+            models.FieldCondition(
+                key="visibility",
+                match=models.MatchAny(
+                    any=[visibility.name for visibility in Visibility if visibility <= max_level]
+                ),
+            ),
+            *[
+                models.FieldCondition(key="tags", match=models.MatchValue(value=tag))
+                for tag in tags
+            ],
+        ]
         dense_query = next(iter(self.dense.embed([query])))
         sparse_query = next(iter(self.sparse.embed([query])))
         result = self.client.query_points(
@@ -132,20 +145,10 @@ class HybridIndex:
                 ),
             ],
             query=models.RrfQuery(rrf=models.Rrf()),
-            query_filter=(
-                models.Filter(
-                    must=[
-                        models.FieldCondition(key="tags", match=models.MatchValue(value=tag))
-                        for tag in tags
-                    ]
-                )
-                if tags
-                else None
-            ),
+            query_filter=models.Filter(must=conditions),
             limit=max(k * 3, k),
             with_payload=True,
         )
-        max_level = Visibility.parse(max_visibility)
         hits: list[SearchHit] = []
         for p in result.points:
             payload = dict(p.payload or {})
