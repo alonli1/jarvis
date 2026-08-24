@@ -54,7 +54,7 @@ def test_batch_citation_response_maps_to_internal_ids():
 
 def test_local_pdf_sync_extracts_reference_ids(tmp_path, monkeypatch):
     knowledge = tmp_path / "knowledge"
-    papers = knowledge / "papers"
+    papers = knowledge / "library" / "public" / "papers"
     books = knowledge / "books"
     papers.mkdir(parents=True)
     books.mkdir()

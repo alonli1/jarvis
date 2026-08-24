@@ -12,9 +12,10 @@ repository state.
 | Source review | All 26 Python modules under `src/jarvis/` read against the documentation |
 | Runtime install | `uv sync` succeeds with uv 0.12.5 and Python 3.14.4 |
 | Diagnostics | `uv run jarvis doctor` passes all four repository-folder checks |
-| Tests | `uv sync --extra dev`; `uv run pytest -q`: 28 passed |
-| Coverage | 63%; weakest areas are the live adapters, CLI, novelty orchestration, and index integration |
+| Tests | `uv sync --extra dev`; `uv run pytest -q`: 31 passed |
+| Coverage | 66%; weakest areas are the live adapters, CLI, novelty orchestration, and index integration |
 | Real retrieval smoke test | Existing local index returned three cited PDF passages for a gravity-EFT query |
+| Provider sync smoke test | A real UOLEA PDF was synced from an isolated Dropbox-style folder, indexed into 36 chunks, and retrieved with a page citation |
 | Lint | Not clean: 22 pre-existing Ruff findings, mainly import ordering, timezone-aware dates, Typer `B008`, and two intentional broad exception boundaries |
 
 `uv sync` installs runtime dependencies only because test tools are an optional `dev` extra.
@@ -34,14 +35,14 @@ an in-memory identifier. Neither warning affected the checks.
 | Retrieval index | Local Qdrant index exists and answers real PDF queries |
 | Citation/relationship graph | Cached graph has 76 nodes and 611 edges |
 | Manuscripts | Only `example_project`; its claim is still a placeholder |
-| Dropbox | No connector, canonical layout, sync script, or Dropbox metadata fields exist |
+| Shared storage | Provider-neutral mounted-folder sync is implemented; no real provider mount has been configured yet |
 | Symbolic packages | No `packages/` registry exists |
 | Symbolic execution | No `workbench/` or provenance format exists |
 | Predictions | No numeric evaluation or theory-to-prediction pipeline exists |
 
 The PDFs make this installation useful locally, but they do not satisfy Phase 1's durable,
-shared-library goal. Dropbox (or another approved private store) is still needed for lawful,
-portable access to non-redistributable material.
+shared-library goal until the group places them in Dropbox or another approved provider and
+runs the documented sync.
 
 ## Capability audit
 
@@ -90,6 +91,5 @@ portable access to non-redistributable material.
 - The local graph server has no authentication; documentation correctly limits it to localhost.
 - Qdrant server mode has no authentication/TLS configuration in this repository.
 
-These are recorded rather than silently expanded into Phase 1+ work. The next roadmap gate is a
-human decision about Dropbox access, layout, and default visibility before implementing a sync
-fallback.
+These are recorded rather than silently expanded into later-phase work. The next Phase 1 gate is
+connecting the real provider folder and verifying one provider-hosted paper end to end.

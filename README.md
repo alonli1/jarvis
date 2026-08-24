@@ -116,6 +116,21 @@ You can also index one path only:
 jarvis ingest knowledge/papers/example.pdf
 ```
 
+### Sync a shared library
+
+Dropbox and similar desktop clients can expose the group's library as a normal local folder.
+Jarvis uses that mounted folder without a provider API or a machine-specific path in Git:
+
+```bash
+jarvis library-sync "/path/to/team/Jarvis" --provider dropbox --dry-run
+jarvis library-sync "/path/to/team/Jarvis" --provider dropbox
+jarvis ingest
+```
+
+The provider folder uses `public/`, `group/`, and `confidential/` visibility directories.
+See [docs/LIBRARY_SYNC.md](docs/LIBRARY_SYNC.md) for the layout, safety rules, and other
+providers.
+
 ### Visibility
 
 Files under `knowledge/` are treated as `public` by default.

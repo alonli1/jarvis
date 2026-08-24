@@ -15,3 +15,14 @@ literature/reports/*.tmp
 # Downloaded locally from their official sources; licenses vary by work.
 knowledge/papers/*.pdf
 knowledge/books/*.pdf
+knowledge/papers/**/*.pdf
+knowledge/books/**/*.pdf
+# Synced bytes stay in the approved provider; generated metadata remains trackable.
+knowledge/library/**/*.pdf
+knowledge/library/**/*.tex
+knowledge/library/**/*.md
+knowledge/library/**/*.txt
+group/library/**/*.pdf
+group/library/**/*.tex
+group/library/**/*.md
+group/library/**/*.txt

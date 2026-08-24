@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import os
 import webbrowser
 from datetime import date, timedelta
+from pathlib import Path
 
 import httpx
 import typer
@@ -24,6 +26,7 @@ from .literature_graph import (
     render_graph_markdown,
     save_graph,
 )
+from .library_sync import sync_library
 from .novelty import evaluate_project, render_markdown
 from .retrieval import render_retrieval_prompt, retrieve_hits
 from .taxonomy import normalize_tag
@@ -78,6 +81,31 @@ def ingest(
         total_chunks += chunks
         console.print(f"Indexed {docs} documents / {chunks} chunks from {target}")
     console.print(f"[bold green]Done:[/bold green] {total_docs} documents, {total_chunks} chunks")
+
+
+@app.command("library-sync")
+def library_sync_command(
+    source: Path | None = typer.Argument(  # noqa: B008
+        None, help="Mounted provider root; defaults to JARVIS_LIBRARY_ROOT."
+    ),
+    provider: str = typer.Option("synced-folder", "--provider"),
+    dry_run: bool = typer.Option(False, "--dry-run"),
+) -> None:
+    """Pull validated documents from Dropbox or another locally synced provider."""
+    source = source or (Path(value) if (value := os.getenv("JARVIS_LIBRARY_ROOT")) else None)
+    if source is None:
+        raise typer.BadParameter("Pass SOURCE or set JARVIS_LIBRARY_ROOT")
+    try:
+        result = sync_library(find_repo_root(), source, provider=provider, dry_run=dry_run)
+    except (FileNotFoundError, FileExistsError, NotADirectoryError, TypeError, ValueError) as exc:
+        console.print(f"[red]Library sync failed:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    verb = "Would sync" if dry_run else "Synced"
+    console.print(
+        f"[green]{verb}[/green] {result.documents} documents: {result.copied} new, "
+        f"{result.updated} updated, {result.unchanged} unchanged; "
+        f"{result.sidecars_preserved} curated sidecars preserved."
+    )
 
 
 @app.command()
