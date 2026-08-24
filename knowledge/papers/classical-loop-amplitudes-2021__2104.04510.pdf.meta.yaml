@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Classical Gravity from Loop Amplitudes
+tags:
+- gravity
+- amplitudes
+- loops
+- post_minkowskian
+- classical_gravity_observables
+reference_id: classical-loop-amplitudes-2021
+tier: T1
+authors:
+- N. E. J. Bjerrum-Bohr
+- Poul H. Damgaard
+- Ludovic Planté
+- Pierre Vanhove
+year: 2021
+arxiv: '2104.04510'
+doi: null
+url: https://arxiv.org/abs/2104.04510

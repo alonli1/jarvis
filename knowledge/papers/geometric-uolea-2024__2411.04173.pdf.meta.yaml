@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: The Geometric Universal One-Loop Effective Action
+tags:
+- eft
+- uolea
+- field_space_geometry
+- one_loop_matching
+- one_loop_effective_action
+reference_id: geometric-uolea-2024
+tier: T1
+authors:
+- Xu-Xiang Li
+- Xiaochuan Lu
+- Zhengkang Zhang
+year: 2024
+arxiv: '2411.04173'
+doi: null
+url: https://arxiv.org/abs/2411.04173

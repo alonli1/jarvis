@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Perturbative Asymptotic Safety and Its Phenomenological Applications
+tags:
+- quantum_gravity
+- asymptotic_safety
+- rg
+- quantum_gravity_rg
+reference_id: perturbative-as-2023
+tier: T2
+authors:
+- Alexander Bednyakov
+- Alena Mukhaeva
+year: 2023
+arxiv: '2309.08258'
+doi: null
+url: https://arxiv.org/abs/2309.08258

@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Quantum General Relativity and Effective Field Theory
+tags:
+- gravity
+- eft
+- quantum_gravity
+- review
+- gravitational_eft
+reference_id: donoghue-qgr-2022
+tier: T1
+authors:
+- John F. Donoghue
+year: 2022
+arxiv: '2211.09902'
+doi: null
+url: https://arxiv.org/abs/2211.09902

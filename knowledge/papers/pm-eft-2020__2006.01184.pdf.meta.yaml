@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Post-Minkowskian Effective Field Theory for Conservative Binary Dynamics
+tags:
+- gravity
+- eft
+- post_minkowskian
+- binary_dynamics
+- gravitational_eft
+- classical_gravity_observables
+reference_id: pm-eft-2020
+tier: T1
+authors:
+- Gregor Kälin
+- Rafael A. Porto
+year: 2020
+arxiv: '2006.01184'
+doi: null
+url: https://arxiv.org/abs/2006.01184

@@ -1,0 +1,22 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: A complete tree-level dictionary between simplified BSM models and SMEFT (d≤7)
+  operators
+tags:
+- eft
+- uv_ir_dictionary
+- inverse_matching
+- smeft
+- inverse_uv_reconstruction
+- smeft_uv_dictionary
+reference_id: d7-tree-dictionary-2023
+tier: T1
+authors:
+- Hao-Lin Li
+- Yu-Hang Ni
+- Ming-Lei Xiao
+- Jiang-Hao Yu
+year: 2023
+arxiv: '2307.10380'
+doi: null
+url: https://arxiv.org/abs/2307.10380

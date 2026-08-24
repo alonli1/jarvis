@@ -1,0 +1,21 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: STrEAMlining EFT Matching
+tags:
+- eft
+- automation
+- one_loop_matching
+- supertraces
+- automated_eft_matching
+- one_loop_effective_action
+- computational_qft_tools
+reference_id: streamlining-2020
+tier: T1
+authors:
+- Timothy Cohen
+- Xiaochuan Lu
+- Zhengkang Zhang
+year: 2020
+arxiv: '2012.07851'
+doi: null
+url: https://arxiv.org/abs/2012.07851

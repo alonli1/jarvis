@@ -1,0 +1,21 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Matchotter: An Automated Tool for Dimensional Reduction at Finite Temperature'
+tags:
+- eft
+- automation
+- matchete
+- finite_temperature
+- dimensional_reduction
+- automated_eft_matching
+- computational_qft_tools
+reference_id: matchotter-2026
+tier: T1
+authors:
+- Javier Fuentes-Martín
+- Javier López Miras
+- Adrián Moreno-Sánchez
+year: 2026
+arxiv: '2604.21972'
+doi: null
+url: https://arxiv.org/abs/2604.21972

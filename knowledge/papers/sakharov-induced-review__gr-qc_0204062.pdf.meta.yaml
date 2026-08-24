@@ -1,0 +1,16 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Sakharov''s induced gravity: a modern perspective'
+tags:
+- emergent_gravity
+- induced_gravity
+- uv_completion
+- spin_2_consistency
+reference_id: sakharov-induced-review
+tier: T1
+authors:
+- Matt Visser
+year: 2002
+arxiv: gr-qc/0204062
+doi: null
+url: https://arxiv.org/abs/gr-qc/0204062

@@ -1,7 +1,518 @@
 version: 1
 source: Local PDF arXiv/DOI extraction
-updated_at: '2026-08-22T13:55:48.892472+00:00'
+updated_at: '2026-08-23T22:10:12.031585+00:00'
 papers:
+  avramidi-book:
+    identifiers:
+    - doi:10.1007/3-540-46523-5
+    citation_count: null
+    reference_count: 0
+    references: []
+  birrell-davies-book:
+    identifiers:
+    - doi:10.1017/cbo9780511622632
+    citation_count: null
+    reference_count: 0
+    references: []
+  buchbinder-shapiro-book:
+    identifiers:
+    - doi:10.1093/oso/9780198838319.001.0001
+    citation_count: null
+    reference_count: 87
+    references:
+    - arxiv:0709.3851
+    - arxiv:0712.3379
+    - arxiv:0801.0216
+    - arxiv:0803.4331
+    - arxiv:0809.2104
+    - arxiv:0812.4950
+    - arxiv:0904.1537
+    - arxiv:0904.1698
+    - arxiv:0906.3837
+    - arxiv:0911.4579
+    - arxiv:1006.0984
+    - arxiv:1008.5157
+    - arxiv:1104.3797
+    - arxiv:1107.2403
+    - arxiv:1112.3359
+    - arxiv:1112.5202
+    - arxiv:1202.4235
+    - arxiv:1203.2034
+    - arxiv:1212.2577
+    - arxiv:1304.5992
+    - arxiv:1308.3907
+    - arxiv:1401.4583
+    - arxiv:1402.4854
+    - arxiv:1403.3335
+    - arxiv:1403.4226
+    - arxiv:1407.8036
+    - arxiv:1408.5769
+    - arxiv:1503.08059
+    - arxiv:1504.06756
+    - arxiv:1506.02210
+    - arxiv:1507.00981
+    - arxiv:1507.03620
+    - arxiv:1509.08882
+    - arxiv:1512.07600
+    - arxiv:1602.03837
+    - arxiv:1610.05260
+    - arxiv:1611.02263
+    - arxiv:1702.06892
+    - arxiv:1704.03988
+    - arxiv:1710.0581
+    - arxiv:1712.03338
+    - arxiv:1712.07066
+    - arxiv:1801.00063
+    - arxiv:1802.01036
+    - arxiv:1802.05922
+    - arxiv:1804.08350
+    - arxiv:1805.02149
+    - arxiv:1810.07787
+    - arxiv:1810.08911
+    - arxiv:1812.00460
+    - arxiv:1812.01140
+    - arxiv:1902.03167
+    - arxiv:1902.04687
+    - arxiv:1902.09557
+    - arxiv:1903.01044
+    - arxiv:1903.11546
+    - arxiv:1905.08296
+    - arxiv:1906.04767
+    - arxiv:1908.01937
+    - arxiv:1910.01731
+    - arxiv:1910.06068
+    - arxiv:2002.05997
+    - arxiv:2002.12661
+    - arxiv:2003.04503
+    - arxiv:2009.04122
+    - doi:10.1093/oso/9780198838319.003.0001
+    - doi:10.1093/oso/9780198838319.003.0002
+    - doi:10.1093/oso/9780198838319.003.0003
+    - doi:10.1093/oso/9780198838319.003.0004
+    - doi:10.1093/oso/9780198838319.003.0005
+    - doi:10.1093/oso/9780198838319.003.0006
+    - doi:10.1093/oso/9780198838319.003.0007
+    - doi:10.1093/oso/9780198838319.003.0009
+    - doi:10.1093/oso/9780198838319.003.0010
+    - doi:10.1093/oso/9780198838319.003.0011
+    - doi:10.1093/oso/9780198838319.003.0012
+    - doi:10.1093/oso/9780198838319.003.0013
+    - doi:10.1093/oso/9780198838319.003.0014
+    - doi:10.1093/oso/9780198838319.003.0015
+    - doi:10.1093/oso/9780198838319.003.0016
+    - doi:10.1093/oso/9780198838319.003.0017
+    - doi:10.1093/oso/9780198838319.003.0018
+    - doi:10.1093/oso/9780198838319.003.0019
+    - doi:10.1093/oso/9780198838319.003.0020
+    - doi:10.1093/oso/9780198838319.003.0021
+    - doi:10.1093/oso/9780198838319.003.0022
+    - doi:10.1093/oso/9780198838319.003.0023
+  burgess-eft-book:
+    identifiers:
+    - doi:10.1017/9781139048040
+    citation_count: null
+    reference_count: 86
+    references:
+    - arxiv:0709.0293
+    - arxiv:0808.1446
+    - arxiv:0811.2197
+    - arxiv:0902.4465
+    - arxiv:0905.4752
+    - arxiv:0912.3039
+    - arxiv:1005.3848
+    - arxiv:1008.1917
+    - arxiv:1008.4884
+    - arxiv:1008.5257
+    - arxiv:1011.6396
+    - arxiv:1103.3260
+    - arxiv:1107.0731
+    - arxiv:1108.2513
+    - arxiv:1112.5174
+    - arxiv:1112.6353
+    - arxiv:1203.0609
+    - arxiv:1203.1669
+    - arxiv:1203.2962
+    - arxiv:1203.6443
+    - arxiv:1208.0601
+    - arxiv:1209.5701
+    - arxiv:1212.4508
+    - arxiv:1309.4133
+    - arxiv:1403.7377
+    - arxiv:1404.2236
+    - arxiv:1408.2518
+    - arxiv:1408.5002
+    - arxiv:1410.1892
+    - arxiv:1411.3721
+    - arxiv:1501.07274
+    - arxiv:1503.07216
+    - arxiv:1506.02210
+    - arxiv:1507.07956
+    - arxiv:1511.03646
+    - arxiv:1512.00169
+    - arxiv:1606.01989
+    - arxiv:1606.06687
+    - arxiv:1612.07313
+    - arxiv:1702.08713
+    - arxiv:1704.02751
+    - arxiv:1705.04370
+    - arxiv:1706.01063
+    - arxiv:1708.07443
+    - arxiv:1709.09695
+    - arxiv:1710.05815
+    - arxiv:1711.10592
+    - arxiv:1804.05863
+    - arxiv:1804.10324
+    - arxiv:1807.06209
+    - arxiv:1807.06211
+    - arxiv:1808.00847
+    - arxiv:1808.07897
+    - arxiv:1902.05550
+    - arxiv:1912.12951
+    - arxiv:1912.12955
+    - arxiv:astro-ph/9805201
+    - arxiv:astro-ph/9812133
+    - arxiv:cond-mat/9907002
+    - arxiv:gr-qc/0311082
+    - arxiv:gr-qc/0605010
+    - arxiv:hep-ex/9807003
+    - arxiv:hep-ph/0005275
+    - arxiv:hep-ph/0006165
+    - arxiv:hep-ph/0011336
+    - arxiv:hep-ph/0109045
+    - arxiv:hep-ph/0205289
+    - arxiv:hep-ph/0207036
+    - arxiv:hep-ph/0407101
+    - arxiv:hep-ph/9203216
+    - arxiv:hep-ph/9305284
+    - arxiv:hep-ph/9703210
+    - arxiv:hep-ph/9708416
+    - arxiv:hep-ph/9803315
+    - arxiv:hep-ph/9807344
+    - arxiv:hep-ph/9905221
+    - arxiv:hep-th/0503158
+    - arxiv:hep-th/0701053
+    - arxiv:hep-th/9401105
+    - arxiv:hep-th/9510017
+    - arxiv:hep-th/9510209
+    - arxiv:hep-th/9906064
+    - arxiv:nucl-ex/0106015
+    - arxiv:nucl-th/0510023
+    - doi:10.1007/978-3-662-12869-5
+    - doi:10.1007/jhep09(2010)016
+  kiefer-qg-book:
+    identifiers:
+    - doi:10.1093/acprof:oso/9780199585205.001.0001
+    citation_count: null
+    reference_count: 32
+    references:
+    - arxiv:0706.3359
+    - arxiv:0708.2481
+    - arxiv:0806.0402
+    - arxiv:0808.1223
+    - arxiv:0903.3489
+    - arxiv:0910.5836
+    - arxiv:1001.4188
+    - arxiv:1003.2617
+    - arxiv:1005.2471
+    - arxiv:1009.1136
+    - arxiv:1010.3420
+    - arxiv:1103.3864
+    - arxiv:1105.5646
+    - arxiv:1105.6271
+    - arxiv:1106.4153
+    - arxiv:1106.6073
+    - arxiv:1108.0302
+    - arxiv:1108.0893
+    - arxiv:1108.3269
+    - arxiv:1109.0091
+    - arxiv:astro-ph/0006423
+    - arxiv:gr-qc/0308048
+    - arxiv:gr-qc/0504096
+    - arxiv:gr-qc/0510042
+    - arxiv:gr-qc/0512047
+    - arxiv:gr-qc/0601095
+    - arxiv:gr-qc/9501001
+    - arxiv:gr-qc/9709012
+    - arxiv:hep-th/0302219
+    - arxiv:hep-th/9702027
+    - arxiv:hep-th/9702155
+    - arxiv:hep-th/9709356
+  parker-toms-book:
+    identifiers:
+    - doi:10.1017/cbo9780511813924
+    citation_count: null
+    reference_count: 14
+    references:
+    - arxiv:0706.2151
+    - arxiv:0802.3920
+    - arxiv:0803.2003
+    - arxiv:0804.0513
+    - arxiv:gr-qc/0608018
+    - arxiv:hep-ph/9712331
+    - arxiv:hep-th/0112090
+    - arxiv:hep-th/0302184
+    - arxiv:hep-th/0303103
+    - arxiv:hep-th/0612142
+    - arxiv:hep-th/0702216
+    - arxiv:hep-th/9806223
+    - arxiv:hep-th/9809159
+    - arxiv:math-ph/0109010
+  percacci-as-book:
+    identifiers:
+    - doi:10.1142/10369
+    citation_count: null
+    reference_count: 250
+    references:
+    - arxiv:0705.0712
+    - arxiv:0705.1769
+    - arxiv:0706.0174
+    - arxiv:0707.3182
+    - arxiv:0707.3983
+    - arxiv:0707.4644
+    - arxiv:0708.1701
+    - arxiv:0708.2990
+    - arxiv:0709.3555
+    - arxiv:0709.3851
+    - arxiv:0710.1002
+    - arxiv:0710.3096
+    - arxiv:0710.4177
+    - arxiv:0711.3745
+    - arxiv:0712.0445
+    - arxiv:0712.3545
+    - arxiv:0801.0861
+    - arxiv:0801.3287
+    - arxiv:0804.1475
+    - arxiv:0805.2909
+    - arxiv:0806.3907
+    - arxiv:0807.0331
+    - arxiv:0808.3124
+    - arxiv:0809.3897
+    - arxiv:0901.0964
+    - arxiv:0901.1766
+    - arxiv:0901.2984
+    - arxiv:0901.3775
+    - arxiv:0902.4630
+    - arxiv:0903.4049
+    - arxiv:0904.2510
+    - arxiv:0905.1536
+    - arxiv:0905.2326
+    - arxiv:0906.3477
+    - arxiv:0907.1828
+    - arxiv:0907.2617
+    - arxiv:0910.4110
+    - arxiv:0910.4938
+    - arxiv:0911.0386
+    - arxiv:0911.0394
+    - arxiv:0911.0401
+    - arxiv:0911.0931
+    - arxiv:0911.3165
+    - arxiv:0911.5004
+    - arxiv:0912.0208
+    - arxiv:1001.2933
+    - arxiv:1001.5032
+    - arxiv:1001.5033
+    - arxiv:1002.0260
+    - arxiv:1002.2640
+    - arxiv:1002.3298
+    - arxiv:1003.5018
+    - arxiv:1003.5129
+    - arxiv:1004.2171
+    - arxiv:1004.3664
+    - arxiv:1006.0099
+    - arxiv:1006.0192
+    - arxiv:1006.0718
+    - arxiv:1006.3808
+    - arxiv:1007.1317
+    - arxiv:1007.2729
+    - arxiv:1007.3503
+    - arxiv:1007.5189
+    - arxiv:1008.2768
+    - arxiv:1008.3621
+    - arxiv:1008.4787
+    - arxiv:1009.1643
+    - arxiv:1009.3528
+    - arxiv:1010.2799
+    - arxiv:1010.3585
+    - arxiv:1011.3229
+    - arxiv:1012.4280
+    - arxiv:1012.4476
+    - arxiv:1101.4182
+    - arxiv:1101.4788
+    - arxiv:1101.5047
+    - arxiv:1101.5401
+    - arxiv:1101.5548
+    - arxiv:1101.5552
+    - arxiv:1101.6007
+    - arxiv:1102.5012
+    - arxiv:1103.1181
+    - arxiv:1103.4498
+    - arxiv:1104.4028
+    - arxiv:1105.3735
+    - arxiv:1107.2403
+    - arxiv:1107.3110
+    - arxiv:1107.5815
+    - arxiv:1108.0422
+    - arxiv:1108.1908
+    - arxiv:1108.5886
+    - arxiv:1110.5224
+    - arxiv:1110.5249
+    - arxiv:1110.6758
+    - arxiv:1111.1000
+    - arxiv:1111.1743
+    - arxiv:1111.2875
+    - arxiv:1111.6634
+    - arxiv:1201.2649
+    - arxiv:1202.2274
+    - arxiv:1203.1962
+    - arxiv:1203.2158
+    - arxiv:1203.3957
+    - arxiv:1203.4207
+    - arxiv:1203.6366
+    - arxiv:1204.3541
+    - arxiv:1205.0476
+    - arxiv:1205.2893
+    - arxiv:1205.3681
+    - arxiv:1206.0657
+    - arxiv:1206.6531
+    - arxiv:1207.2504
+    - arxiv:1208.0031
+    - arxiv:1208.2038
+    - arxiv:1209.3649
+    - arxiv:1209.4038
+    - arxiv:1210.3284
+    - arxiv:1210.4491
+    - arxiv:1210.8389
+    - arxiv:1211.0955
+    - arxiv:1212.1821
+    - arxiv:1301.0879
+    - arxiv:1301.1361
+    - arxiv:1301.4191
+    - arxiv:1301.4422
+    - arxiv:1301.5135
+    - arxiv:1302.0868
+    - arxiv:1302.2928
+    - arxiv:1304.2059
+    - arxiv:1304.4777
+    - arxiv:1304.6938
+    - arxiv:1304.7247
+    - arxiv:1304.7743
+    - arxiv:1306.1223
+    - arxiv:1306.1546
+    - arxiv:1306.4710
+    - arxiv:1308.3398
+    - arxiv:1309.0804
+    - arxiv:1309.5343
+    - arxiv:1309.7273
+    - arxiv:1310.4122
+    - arxiv:1311.0029
+    - arxiv:1311.0881
+    - arxiv:1311.1121
+    - arxiv:1311.2898
+    - arxiv:1311.6253
+    - arxiv:1312.7097
+    - arxiv:1312.7767
+    - arxiv:1401.4173
+    - arxiv:1401.5495
+    - arxiv:1403.0580
+    - arxiv:1403.1232
+    - arxiv:1404.0634
+    - arxiv:1404.4537
+    - arxiv:1405.4585
+    - arxiv:1406.2337
+    - arxiv:1406.4366
+    - arxiv:1407.4748
+    - arxiv:1407.6993
+    - arxiv:1408.0276
+    - arxiv:1409.3089
+    - arxiv:1410.4815
+    - arxiv:1410.7003
+    - arxiv:1410.7816
+    - arxiv:1410.7999
+    - arxiv:1412.0468
+    - arxiv:1412.6837
+    - arxiv:1412.7207
+    - arxiv:1501.00849
+    - arxiv:1501.00888
+    - arxiv:1501.01408
+    - arxiv:1501.05331
+    - arxiv:1502.02439
+    - arxiv:1502.07396
+    - arxiv:1502.07511
+    - arxiv:1503.06233
+    - arxiv:1504.00225
+    - arxiv:1504.07656
+    - arxiv:1505.03119
+    - arxiv:1505.05393
+    - arxiv:1506.02882
+    - arxiv:1506.02965
+    - arxiv:1506.03757
+    - arxiv:1506.03809
+    - arxiv:1506.07016
+    - arxiv:1507.00968
+    - arxiv:1507.06118
+    - arxiv:1507.06308
+    - arxiv:1507.07829
+    - arxiv:1507.08859
+    - arxiv:1508.00590
+    - arxiv:1508.06244
+    - arxiv:1511.09393
+    - arxiv:1601.04944
+    - arxiv:1605.00454
+    - arxiv:cond-mat/0702365
+    - arxiv:gr-qc/0006061
+    - arxiv:gr-qc/0012054
+    - arxiv:gr-qc/0207118
+    - arxiv:gr-qc/0311082
+    - arxiv:gr-qc/0402018
+    - arxiv:gr-qc/0610018
+    - arxiv:gr-qc/9308012
+    - arxiv:gr-qc/9310024
+    - arxiv:gr-qc/9405057
+    - arxiv:gr-qc/9505009
+    - arxiv:gr-qc/9801026
+    - arxiv:hep-ph/9403340
+    - arxiv:hep-th/0002034
+    - arxiv:hep-th/0105267
+    - arxiv:hep-th/0106230
+    - arxiv:hep-th/0108040
+    - arxiv:hep-th/0110021
+    - arxiv:hep-th/0112089
+    - arxiv:hep-th/0112237
+    - arxiv:hep-th/0202167
+    - arxiv:hep-th/0202207
+    - arxiv:hep-th/0203006
+    - arxiv:hep-th/0205062
+    - arxiv:hep-th/0206236
+    - arxiv:hep-th/0207028
+    - arxiv:hep-th/0211071
+    - arxiv:hep-th/0211072
+    - arxiv:hep-th/0304117
+    - arxiv:hep-th/0304222
+    - arxiv:hep-th/0311056
+    - arxiv:hep-th/0404156
+    - arxiv:hep-th/0405239
+    - arxiv:hep-th/0410191
+    - arxiv:hep-th/0501096
+    - arxiv:hep-th/0505113
+    - arxiv:hep-th/0505154
+    - arxiv:hep-th/0508202
+    - arxiv:hep-th/0511021
+    - arxiv:hep-th/0512261
+    - arxiv:hep-th/0602203
+    - arxiv:hep-th/0611294
+    - arxiv:hep-th/0702112
+    - arxiv:hep-th/9303123
+    - arxiv:hep-th/9405190
+    - arxiv:hep-th/9505182
+    - arxiv:hep-th/9605030
+    - arxiv:hep-th/9606001
+    - arxiv:hep-th/9610006
+    - arxiv:hep-th/9705008
+    - arxiv:hep-th/9706062
+    - arxiv:hep-th/9707239
+    - arxiv:hep-th/9802039
+    - arxiv:hep-th/9907027
+    - doi:10.1103/physrevd.84.024026
   alonso-cde-gravity-2019:
     identifiers:
     - arxiv:1912.09671
@@ -27,12 +538,397 @@ papers:
     - arxiv:1902.06754
     - arxiv:1908.08050
     - arxiv:1910.05831
+  appelquist-carazzone-1975:
+    identifiers:
+    - doi:10.1103/physrevd.11.2856
+    citation_count: null
+    reference_count: 0
+    references: []
+  barvinsky-cpt-2009:
+    identifiers:
+    - arxiv:0911.1168
+    citation_count: null
+    reference_count: 0
+    references: []
+  bern-3pm-2019:
+    identifiers:
+    - arxiv:1901.04424
+    citation_count: null
+    reference_count: 125
+    references:
+    - arxiv:0705.1864
+    - arxiv:0802.0716
+    - arxiv:0805.3993
+    - arxiv:0901.0386
+    - arxiv:1004.0476
+    - arxiv:1010.1667
+    - arxiv:1201.5366
+    - arxiv:1304.7263
+    - arxiv:1310.1528
+    - arxiv:1401.4548
+    - arxiv:1402.7307
+    - arxiv:1407.4772
+    - arxiv:1408.2372
+    - arxiv:1410.5348
+    - arxiv:1508.01016
+    - arxiv:1511.03614
+    - arxiv:1601.04914
+    - arxiv:1602.03837
+    - arxiv:1603.05737
+    - arxiv:1609.00354
+    - arxiv:1611.03493
+    - arxiv:1705.05610
+    - arxiv:1705.09263
+    - arxiv:1705.10262
+    - arxiv:1706.02314
+    - arxiv:1706.06877
+    - arxiv:1709.06016
+    - arxiv:1710.05832
+    - arxiv:1710.10599
+    - arxiv:1711.03901
+    - arxiv:1711.09493
+    - arxiv:1712.08684
+    - arxiv:1712.09250
+    - arxiv:1803.02405
+    - arxiv:1804.09311
+    - arxiv:1805.07240
+    - arxiv:1805.10385
+    - arxiv:1806.01872
+    - arxiv:1806.04920
+    - arxiv:1806.07388
+    - arxiv:1807.01699
+    - arxiv:1807.09859
+    - arxiv:1808.02489
+    - arxiv:1808.03288
+    - arxiv:1811.10950
+    - arxiv:1812.06895
+    - arxiv:1812.08137
+    - arxiv:1812.08752
+    - doi:10.1007/978-3-642-34886-0
+    - doi:10.1007/bf00756073
+    - doi:10.1007/bf02732767
+    - doi:10.1007/bf02746175
+    - doi:10.1007/bf02817047
+    - doi:10.1007/jhep03(2018)044
+    - doi:10.1007/jhep06(2016)023
+    - doi:10.1007/jhep11(2015)046
+    - doi:10.1007/jhep11(2018)162
+    - doi:10.1007/s41114-018-0016-5
+    - doi:10.1016/0003-4916(60)90132-9
+    - doi:10.1016/0370-
+    - doi:10.1016/0370-1573(91)90091-y
+    - doi:10.1016/0370-2693(81)90685-7
+    - doi:10.1016/0550-
+    - doi:10.1016/0550-3213(81)90199-1
+    - doi:10.1016/0550-3213(87)90479-2
+    - doi:10.1016/0550-3213(94)90179-1
+    - doi:10.1016/j.cpc.2006.07.002
+    - doi:10.1016/j.cpc.2014.11.024
+    - doi:10.1016/j.cpc.2016.03.013
+    - doi:10.1016/j.cpc.2018.04.012
+    - doi:10.1016/j.nuclphysb.2003.12.023
+    - doi:10.1016/j.nuclphysb.2013.09.007
+    - doi:10.1016/j.physrep.2016.04.003
+    - doi:10.1016/s0217-
+    - doi:10.1016/s0370-2693(01)00642-6
+    - doi:10.1016/s0370-2693(99)00777-7
+    - doi:10.1016/s0375-9601(00)00360-1
+    - doi:10.1016/s0550-3213(00)00223-6
+    - doi:10.1016/s0550-3213(98)00420-9
+    - doi:10.1088/0305-
+    - doi:10.1088/0305-4470/13/12/017
+    - doi:10.1088/1126-6708/2005/07/025
+    - doi:10.1088/1361-
+    - doi:10.1088/1361-6633/aae552
+    - doi:10.1103/phys-
+    - doi:10.1103/physrevd.55.3457
+    - doi:10.1103/physrevd.56.3381
+    - doi:10.1103/physrevd.57.7274
+    - doi:10.1103/physrevd.59.084006
+    - doi:10.1103/physrevd.62.044024
+    - doi:10.1103/physrevd.62.064015
+    - doi:10.1103/physrevd.63.029903
+    - doi:10.1103/physrevd.71.069903
+    - doi:10.1103/physrevd.73.104029
+    - doi:10.1103/physrevd.76.125020
+    - doi:10.1103/physrevd.78.085011
+    - doi:10.1103/physrevd.85.105014
+    - doi:10.1103/physrevd.89.064058
+    - doi:10.1103/physrevd.89.081503
+    - doi:10.1103/physrevd.91.024017
+    - doi:10.1103/physrevd.92.124043
+    - doi:10.1103/physrevd.94.104015
+    - doi:10.1103/physrevd.95.125010
+    - doi:10.1103/physrevd.96.064021
+    - doi:10.1103/physrevd.96.065009
+    - doi:10.1103/physrevd.97.044038
+    - doi:10.1103/physrevd.97.084025
+    - doi:10.1103/physrevd.97.085019
+    - doi:10.1103/physrevd.97.105018
+    - doi:10.1103/physrevd.97.105019
+    - doi:10.1103/physrevd.98.086021
+    - doi:10.1103/physrevlett.105.061602
+    - doi:10.1103/physrevlett.116.061102
+    - doi:10.1103/physrevlett.119.161101
+    - doi:10.1103/physrevlett.121.171601
+    - doi:10.1103/physrevlett.121.251101
+    - doi:10.1103/physrevlett.95.121101
+    - doi:10.1103/physrevlett.96.111101
+    - doi:10.1103/physrevlett.96.111102
+    - doi:10.1140/epjc/s10052-009-1039-6
+    - doi:10.1140/epjc/s10052-010-1516-y
+    - doi:10.1142/s0217751x00002157
+    - doi:10.1143/ptp.50.492
+    - doi:10.12942/lrr-2014-2
+    - doi:10.2307/1968714
+  black-hole-tidal-2022:
+    identifiers:
+    - arxiv:2208.08459
+    citation_count: null
+    reference_count: 45
+    references:
+    - arxiv:0709.1915
+    - arxiv:0710.5150
+    - arxiv:0712.2822
+    - arxiv:0903.1122
+    - arxiv:0906.0096
+    - arxiv:0906.1366
+    - arxiv:0910.5222
+    - arxiv:0912.4254
+    - arxiv:1101.1673
+    - arxiv:1110.3764
+    - arxiv:1202.3565
+    - arxiv:1202.4750
+    - arxiv:1411.4711
+    - arxiv:1503.07366
+    - arxiv:1601.04914
+    - arxiv:1602.03837
+    - arxiv:1606.08895
+    - arxiv:1610.01940
+    - arxiv:1701.01116
+    - arxiv:1702.00319
+    - arxiv:1710.05832
+    - arxiv:1710.10599
+    - arxiv:1710.11096
+    - arxiv:1807.01699
+    - arxiv:1808.02489
+    - arxiv:1901.04424
+    - arxiv:1906.06850
+    - arxiv:1909.02375
+    - arxiv:2003.08351
+    - arxiv:2006.06665
+    - arxiv:2007.00214
+    - arxiv:2007.04977
+    - arxiv:2010.00593
+    - arxiv:2010.07300
+    - arxiv:2010.08559
+    - arxiv:2010.15795
+    - arxiv:2012.10184
+    - arxiv:2012.14869
+    - arxiv:2102.08917
+    - arxiv:2103.01234
+    - arxiv:2105.01069
+    - arxiv:2203.08832
+    - arxiv:2206.14249
+    - arxiv:2209.02091
+    - arxiv:2209.14324
   burgess-gravity-eft-2003:
     identifiers:
     - arxiv:gr-qc/0311082
     citation_count: null
     reference_count: 0
     references: []
+  cdt-review-2019:
+    identifiers:
+    - arxiv:1905.08669
+    citation_count: null
+    reference_count: 87
+    references:
+    - arxiv:0711.0273
+    - arxiv:0712.2485
+    - arxiv:0806.3506
+    - arxiv:0807.4481
+    - arxiv:0901.0964
+    - arxiv:0901.3775
+    - arxiv:0911.0401
+    - arxiv:1001.4581
+    - arxiv:1002.3298
+    - arxiv:1002.4618
+    - arxiv:1004.0352
+    - arxiv:1007.2560
+    - arxiv:1102.3929
+    - arxiv:1108.3932
+    - arxiv:1110.5224
+    - arxiv:1110.6875
+    - arxiv:1111.6634
+    - arxiv:1111.6938
+    - arxiv:1201.1590
+    - arxiv:1203.3591
+    - arxiv:1204.1356
+    - arxiv:1205.1229
+    - arxiv:1205.3791
+    - arxiv:1206.0657
+    - arxiv:1302.2173
+    - arxiv:1302.2181
+    - arxiv:1302.2210
+    - arxiv:1305.4582
+    - arxiv:1305.6680
+    - arxiv:1307.2270
+    - arxiv:1307.5469
+    - arxiv:1311.3340
+    - arxiv:1401.3299
+    - arxiv:1403.5940
+    - arxiv:1405.0323
+    - arxiv:1405.4585
+    - arxiv:1406.4531
+    - arxiv:1410.0632
+    - arxiv:1411.7712
+    - arxiv:1503.03706
+    - arxiv:1503.08580
+    - arxiv:1504.01065
+    - arxiv:1507.04566
+    - arxiv:1509.08788
+    - arxiv:1510.08672
+    - arxiv:1510.08719
+    - arxiv:1512.03313
+    - arxiv:1603.02076
+    - arxiv:1604.01798
+    - arxiv:1604.08786
+    - arxiv:1610.05245
+    - arxiv:1612.08222
+    - arxiv:1703.08160
+    - arxiv:1704.04373
+    - arxiv:1705.05417
+    - arxiv:1705.07653
+    - arxiv:1709.03013
+    - arxiv:1710.06398
+    - arxiv:1712.08847
+    - arxiv:1802.10434
+    - arxiv:1802.10524
+    - arxiv:1804.02294
+    - arxiv:1804.03846
+    - arxiv:1808.08490
+    - arxiv:1903.00430
+    - arxiv:1904.04379
+    - arxiv:gr-qc/0610018
+    - arxiv:gr-qc/9709084
+    - arxiv:gr-qc/9805049
+    - arxiv:hep-lat/9511023
+    - arxiv:hep-lat/9512012
+    - arxiv:hep-lat/9710077
+    - arxiv:hep-lat/9909129
+    - arxiv:hep-th/0008035
+    - arxiv:hep-th/0011194
+    - arxiv:hep-th/0011276
+    - arxiv:hep-th/0103186
+    - arxiv:hep-th/0105267
+    - arxiv:hep-th/0306138
+    - arxiv:hep-th/0404156
+    - arxiv:hep-th/0411152
+    - arxiv:hep-th/0505113
+    - arxiv:hep-th/0505154
+    - arxiv:hep-th/0604212
+    - arxiv:hep-th/9303127
+    - arxiv:hep-th/9805108
+    - arxiv:hep-th/9806241
+  classical-loop-amplitudes-2021:
+    identifiers:
+    - arxiv:2104.04510
+    citation_count: null
+    reference_count: 36
+    references:
+    - arxiv:0805.3682
+    - arxiv:1309.0804
+    - arxiv:1310.1145
+    - arxiv:1410.7590
+    - arxiv:1412.2296
+    - arxiv:1602.03837
+    - arxiv:1609.00354
+    - arxiv:1703.09692
+    - arxiv:1710.05832
+    - arxiv:1710.10599
+    - arxiv:1806.04920
+    - arxiv:1808.02489
+    - arxiv:1810.04694
+    - arxiv:1811.10950
+    - arxiv:1901.04424
+    - arxiv:1904.02667
+    - arxiv:1908.01493
+    - arxiv:1911.11716
+    - arxiv:2002.02459
+    - arxiv:2003.08351
+    - arxiv:2003.10274
+    - arxiv:2004.05407
+    - arxiv:2005.04236
+    - arxiv:2007.04977
+    - arxiv:2008.12743
+    - arxiv:2010.01641
+    - arxiv:2101.05772
+    - arxiv:2101.07254
+    - arxiv:2101.08630
+    - arxiv:2104.03256
+    - arxiv:2104.03957
+    - arxiv:hep-ph/9901201
+    - arxiv:hep-th/9203082
+    - arxiv:hep-th/9802162
+    - doi:10.1103/physrevlett.116.061102
+    - doi:10.1103/physrevlett.119.161101
+  codex-2018:
+    identifiers:
+    - arxiv:1808.04403
+    citation_count: null
+    reference_count: 50
+    references:
+    - arxiv:1006.2142
+    - arxiv:1105.5140
+    - arxiv:1105.6103
+    - arxiv:1201.4383
+    - arxiv:1207.3588
+    - arxiv:1207.4599
+    - arxiv:1301.2588
+    - arxiv:1303.3876
+    - arxiv:1305.0017
+    - arxiv:1305.3927
+    - arxiv:1306.6228
+    - arxiv:1308.1879
+    - arxiv:1308.2627
+    - arxiv:1308.4860
+    - arxiv:1310.1921
+    - arxiv:1310.4838
+    - arxiv:1312.2014
+    - arxiv:1312.2928
+    - arxiv:1412.1837
+    - arxiv:1502.02570
+    - arxiv:1502.07352
+    - arxiv:1503.07537
+    - arxiv:1505.06334
+    - arxiv:1506.00840
+    - arxiv:1506.01343
+    - arxiv:1508.05060
+    - arxiv:1508.05895
+    - arxiv:1509.05942
+    - arxiv:1510.00372
+    - arxiv:1510.03443
+    - arxiv:1510.08462
+    - arxiv:1512.03003
+    - arxiv:1512.03056
+    - arxiv:1512.03433
+    - arxiv:1602.00126
+    - arxiv:1604.01019
+    - arxiv:1604.02445
+    - arxiv:1604.06444
+    - arxiv:1607.02142
+    - arxiv:1704.04504
+    - arxiv:1710.06445
+    - arxiv:1804.05033
+    - arxiv:1807.07546
+    - arxiv:hep-ph/0308266
+    - arxiv:hep-ph/0412166
+    - arxiv:hep-ph/0604111
+    - arxiv:hep-ph/0703164
+    - arxiv:hep-ph/9606222
+    - arxiv:hep-th/0701053
+    - arxiv:nucl-th/9506035
   complete-one-loop-dictionary-2024:
     identifiers:
     - arxiv:2412.14253
@@ -89,6 +985,458 @@ papers:
     - arxiv:2410.21444
     - arxiv:2411.12798
     - arxiv:2412.01759
+  composite-graviton-2017:
+    identifiers:
+    - arxiv:1710.09367
+    citation_count: null
+    reference_count: 17
+    references:
+    - arxiv:1001.0785
+    - arxiv:1110.0686
+    - arxiv:1309.3090
+    - arxiv:1603.07670
+    - arxiv:1610.08521
+    - arxiv:1611.02269
+    - arxiv:1707.01589
+    - arxiv:1710.07262
+    - doi:10.1007/jhep04(2011)029
+    - doi:10.1103/physrev.111.315
+    - doi:10.1103/physrev.184.1305
+    - doi:10.1103/physrevd.7.2317
+    - doi:10.1103/physrevd.94.025010
+    - doi:10.1103/physrevd.96.065010
+    - doi:10.1142/s0217732302006886
+    - doi:10.21468/scipostphys.2.3.016
+    - doi:10.3842/sigma.2012.027
+  critical-as-2020:
+    identifiers:
+    - arxiv:2004.06810
+    citation_count: null
+    reference_count: 375
+    references:
+    - arxiv:0705.1769
+    - arxiv:0706.0174
+    - arxiv:0707.3983
+    - arxiv:0709.3555
+    - arxiv:0709.3968
+    - arxiv:0711.2651
+    - arxiv:0712.0445
+    - arxiv:0801.3287
+    - arxiv:0804.1475
+    - arxiv:0805.2909
+    - arxiv:0805.3993
+    - arxiv:0806.3907
+    - arxiv:0810.0715
+    - arxiv:0811.3888
+    - arxiv:0901.0964
+    - arxiv:0901.2984
+    - arxiv:0901.3775
+    - arxiv:0902.4630
+    - arxiv:0905.3168
+    - arxiv:0905.4220
+    - arxiv:0907.2582
+    - arxiv:0907.2617
+    - arxiv:0908.0004
+    - arxiv:0908.1780
+    - arxiv:0909.0327
+    - arxiv:0910.4938
+    - arxiv:0911.0386
+    - arxiv:0912.0208
+    - arxiv:1001.5032
+    - arxiv:1001.5033
+    - arxiv:1002.0260
+    - arxiv:1003.5129
+    - arxiv:1004.2171
+    - arxiv:1006.0099
+    - arxiv:1006.0718
+    - arxiv:1006.2119
+    - arxiv:1006.3747
+    - arxiv:1007.1317
+    - arxiv:1008.2768
+    - arxiv:1008.3621
+    - arxiv:1009.1735
+    - arxiv:1009.3528
+    - arxiv:1010.0912
+    - arxiv:1010.1415
+    - arxiv:1010.1530
+    - arxiv:1011.1456
+    - arxiv:1012.3081
+    - arxiv:1012.4280
+    - arxiv:1101.4182
+    - arxiv:1101.5401
+    - arxiv:1101.5548
+    - arxiv:1101.5552
+    - arxiv:1101.6007
+    - arxiv:1102.4624
+    - arxiv:1102.5012
+    - arxiv:1102.5759
+    - arxiv:1104.3712
+    - arxiv:1104.5366
+    - arxiv:1105.2036
+    - arxiv:1107.2403
+    - arxiv:1108.3932
+    - arxiv:1110.5224
+    - arxiv:1110.5249
+    - arxiv:1110.6244
+    - arxiv:1110.6758
+    - arxiv:1111.2875
+    - arxiv:1111.7204
+    - arxiv:1112.4374
+    - arxiv:1112.5104
+    - arxiv:1202.1101
+    - arxiv:1202.2274
+    - arxiv:1202.3637
+    - arxiv:1203.2158
+    - arxiv:1203.3591
+    - arxiv:1203.4207
+    - arxiv:1203.5153
+    - arxiv:1203.6366
+    - arxiv:1204.0965
+    - arxiv:1204.3541
+    - arxiv:1205.1229
+    - arxiv:1205.3583
+    - arxiv:1206.0657
+    - arxiv:1208.0031
+    - arxiv:1208.2038
+    - arxiv:1209.3649
+    - arxiv:1209.4038
+    - arxiv:1209.6039
+    - arxiv:1210.0443
+    - arxiv:1210.3284
+    - arxiv:1211.0955
+    - arxiv:1212.1821
+    - arxiv:1212.5114
+    - arxiv:1212.6824
+    - arxiv:1301.4191
+    - arxiv:1301.5135
+    - arxiv:1302.1312
+    - arxiv:1302.2928
+    - arxiv:1302.6199
+    - arxiv:1302.6359
+    - arxiv:1304.4777
+    - arxiv:1304.7247
+    - arxiv:1304.7743
+    - arxiv:1304.7761
+    - arxiv:1306.1058
+    - arxiv:1306.1223
+    - arxiv:1306.1546
+    - arxiv:1306.2272
+    - arxiv:1307.0765
+    - arxiv:1307.2270
+    - arxiv:1308.3398
+    - arxiv:1308.4318
+    - arxiv:1308.5630
+    - arxiv:1309.1690
+    - arxiv:1309.7273
+    - arxiv:1311.0881
+    - arxiv:1312.2846
+    - arxiv:1312.7767
+    - arxiv:1401.5495
+    - arxiv:1402.1851
+    - arxiv:1402.3589
+    - arxiv:1403.1232
+    - arxiv:1404.4537
+    - arxiv:1404.7655
+    - arxiv:1405.4585
+    - arxiv:1405.5774
+    - arxiv:1405.7922
+    - arxiv:1406.2337
+    - arxiv:1406.3195
+    - arxiv:1407.0029
+    - arxiv:1407.5848
+    - arxiv:1407.8124
+    - arxiv:1408.0276
+    - arxiv:1408.4127
+    - arxiv:1408.4336
+    - arxiv:1409.1450
+    - arxiv:1410.4815
+    - arxiv:1410.7003
+    - arxiv:1410.7816
+    - arxiv:1411.7383
+    - arxiv:1411.7978
+    - arxiv:1412.0468
+    - arxiv:1412.7207
+    - arxiv:1501.00888
+    - arxiv:1501.05331
+    - arxiv:1501.05848
+    - arxiv:1502.07396
+    - arxiv:1502.07511
+    - arxiv:1503.06233
+    - arxiv:1503.09136
+    - arxiv:1504.07656
+    - arxiv:1505.03119
+    - arxiv:1505.05393
+    - arxiv:1506.02210
+    - arxiv:1506.02965
+    - arxiv:1506.03809
+    - arxiv:1506.05526
+    - arxiv:1506.07016
+    - arxiv:1506.07570
+    - arxiv:1506.07795
+    - arxiv:1507.00968
+    - arxiv:1507.03375
+    - arxiv:1507.08657
+    - arxiv:1507.08859
+    - arxiv:1508.01160
+    - arxiv:1509.05041
+    - arxiv:1509.09122
+    - arxiv:1510.07018
+    - arxiv:1510.09003
+    - arxiv:1511.08816
+    - arxiv:1511.09393
+    - arxiv:1512.01589
+    - arxiv:1512.05305
+    - arxiv:1512.06718
+    - arxiv:1512.06805
+    - arxiv:1601.01800
+    - arxiv:1603.01902
+    - arxiv:1603.02076
+    - arxiv:1603.02147
+    - arxiv:1603.04772
+    - arxiv:1603.07250
+    - arxiv:1604.02041
+    - arxiv:1604.02745
+    - arxiv:1605.00454
+    - arxiv:1605.01856
+    - arxiv:1605.01858
+    - arxiv:1605.02241
+    - arxiv:1605.02573
+    - arxiv:1605.07636
+    - arxiv:1605.07649
+    - arxiv:1605.08015
+    - arxiv:1605.09618
+    - arxiv:1607.03053
+    - arxiv:1607.07074
+    - arxiv:1607.08460
+    - arxiv:1608.00519
+    - arxiv:1608.01515
+    - arxiv:1609.03824
+    - arxiv:1609.04813
+    - arxiv:1609.05071
+    - arxiv:1610.03081
+    - arxiv:1610.04394
+    - arxiv:1610.05299
+    - arxiv:1610.07991
+    - arxiv:1610.09681
+    - arxiv:1611.00275
+    - arxiv:1611.06522
+    - arxiv:1611.07005
+    - arxiv:1612.04506
+    - arxiv:1612.07315
+    - arxiv:1701.01506
+    - arxiv:1702.01727
+    - arxiv:1702.03577
+    - arxiv:1702.06539
+    - arxiv:1702.07724
+    - arxiv:1703.01035
+    - arxiv:1703.08801
+    - arxiv:1703.09033
+    - arxiv:1704.05312
+    - arxiv:1704.08873
+    - arxiv:1705.01848
+    - arxiv:1705.02342
+    - arxiv:1705.03484
+    - arxiv:1705.05417
+    - arxiv:1706.06326
+    - arxiv:1706.06432
+    - arxiv:1707.01107
+    - arxiv:1707.01397
+    - arxiv:1707.02942
+    - arxiv:1707.04217
+    - arxiv:1707.09298
+    - arxiv:1708.00437
+    - arxiv:1708.09760
+    - arxiv:1709.02354
+    - arxiv:1709.03696
+    - arxiv:1709.05057
+    - arxiv:1709.07252
+    - arxiv:1709.09098
+    - arxiv:1710.02494
+    - arxiv:1710.04669
+    - arxiv:1710.05815
+    - arxiv:1710.06317
+    - arxiv:1710.10845
+    - arxiv:1711.09259
+    - arxiv:1712.00319
+    - arxiv:1712.04308
+    - arxiv:1712.09959
+    - arxiv:1801.00162
+    - arxiv:1802.00498
+    - arxiv:1802.02519
+    - arxiv:1802.10434
+    - arxiv:1802.10524
+    - arxiv:1803.02355
+    - arxiv:1803.04027
+    - arxiv:1803.07777
+    - arxiv:1803.09770
+    - arxiv:1804.00012
+    - arxiv:1804.00023
+    - arxiv:1804.00945
+    - arxiv:1804.02162
+    - arxiv:1804.03846
+    - arxiv:1805.09656
+    - arxiv:1806.04977
+    - arxiv:1806.10147
+    - arxiv:1807.10512
+    - arxiv:1807.11708
+    - arxiv:1808.03472
+    - arxiv:1809.06162
+    - arxiv:1810.02828
+    - arxiv:1810.07615
+    - arxiv:1810.07971
+    - arxiv:1810.08550
+    - arxiv:1810.09824
+    - arxiv:1811.03369
+    - arxiv:1811.11706
+    - arxiv:1811.12909
+    - arxiv:1812.00460
+    - arxiv:1812.08782
+    - arxiv:1901.04741
+    - arxiv:1902.00391
+    - arxiv:1903.02568
+    - arxiv:1903.07388
+    - arxiv:1903.10411
+    - arxiv:1903.11544
+    - arxiv:1904.04379
+    - arxiv:1904.04845
+    - arxiv:1904.07042
+    - arxiv:1905.00137
+    - arxiv:1905.08669
+    - arxiv:1906.01058
+    - arxiv:1906.01721
+    - arxiv:1906.02507
+    - arxiv:1906.04557
+    - arxiv:1907.02903
+    - arxiv:1907.05330
+    - arxiv:1907.07894
+    - arxiv:1908.02140
+    - arxiv:1908.02416
+    - arxiv:1908.03897
+    - arxiv:1908.04170
+    - arxiv:1908.11647
+    - arxiv:1909.01169
+    - arxiv:1911.00012
+    - arxiv:1911.02415
+    - arxiv:1911.02967
+    - arxiv:1911.10066
+    - arxiv:1912.01624
+    - arxiv:1912.05314
+    - arxiv:1912.08135
+    - arxiv:2001.05974
+    - arxiv:2002.00256
+    - arxiv:2002.03666
+    - arxiv:2002.10839
+    - arxiv:2003.07454
+    - arxiv:2003.08397
+    - arxiv:2003.13642
+    - arxiv:2003.13656
+    - arxiv:2004.04126
+    - arxiv:cond-mat/0203588
+    - arxiv:gr-qc/0002040
+    - arxiv:gr-qc/0607032
+    - arxiv:gr-qc/9310024
+    - arxiv:gr-qc/9402003
+    - arxiv:gr-qc/9811026
+    - arxiv:hep-lat/0612031
+    - arxiv:hep-lat/9208022
+    - arxiv:hep-lat/9401026
+    - arxiv:hep-lat/9601024
+    - arxiv:hep-lat/9603024
+    - arxiv:hep-lat/9608042
+    - arxiv:hep-ph/9308260
+    - arxiv:hep-ph/9308265
+    - arxiv:hep-th/0002050
+    - arxiv:hep-th/0002196
+    - arxiv:hep-th/0105267
+    - arxiv:hep-th/0106133
+    - arxiv:hep-th/0108040
+    - arxiv:hep-th/0110021
+    - arxiv:hep-th/0110054
+    - arxiv:hep-th/0205062
+    - arxiv:hep-th/0206145
+    - arxiv:hep-th/0304194
+    - arxiv:hep-th/0306138
+    - arxiv:hep-th/0309234
+    - arxiv:hep-th/0310018
+    - arxiv:hep-th/0311196
+    - arxiv:hep-th/0312114
+    - arxiv:hep-th/0404156
+    - arxiv:hep-th/0410117
+    - arxiv:hep-th/0410119
+    - arxiv:hep-th/0410191
+    - arxiv:hep-th/0412249
+    - arxiv:hep-th/0505113
+    - arxiv:hep-th/0507167
+    - arxiv:hep-th/0508026
+    - arxiv:hep-th/0508194
+    - arxiv:hep-th/0508202
+    - arxiv:hep-th/0511021
+    - arxiv:hep-th/0512261
+    - arxiv:hep-th/0602159
+    - arxiv:hep-th/0607128
+    - arxiv:hep-th/0611294
+    - arxiv:hep-th/0702051
+    - arxiv:hep-th/9206081
+    - arxiv:hep-th/9303123
+    - arxiv:hep-th/9403164
+    - arxiv:hep-th/9609077
+    - arxiv:hep-th/9612069
+    - arxiv:hep-th/9706070
+    - arxiv:hep-th/9707239
+    - arxiv:hep-th/9708051
+    - arxiv:hep-th/9803212
+    - arxiv:hep-th/9805108
+    - arxiv:hep-th/9812237
+    - arxiv:hep-th/9907027
+    - arxiv:nucl-th/9709062
+  d7-tree-dictionary-2023:
+    identifiers:
+    - arxiv:2307.10380
+    citation_count: null
+    reference_count: 42
+    references:
+    - arxiv:1006.2142
+    - arxiv:1008.4884
+    - arxiv:1306.4669
+    - arxiv:1410.4193
+    - arxiv:1412.1837
+    - arxiv:1512.03433
+    - arxiv:1607.07309
+    - arxiv:1609.06659
+    - arxiv:1703.04415
+    - arxiv:1706.08945
+    - arxiv:1708.09390
+    - arxiv:1709.04891
+    - arxiv:1711.10391
+    - arxiv:1806.02780
+    - arxiv:1811.09413
+    - arxiv:1812.07829
+    - arxiv:1901.10302
+    - arxiv:1902.05936
+    - arxiv:1907.02078
+    - arxiv:1909.10551
+    - arxiv:2001.04481
+    - arxiv:2004.02827
+    - arxiv:2005.00008
+    - arxiv:2005.00059
+    - arxiv:2007.07899
+    - arxiv:2007.08125
+    - arxiv:2008.08597
+    - arxiv:2008.09652
+    - arxiv:2011.02484
+    - arxiv:2012.02779
+    - arxiv:2012.07851
+    - arxiv:2012.08506
+    - arxiv:2012.11615
+    - arxiv:2103.15837
+    - arxiv:2104.10709
+    - arxiv:2110.11359
+    - arxiv:2201.04639
+    - arxiv:2201.08819
+    - arxiv:2202.02681
+    - arxiv:2204.03660
+    - arxiv:2211.01420
+    - arxiv:2303.16922
   derham-massive-review:
     identifiers:
     - arxiv:1401.4173
@@ -548,18 +1896,457 @@ papers:
     citation_count: null
     reference_count: 0
     references: []
+  dittmaier-functional-2026:
+    identifiers:
+    - arxiv:2608.11306
+    citation_count: null
+    reference_count: 17
+    references:
+    - arxiv:1008.4884
+    - arxiv:1603.03660
+    - arxiv:1607.02142
+    - arxiv:1608.03564
+    - arxiv:1610.00710
+    - arxiv:1706.07765
+    - arxiv:1801.07291
+    - arxiv:1808.03466
+    - arxiv:1912.06823
+    - arxiv:2003.05936
+    - arxiv:2008.08597
+    - arxiv:2011.02484
+    - arxiv:2102.12020
+    - arxiv:2203.07236
+    - arxiv:2206.01479
+    - arxiv:2604.01125
+    - arxiv:hep-ph/9711391
   donoghue-gravity-eft-1994:
     identifiers:
     - arxiv:gr-qc/9405057
     citation_count: null
     reference_count: 0
     references: []
+  donoghue-intro-gravity-eft-1995:
+    identifiers:
+    - arxiv:gr-qc/9512024
+    citation_count: null
+    reference_count: 0
+    references: []
+  donoghue-qgr-2022:
+    identifiers:
+    - arxiv:2211.09902
+    citation_count: null
+    reference_count: 107
+    references:
+    - arxiv:0709.3851
+    - arxiv:0802.0716
+    - arxiv:0803.3456
+    - arxiv:0911.1168
+    - arxiv:1006.3808
+    - arxiv:1111.2875
+    - arxiv:1209.3511
+    - arxiv:1308.5204
+    - arxiv:1309.0804
+    - arxiv:1410.7590
+    - arxiv:1503.06099
+    - arxiv:1506.02210
+    - arxiv:1506.05065
+    - arxiv:1609.00714
+    - arxiv:1609.07477
+    - arxiv:1612.07629
+    - arxiv:1702.00319
+    - arxiv:1806.08383
+    - arxiv:1807.07015
+    - arxiv:1903.07944
+    - arxiv:1905.08669
+    - arxiv:1908.04170
+    - arxiv:1909.01358
+    - arxiv:1911.02967
+    - arxiv:2003.09047
+    - arxiv:2009.00728
+    - arxiv:2101.04241
+    - arxiv:2108.06320
+    - arxiv:2112.10798
+    - arxiv:2201.12217
+    - arxiv:2203.13024
+    - arxiv:2210.16072
+    - arxiv:2212.06677
+    - arxiv:2212.08957
+    - arxiv:2212.09157
+    - arxiv:gr-qc/0206071
+    - arxiv:gr-qc/0207118
+    - arxiv:gr-qc/0311082
+    - arxiv:gr-qc/0402018
+    - arxiv:gr-qc/0601020
+    - arxiv:gr-qc/9512024
+    - arxiv:hep-th/0112237
+    - arxiv:hep-th/0211071
+    - arxiv:hep-th/0211072
+    - arxiv:hep-th/0405239
+    - arxiv:hep-th/0409156
+    - arxiv:hep-th/9411092
+    - doi:10.1007/bf00762011
+    - doi:10.1007/jhep02(2014)111
+    - doi:10.1007/jhep05(2015)118
+    - doi:10.1007/jhep11(2016)117
+    - doi:10.1016/0370-1573(85)90148-6
+    - doi:10.1016/0550-3213(85)90492-4
+    - doi:10.1016/0550-3213(86)90193-8
+    - doi:10.1016/j.ppnp.2020.103812
+    - doi:10.1016/s0370-2693(02)01246-7
+    - doi:10.1017/9781139048040
+    - doi:10.1017/cbo9780511524370
+    - doi:10.1038/s41598-019-47844-8
+    - doi:10.1063/1.1703702
+    - doi:10.1063/1.4756964
+    - doi:10.1088/0264-9381/12/9/005
+    - doi:10.1088/0264-9381/25/15/154010
+    - doi:10.1088/0954-
+    - doi:10.1088/1361-
+    - doi:10.1088/1367-
+    - doi:10.1103/physrev.101.1597
+    - doi:10.1103/physrev.112.669
+    - doi:10.1103/physrev.140.b516
+    - doi:10.1103/physrev.162.1195
+    - doi:10.1103/physrev.166.1287
+    - doi:10.1103/physrev.96.1428
+    - doi:10.1103/physrevd.103.064036
+    - doi:10.1103/physrevd.104.045005
+    - doi:10.1103/physrevd.105.024029
+    - doi:10.1103/physrevd.105.086001
+    - doi:10.1103/physrevd.105.105025
+    - doi:10.1103/physrevd.11.2856
+    - doi:10.1103/physrevd.21.2213
+    - doi:10.1103/physrevd.43.3308
+    - doi:10.1103/physrevd.51.2751
+    - doi:10.1103/physrevd.68.084005
+    - doi:10.1103/physrevd.71.069903
+    - doi:10.1103/physrevd.73.104029
+    - doi:10.1103/physrevd.75.108501
+    - doi:10.1103/physrevd.82.084011
+    - doi:10.1103/physrevd.85.104016
+    - doi:10.1103/physrevd.9.1837
+    - doi:10.1103/physrevd.95.064045
+    - doi:10.1103/physrevd.98.126009
+    - doi:10.1103/physrevd.99.126008
+    - doi:10.1103/physrevlett.114.061301
+    - doi:10.1103/physrevlett.123.171601
+    - doi:10.1103/physrevlett.47.979
+    - doi:10.1103/physrevlett.93.201602
+    - doi:10.1134/1.1537290
+    - doi:10.1134/1.1777618
+    - doi:10.1140/epjh/s13129-021-00004-x
+    - doi:10.1142/8619
+    - doi:10.1142/s0217751x16300076
+    - doi:10.1143/ptp.46.1587
+    - doi:10.12942/lrr-2002-5
+    - doi:10.12942/lrr-2004-5
+    - doi:10.12942/lrr-2006-5
+    - doi:10.3389/fphy.2020.00056
+    - doi:10.4249/scholarpedia.32243
+    - doi:10.4249/scholarpedia.32997
+  drgt-2010:
+    identifiers:
+    - arxiv:1011.1232
+    citation_count: null
+    reference_count: 9
+    references:
+    - arxiv:0802.4379
+    - arxiv:0908.1112
+    - arxiv:0910.5474
+    - arxiv:1003.5917
+    - arxiv:1006.4367
+    - arxiv:1007.0443
+    - arxiv:1010.1780
+    - arxiv:1010.3288
+    - arxiv:1011.0183
+  einstein-aether-review:
+    identifiers:
+    - arxiv:gr-qc/0410001
+    citation_count: null
+    reference_count: 22
+    references:
+    - arxiv:astro-ph/0403694
+    - arxiv:astro-ph/0407437
+    - arxiv:gr-qc/0103036
+    - arxiv:gr-qc/0104103
+    - arxiv:gr-qc/0112012
+    - arxiv:gr-qc/0307066
+    - arxiv:gr-qc/0308071
+    - arxiv:gr-qc/0310044
+    - arxiv:gr-qc/0402005
+    - arxiv:gr-qc/0407005
+    - arxiv:gr-qc/0412086
+    - arxiv:gr-qc/9507055
+    - arxiv:hep-ph/0106220
+    - arxiv:hep-ph/0407034
+    - arxiv:hep-ph/0407370
+    - arxiv:hep-th/0009052
+    - arxiv:hep-th/0208019
+    - arxiv:hep-th/0312099
+    - arxiv:hep-th/0312310
+    - arxiv:hep-th/0407149
+    - arxiv:hep-th/0408127
+    - arxiv:hep-th/9904075
   fermionic-uolea-2020:
     identifiers:
     - arxiv:2006.16260
     citation_count: null
     reference_count: 0
     references: []
+  feyncalc10:
+    identifiers:
+    - arxiv:2312.14089
+    citation_count: null
+    reference_count: 248
+    references:
+    - arxiv:0708.4233
+    - arxiv:0709.2092
+    - arxiv:0712.1851
+    - arxiv:0803.0883
+    - arxiv:0803.4177
+    - arxiv:0811.4622
+    - arxiv:0912.2546
+    - arxiv:1002.2581
+    - arxiv:1002.3458
+    - arxiv:1005.2076
+    - arxiv:1007.4716
+    - arxiv:1011.4863
+    - arxiv:1105.2076
+    - arxiv:1108.2040
+    - arxiv:1110.1499
+    - arxiv:1111.0868
+    - arxiv:1111.2034
+    - arxiv:1201.4330
+    - arxiv:1203.6543
+    - arxiv:1207.6082
+    - arxiv:1212.2685
+    - arxiv:1304.1806
+    - arxiv:1310.1145
+    - arxiv:1312.5603
+    - arxiv:1401.4361
+    - arxiv:1403.3385
+    - arxiv:1404.7096
+    - arxiv:1405.0301
+    - arxiv:1408.2372
+    - arxiv:1411.0911
+    - arxiv:1412.2296
+    - arxiv:1412.6102
+    - arxiv:1503.01469
+    - arxiv:1506.04517
+    - arxiv:1506.07243
+    - arxiv:1510.04562
+    - arxiv:1511.03614
+    - arxiv:1512.01178
+    - arxiv:1601.01167
+    - arxiv:1604.00267
+    - arxiv:1604.06447
+    - arxiv:1604.06792
+    - arxiv:1607.04465
+    - arxiv:1610.09331
+    - arxiv:1611.01087
+    - arxiv:1611.06793
+    - arxiv:1612.00009
+    - arxiv:1612.04252
+    - arxiv:1701.00725
+    - arxiv:1701.04269
+    - arxiv:1703.09692
+    - arxiv:1705.05610
+    - arxiv:1705.06252
+    - arxiv:1705.08830
+    - arxiv:1709.01266
+    - arxiv:1811.11720
+    - arxiv:1812.01491
+    - arxiv:1901.07808
+    - arxiv:1904.07279
+    - arxiv:1905.09127
+    - arxiv:1910.13251
+    - arxiv:2001.04407
+    - arxiv:2002.02340
+    - arxiv:2006.15451
+    - arxiv:2008.06494
+    - arxiv:2009.11957
+    - arxiv:2012.00279
+    - arxiv:2103.08507
+    - arxiv:2108.10807
+    - arxiv:2110.11660
+    - arxiv:2111.01045
+    - arxiv:2112.14132
+    - arxiv:2201.03593
+    - arxiv:2201.05618
+    - arxiv:2201.11615
+    - arxiv:2203.11110
+    - arxiv:2205.07907
+    - arxiv:2207.07468
+    - arxiv:2211.16357
+    - arxiv:2302.00022
+    - arxiv:2304.09883
+    - arxiv:2305.08783
+    - arxiv:2305.19768
+    - arxiv:2309.08410
+    - arxiv:2309.14886
+    - arxiv:2310.07634
+    - arxiv:2311.02370
+    - arxiv:2312.11291
+    - arxiv:2402.03301
+    - arxiv:2405.14698
+    - arxiv:2406.16084
+    - arxiv:2407.01447
+    - arxiv:2407.07247
+    - arxiv:2407.19005
+    - arxiv:hep-ph/0004013
+    - arxiv:hep-ph/0007053
+    - arxiv:hep-ph/0102195
+    - arxiv:hep-ph/0208036
+    - arxiv:hep-ph/0212259
+    - arxiv:hep-ph/0403113
+    - arxiv:hep-ph/0409146
+    - arxiv:hep-ph/0507152
+    - arxiv:hep-ph/0508242
+    - arxiv:hep-ph/0509141
+    - arxiv:hep-ph/0703052
+    - arxiv:hep-ph/9302240
+    - arxiv:hep-ph/9306240
+    - arxiv:hep-ph/9506451
+    - arxiv:hep-ph/9609429
+    - arxiv:hep-ph/9711391
+    - arxiv:hep-ph/9712228
+    - arxiv:hep-ph/9801380
+    - arxiv:hep-ph/9801383
+    - arxiv:hep-ph/9807565
+    - arxiv:hep-ph/9905237
+    - arxiv:hep-ph/9905298
+    - arxiv:hep-ph/9912329
+    - arxiv:hep-th/9711188
+    - arxiv:math-ph/0010025
+    - doi:10.1006/jcph.1993.1074
+    - doi:10.1006/jsco.2001.0494
+    - doi:10.1007/978-3-030-99558-4
+    - doi:10.1007/978-3-642-34886-0
+    - doi:10.1007/bf01773358
+    - doi:10.1007/bf03185566
+    - doi:10.1007/jhep02(2024)139
+    - doi:10.1007/jhep03(2014)071
+    - doi:10.1007/jhep04(2015)108
+    - doi:10.1007/jhep04(2017)006
+    - doi:10.1007/jhep04(2023)041
+    - doi:10.1007/jhep05(2020)025
+    - doi:10.1007/jhep05(2022)161
+    - doi:10.1007/jhep05(2024)013
+    - doi:10.1007/jhep06(2010)043
+    - doi:10.1007/jhep07(2014)079
+    - doi:10.1007/jhep08(2019)135
+    - doi:10.1007/jhep08(2023)120
+    - doi:10.1007/jhep08(2024)002
+    - doi:10.1007/jhep11(2020)130
+    - doi:10.1007/s002880050138
+    - doi:10.1016/0010-4655(72)90115-4
+    - doi:10.1016/0010-4655(91)90130-d
+    - doi:10.1016/0370-2693(81)90288-4
+    - doi:10.1016/0370-2693(81)90685-7
+    - doi:10.1016/0370-2693(85)90774-9
+    - doi:10.1016/0370-2693(91)90413-k
+    - doi:10.1016/0370-2693(91)90536-y
+    - doi:10.1016/0370-2693(91)90834-d
+    - doi:10.1016/0370-2693(93)90053-k
+    - doi:10.1016/0550-3213(79)90234-7
+    - doi:10.1016/0550-3213(81)90199-1
+    - doi:10.1016/0550-3213(82)90488-6
+    - doi:10.1016/0550-3213(85)90285-8
+    - doi:10.1016/0550-3213(87)90479-2
+    - doi:10.1016/0550-3213(94)90398-0
+    - doi:10.1016/j.cpc.2005.10.008
+    - doi:10.1016/j.cpc.2010.03.012
+    - doi:10.1016/j.cpc.2011.06.011
+    - doi:10.1016/j.cpc.2011.11.015
+    - doi:10.1016/j.cpc.2012.01.022
+    - doi:10.1016/j.cpc.2012.10.033
+    - doi:10.1016/j.cpc.2012.12.028
+    - doi:10.1016/j.cpc.2013.01.014
+    - doi:10.1016/j.cpc.2014.10.019
+    - doi:10.1016/j.cpc.2014.11.024
+    - doi:10.1016/j.cpc.2015.04.022
+    - doi:10.1016/j.cpc.2015.08.017
+    - doi:10.1016/j.cpc.2016.02.033
+    - doi:10.1016/j.cpc.2016.03.013
+    - doi:10.1016/j.cpc.2016.06.008
+    - doi:10.1016/j.cpc.2016.10.013
+    - doi:10.1016/j.cpc.2017.04.014
+    - doi:10.1016/j.cpc.2017.04.015
+    - doi:10.1016/j.cpc.2017.05.004
+    - doi:10.1016/j.cpc.2017.05.024
+    - doi:10.1016/j.cpc.2017.05.026
+    - doi:10.1016/j.cpc.2017.08.013
+    - doi:10.1016/j.cpc.2017.09.014
+    - doi:10.1016/j.cpc.2017.09.015
+    - doi:10.1016/j.cpc.2017.12.017
+    - doi:10.1016/j.cpc.2018.04.012
+    - doi:10.1016/j.cpc.2019.02.015
+    - doi:10.1016/j.cpc.2019.106877
+    - doi:10.1016/j.cpc.2020.107197
+    - doi:10.1016/j.cpc.2020.107478
+    - doi:10.1016/j.cpc.2021.107982
+    - doi:10.1016/j.cpc.2021.108024
+    - doi:10.1016/j.cpc.2021.108058
+    - doi:10.1016/j.cpc.2021.108069
+    - doi:10.1016/j.cpc.2021.108267
+    - doi:10.1016/j.cpc.2022.108386
+    - doi:10.1016/j.cpc.2022.108544
+    - doi:10.1016/j.cpc.2022.108631
+    - doi:10.1016/j.cpc.2023.108956
+    - doi:10.1016/j.cpc.2023.108999
+    - doi:10.1016/j.cpc.2024.109230
+    - doi:10.1016/j.cpc.2024.109261
+    - doi:10.1016/j.nima.2004.07.096
+    - doi:10.1016/j.nuclphysb.2005.11.007
+    - doi:10.1016/j.nuclphysb.2010.11.002
+    - doi:10.1016/j.physletb.2015.07.027
+    - doi:10.1016/s0010-4655(03)00159-0
+    - doi:10.1016/s0010-4655(98)00042-3
+    - doi:10.1016/s0010-4655(98)00173-8
+    - doi:10.1016/s0168-9002(97)00110-1
+    - doi:10.1016/s0370-2693(98)00220-2
+    - doi:10.1016/s0550-3213(00)00223-6
+    - doi:10.1016/s0550-3213(00)00429-6
+    - doi:10.1016/s0550-3213(03)00184-6
+    - doi:10.1016/s0550-3213(98)00138-2
+    - doi:10.1088/1126-6708/2004/11/040
+    - doi:10.1088/1126-6708/2007/11/070
+    - doi:10.1088/1126-6708/2008/02/002
+    - doi:10.1088/1126-6708/2009/02/007
+    - doi:10.1088/1742-6596/2438/1/012140
+    - doi:10.1088/1742-6596/368/1/012049
+    - doi:10.1088/1742-6596/523/1/012059
+    - doi:10.1088/1742-6596/762/1/012061
+    - doi:10.1088/1742-6596/762/1/012073
+    - doi:10.1088/1751-8113/48/15/153001
+    - doi:10.1103/physrevd.58.036007
+    - doi:10.1103/physrevlett.110.251601
+    - doi:10.1103/physrevlett.117.079901
+    - doi:10.1103/physrevlett.129.102001
+    - doi:10.1140/epjc/s10052-008-0798-9
+    - doi:10.1140/epjc/s10052-011-1626-1
+    - doi:10.1140/epjc/s10052-011-1742-y
+    - doi:10.1140/epjc/s10052-012-1889-1
+    - doi:10.1140/epjc/s10052-014-3001-5
+    - doi:10.1140/epjc/s10052-016-4018-8
+    - doi:10.1140/epjc/s10052-023-11780-9
+    - doi:10.1142/s0217751x00000367
+    - doi:10.1142/s0217751x08040263
+    - doi:10.1142/s0217751x10049438
+    - doi:10.1143/ptps.138.18
+    - doi:10.18452/17157
+    - doi:10.21468/scipostphys.16.5.130
+    - doi:10.21468/scipostphys.7.3.034
+    - doi:10.21468/scipostphysproc.7.017
+    - doi:10.22323/1.416.0073
+    - doi:10.22323/1.432.0056
+    - doi:10.22323/1.432.0081
+    - doi:10.22323/1.432.0086
+    - doi:10.23731/cyrm-2020-003.201
+    - doi:10.4310/mrl.1998.v5.n4.a7
+    - doi:10.5170/cern-2015-005.1
+    - doi:10.5445/ir/1000047447
+    - doi:10.5506/aphyspolb.44.2249
   field-redefs-2018:
     identifiers:
     - arxiv:1811.09413
@@ -567,6 +2354,61 @@ papers:
     reference_count: 1
     references:
     - doi:10.1017/cbo9780511622656
+  fire6-2019:
+    identifiers:
+    - arxiv:1901.07808
+    citation_count: null
+    reference_count: 49
+    references:
+    - arxiv:0707.3993
+    - arxiv:0804.3008
+    - arxiv:0807.3243
+    - arxiv:0912.2546
+    - arxiv:1004.4199
+    - arxiv:1201.4330
+    - arxiv:1210.1436
+    - arxiv:1212.2685
+    - arxiv:1302.5885
+    - arxiv:1310.1145
+    - arxiv:1408.2372
+    - arxiv:1508.00901
+    - arxiv:1604.03126
+    - arxiv:1606.06754
+    - arxiv:1608.01902
+    - arxiv:1611.00795
+    - arxiv:1612.04389
+    - arxiv:1705.05610
+    - arxiv:1705.06862
+    - arxiv:1801.08292
+    - arxiv:1812.01491
+    - arxiv:1901.02898
+    - arxiv:hep-ph/0102033
+    - arxiv:hep-ph/0404258
+    - arxiv:hep-ph/0602078
+    - arxiv:hep-ph/0606247
+    - doi:10.1007/978-3-642-34886-0
+    - doi:10.1007/jhep03(2017)139
+    - doi:10.1007/jhep05(2016)066
+    - doi:10.1007/jhep12(2016)030
+    - doi:10.1007/s11005-010-0450-0
+    - doi:10.1016/0550-3213(81)90199-1
+    - doi:10.1016/j.cpc.2010.03.012
+    - doi:10.1016/j.cpc.2013.06.016
+    - doi:10.1016/j.cpc.2014.11.024
+    - doi:10.1016/j.cpc.2018.04.012
+    - doi:10.1016/j.nuclphysbps.2006.09.032
+    - doi:10.1016/s0217-751x(00)00215-7
+    - doi:10.1088/1126-6708/2004/07/046
+    - doi:10.1088/1126-6708/2006/04/026
+    - doi:10.1088/1126-6708/2008/07/031
+    - doi:10.1088/1126-6708/2008/10/107
+    - doi:10.1088/1742-6596/523/1/012059
+    - doi:10.1103/physrevd.92.073019
+    - doi:10.1103/physrevd.94.074025
+    - doi:10.1103/physrevd.95.034030
+    - doi:10.1103/physrevd.96.014008
+    - doi:10.1103/physrevd.97.054032
+    - doi:10.22323/1.151.0059
   functional-prescription-2020:
     identifiers:
     - arxiv:2011.02484
@@ -609,6 +2451,88 @@ papers:
     - arxiv:2010.15806
     - arxiv:hep-ph/0308266
     - arxiv:hep-ph/9711391
+  geometric-uolea-2024:
+    identifiers:
+    - arxiv:2411.04173
+    citation_count: null
+    reference_count: 76
+    references:
+    - arxiv:1404.1058
+    - arxiv:1409.0868
+    - arxiv:1412.1837
+    - arxiv:1412.7151
+    - arxiv:1505.01844
+    - arxiv:1511.00724
+    - arxiv:1512.03003
+    - arxiv:1604.01019
+    - arxiv:1604.02445
+    - arxiv:1605.03602
+    - arxiv:1607.02142
+    - arxiv:1610.00710
+    - arxiv:1706.07765
+    - arxiv:1709.04486
+    - arxiv:1711.10391
+    - arxiv:1804.05863
+    - arxiv:1806.05171
+    - arxiv:1811.08878
+    - arxiv:1811.09413
+    - arxiv:1904.07618
+    - arxiv:1908.04798
+    - arxiv:1910.05831
+    - arxiv:1910.06661
+    - arxiv:1912.08814
+    - arxiv:2001.00017
+    - arxiv:2001.01453
+    - arxiv:2001.04481
+    - arxiv:2003.05936
+    - arxiv:2005.06983
+    - arxiv:2005.07129
+    - arxiv:2005.12917
+    - arxiv:2006.05831
+    - arxiv:2006.16260
+    - arxiv:2006.16532
+    - arxiv:2007.00565
+    - arxiv:2008.08597
+    - arxiv:2011.02484
+    - arxiv:2012.07851
+    - arxiv:2012.08506
+    - arxiv:2105.12742
+    - arxiv:2106.01373
+    - arxiv:2108.03240
+    - arxiv:2109.13290
+    - arxiv:2110.02967
+    - arxiv:2111.03045
+    - arxiv:2112.05770
+    - arxiv:2112.10787
+    - arxiv:2201.10572
+    - arxiv:2202.06965
+    - arxiv:2202.06972
+    - arxiv:2204.00123
+    - arxiv:2207.02050
+    - arxiv:2210.08000
+    - arxiv:2212.03253
+    - arxiv:2212.04510
+    - arxiv:2301.09995
+    - arxiv:2303.07391
+    - arxiv:2303.10203
+    - arxiv:2305.09722
+    - arxiv:2307.01126
+    - arxiv:2307.03187
+    - arxiv:2307.10380
+    - arxiv:2307.14301
+    - arxiv:2307.15742
+    - arxiv:2308.00017
+    - arxiv:2308.06315
+    - arxiv:2309.16611
+    - arxiv:2310.19883
+    - arxiv:2311.13630
+    - arxiv:2312.06748
+    - arxiv:2403.12142
+    - arxiv:2408.03369
+    - arxiv:2408.08948
+    - arxiv:2410.07320
+    - arxiv:2410.21378
+    - arxiv:2410.21395
   goldberger-rothstein-nrgr:
     identifiers:
     - arxiv:hep-th/0409156
@@ -652,6 +2576,12 @@ papers:
     - arxiv:hep-th/9505182
     - arxiv:hep-th/9602121
     - arxiv:hep-th/9801054
+  goroff-sagnotti-1985:
+    identifiers:
+    - doi:10.1016/0370-2693(85)91470-4
+    citation_count: null
+    reference_count: 0
+    references: []
   gravity-all-orders-2019:
     identifiers:
     - arxiv:1908.08050
@@ -685,6 +2615,13 @@ papers:
     - arxiv:1902.03250
     - arxiv:1902.06747
     - arxiv:1902.06754
+  gw-scattering-amplitudes-2022:
+    identifiers:
+    - arxiv:2204.05194
+    citation_count: null
+    reference_count: 1
+    references:
+    - arxiv:1612.02249
   hlm-cde-2016:
     identifiers:
     - arxiv:1604.01019
@@ -719,6 +2656,289 @@ papers:
     - arxiv:1601.08193
     - arxiv:1602.00126
     - arxiv:1603.03660
+  hlm-smeft-2014:
+    identifiers:
+    - arxiv:1412.1837
+    citation_count: null
+    reference_count: 0
+    references: []
+  horava-review:
+    identifiers:
+    - arxiv:1007.5199
+    citation_count: null
+    reference_count: 31
+    references:
+    - arxiv:0708.2889
+    - arxiv:0901.3775
+    - arxiv:0904.0554
+    - arxiv:0904.0829
+    - arxiv:0904.1334
+    - arxiv:0904.2190
+    - arxiv:0904.2835
+    - arxiv:0904.4464
+    - arxiv:0905.0055
+    - arxiv:0905.0301
+    - arxiv:0905.2300
+    - arxiv:0905.2579
+    - arxiv:0905.3563
+    - arxiv:0906.3477
+    - arxiv:0906.5069
+    - arxiv:0907.1748
+    - arxiv:0908.1005
+    - arxiv:0908.1832
+    - arxiv:0909.2149
+    - arxiv:0909.3525
+    - arxiv:0910.1998
+    - arxiv:0911.1814
+    - arxiv:0912.0399
+    - arxiv:1002.1429
+    - arxiv:1006.2739
+    - arxiv:1007.2410
+    - arxiv:gr-qc/9910099
+    - arxiv:hep-ph/0404271
+    - arxiv:hep-ph/0507120
+    - arxiv:hep-th/0312099
+    - arxiv:hep-th/0312100
+  kira2-2020:
+    identifiers:
+    - arxiv:2008.06494
+    citation_count: null
+    reference_count: 1
+    references:
+    - doi:10.1017/cbo9781139856065
+  levi-review-2018:
+    identifiers:
+    - arxiv:1807.01699
+    citation_count: null
+    reference_count: 162
+    references:
+    - arxiv:0710.5150
+    - arxiv:0712.2822
+    - arxiv:0712.4116
+    - arxiv:0801.0900
+    - arxiv:0802.0720
+    - arxiv:0802.1508
+    - arxiv:0804.0187
+    - arxiv:0804.0260
+    - arxiv:0805.3993
+    - arxiv:0807.2261
+    - arxiv:0808.4034
+    - arxiv:0809.3156
+    - arxiv:0810.1328
+    - arxiv:0811.4113
+    - arxiv:0812.0012
+    - arxiv:0902.0427
+    - arxiv:0903.1122
+    - arxiv:0907.2186
+    - arxiv:0908.3490
+    - arxiv:0910.1601
+    - arxiv:0910.5222
+    - arxiv:0912.4254
+    - arxiv:1004.0476
+    - arxiv:1004.0693
+    - arxiv:1005.0634
+    - arxiv:1005.2617
+    - arxiv:1005.5730
+    - arxiv:1006.4139
+    - arxiv:1007.1312
+    - arxiv:1009.1876
+    - arxiv:1011.6024
+    - arxiv:1012.4488
+    - arxiv:1103.5741
+    - arxiv:1104.1122
+    - arxiv:1105.3735
+    - arxiv:1106.2476
+    - arxiv:1106.3278
+    - arxiv:1107.0766
+    - arxiv:1107.4322
+    - arxiv:1110.2938
+    - arxiv:1110.3764
+    - arxiv:1111.5488
+    - arxiv:1202.3565
+    - arxiv:1202.4750
+    - arxiv:1202.6289
+    - arxiv:1203.2962
+    - arxiv:1205.3842
+    - arxiv:1206.4773
+    - arxiv:1206.7087
+    - arxiv:1207.5448
+    - arxiv:1208.0580
+    - arxiv:1210.2745
+    - arxiv:1210.6651
+    - arxiv:1211.6095
+    - arxiv:1212.3169
+    - arxiv:1212.5212
+    - arxiv:1302.4486
+    - arxiv:1303.3225
+    - arxiv:1304.0670
+    - arxiv:1304.2228
+    - arxiv:1304.7263
+    - arxiv:1305.6930
+    - arxiv:1306.3220
+    - arxiv:1306.5820
+    - arxiv:1307.2450
+    - arxiv:1308.3271
+    - arxiv:1309.0541
+    - arxiv:1309.0544
+    - arxiv:1309.0804
+    - arxiv:1309.3474
+    - arxiv:1310.1528
+    - arxiv:1311.3196
+    - arxiv:1401.4173
+    - arxiv:1401.4548
+    - arxiv:1402.2610
+    - arxiv:1402.7307
+    - arxiv:1405.7384
+    - arxiv:1407.0059
+    - arxiv:1408.5505
+    - arxiv:1408.5762
+    - arxiv:1410.2601
+    - arxiv:1410.5348
+    - arxiv:1410.7590
+    - arxiv:1410.7832
+    - arxiv:1411.4599
+    - arxiv:1411.5745
+    - arxiv:1412.3082
+    - arxiv:1501.04956
+    - arxiv:1501.06524
+    - arxiv:1502.06120
+    - arxiv:1504.06337
+    - arxiv:1505.03915
+    - arxiv:1506.00974
+    - arxiv:1506.05056
+    - arxiv:1506.05794
+    - arxiv:1508.07253
+    - arxiv:1510.08889
+    - arxiv:1511.07379
+    - arxiv:1512.02076
+    - arxiv:1512.02876
+    - arxiv:1601.01283
+    - arxiv:1601.04914
+    - arxiv:1602.03837
+    - arxiv:1602.03840
+    - arxiv:1602.03841
+    - arxiv:1603.05737
+    - arxiv:1605.01067
+    - arxiv:1606.01210
+    - arxiv:1606.04855
+    - arxiv:1606.08462
+    - arxiv:1607.04252
+    - arxiv:1607.08697
+    - arxiv:1608.01907
+    - arxiv:1609.00354
+    - arxiv:1609.06723
+    - arxiv:1609.07477
+    - arxiv:1609.08268
+    - arxiv:1610.07934
+    - arxiv:1611.00018
+    - arxiv:1611.03493
+    - arxiv:1611.07508
+    - arxiv:1612.00482
+    - arxiv:1701.02645
+    - arxiv:1702.03300
+    - arxiv:1703.05448
+    - arxiv:1703.06433
+    - arxiv:1703.06434
+    - arxiv:1705.03025
+    - arxiv:1705.06309
+    - arxiv:1705.07515
+    - arxiv:1705.07934
+    - arxiv:1705.07938
+    - arxiv:1705.09263
+    - arxiv:1705.10262
+    - arxiv:1706.01812
+    - arxiv:1706.02314
+    - arxiv:1706.08480
+    - arxiv:1706.08925
+    - arxiv:1709.06016
+    - arxiv:1709.09660
+    - arxiv:1710.05832
+    - arxiv:1710.10599
+    - arxiv:1711.03901
+    - arxiv:1711.05578
+    - arxiv:1711.09493
+    - arxiv:1711.10038
+    - arxiv:1712.08684
+    - arxiv:1712.09250
+    - arxiv:1801.07719
+    - arxiv:1801.09972
+    - arxiv:1803.02405
+    - arxiv:1804.07290
+    - arxiv:1805.07240
+    - arxiv:1805.10385
+    - arxiv:1805.11579
+    - arxiv:1805.11581
+    - arxiv:1806.01872
+    - arxiv:1806.04920
+    - arxiv:1806.07388
+    - arxiv:1808.02165
+    - arxiv:1808.02489
+    - arxiv:1809.00673
+  lqg-qi-2023:
+    identifiers:
+    - arxiv:2302.05922
+    citation_count: null
+    reference_count: 59
+    references:
+    - arxiv:0802.0880
+    - arxiv:0808.3773
+    - arxiv:0812.1773
+    - arxiv:0911.3553
+    - arxiv:1001.2748
+    - arxiv:1006.4295
+    - arxiv:1009.3402
+    - arxiv:1010.5451
+    - arxiv:1105.3385
+    - arxiv:1109.0036
+    - arxiv:1109.6538
+    - arxiv:1110.4833
+    - arxiv:1212.5183
+    - arxiv:1302.7142
+    - arxiv:1305.4986
+    - arxiv:1306.5206
+    - arxiv:1307.2719
+    - arxiv:1310.3362
+    - arxiv:1507.00851
+    - arxiv:1507.01567
+    - arxiv:1601.04744
+    - arxiv:1603.01117
+    - arxiv:1605.05356
+    - arxiv:1607.00182
+    - arxiv:1607.05129
+    - arxiv:1609.02219
+    - arxiv:1704.04067
+    - arxiv:1709.08511
+    - arxiv:1805.05856
+    - arxiv:1812.10996
+    - arxiv:1901.06454
+    - arxiv:1904.08370
+    - arxiv:2007.03563
+    - arxiv:2007.12635
+    - arxiv:2012.12622
+    - arxiv:2103.08409
+    - arxiv:2104.04394
+    - arxiv:2112.06959
+    - arxiv:2202.05116
+    - arxiv:2204.03093
+    - arxiv:gr-qc/0005095
+    - arxiv:gr-qc/0209105
+    - arxiv:gr-qc/0404018
+    - arxiv:gr-qc/0501075
+    - arxiv:gr-qc/0508085
+    - arxiv:gr-qc/0603008
+    - arxiv:gr-qc/0604044
+    - arxiv:gr-qc/9305007
+    - arxiv:gr-qc/9410014
+    - arxiv:gr-qc/9411046
+    - arxiv:gr-qc/9504004
+    - arxiv:gr-qc/9505006
+    - arxiv:gr-qc/9602046
+    - arxiv:gr-qc/9612030
+    - arxiv:gr-qc/9711031
+    - arxiv:hep-th/0603001
+    - arxiv:hep-th/9303048
+    - arxiv:hep-th/9401070
+    - arxiv:quant-ph/9609002
   manohar-eft-lectures:
     identifiers:
     - arxiv:1804.05863
@@ -734,6 +2954,98 @@ papers:
     citation_count: null
     reference_count: 0
     references: []
+  matchingtools-2017:
+    identifiers:
+    - arxiv:1710.06445
+    citation_count: null
+    reference_count: 86
+    references:
+    - arxiv:0803.4008
+    - arxiv:0806.4194
+    - arxiv:0812.1594
+    - arxiv:1005.3998
+    - arxiv:1008.4884
+    - arxiv:1303.3876
+    - arxiv:1307.5068
+    - arxiv:1307.6173
+    - arxiv:1308.2803
+    - arxiv:1310.1921
+    - arxiv:1405.0181
+    - arxiv:1406.6376
+    - arxiv:1410.7703
+    - arxiv:1411.0669
+    - arxiv:1412.8480
+    - arxiv:1507.00757
+    - arxiv:1508.05060
+    - arxiv:1508.05895
+    - arxiv:1602.00126
+    - arxiv:1604.02445
+    - arxiv:1605.06035
+    - arxiv:1607.02142
+    - arxiv:1610.00710
+    - arxiv:1704.04504
+    - arxiv:1705.10751
+    - arxiv:1706.04260
+    - arxiv:1706.08945
+    - arxiv:1707.01303
+    - arxiv:1709.06492
+    - arxiv:1710.05402
+    - arxiv:1711.10391
+    - arxiv:hep-ph/0007316
+    - arxiv:hep-ph/0412166
+    - arxiv:hep-ph/9301281
+    - arxiv:hep-ph/9304230
+    - arxiv:hep-ph/9803315
+    - arxiv:hep-ph/9905221
+    - doi:10.1007/bf01550255
+    - doi:10.1007/jhep01(2014)151
+    - doi:10.1007/jhep02(2015)039
+    - doi:10.1007/jhep02(2016)069
+    - doi:10.1007/jhep03(2015)157
+    - doi:10.1007/jhep03(2018)109
+    - doi:10.1007/jhep04(2015)078
+    - doi:10.1007/jhep05(2017)152
+    - doi:10.1007/jhep07(2013)035
+    - doi:10.1007/jhep08(2017)029
+    - doi:10.1007/jhep08(2017)052
+    - doi:10.1007/jhep09(2010)033
+    - doi:10.1007/jhep09(2015)189
+    - doi:10.1007/jhep09(2016)156
+    - doi:10.1007/jhep10(2010)085
+    - doi:10.1007/jhep10(2014)128
+    - doi:10.1016/0003-4916(75)90211-0
+    - doi:10.1016/0370-2693(84)90644-0
+    - doi:10.1016/0370-2693(94)01419-d
+    - doi:10.1016/0550-3213(80)90172-8
+    - doi:10.1016/0550-3213(81)90109-7
+    - doi:10.1016/0550-3213(86)90264-6
+    - doi:10.1016/0550-3213(91)90244-r
+    - doi:10.1016/j.cpc.2009.02.018
+    - doi:10.1016/j.cpc.2014.04.012
+    - doi:10.1016/j.physletb.2016.09.016
+    - doi:10.1016/j.physrep.2010.05.002
+    - doi:10.1016/s0370-2693(98)00466-3
+    - doi:10.1051/epjconf/20136019008
+    - doi:10.1088/1126-6708/2000/09/011
+    - doi:10.1088/1367-2630/18/9/093016
+    - doi:10.1103/physrevd.22.1166
+    - doi:10.1103/physrevd.22.200
+    - doi:10.1103/physrevd.31.2605
+    - doi:10.1103/physrevd.32.2190
+    - doi:10.1103/physrevd.71.075009
+    - doi:10.1103/physrevd.78.013010
+    - doi:10.1103/physrevd.88.095011
+    - doi:10.1103/physrevd.91.035001
+    - doi:10.1103/physrevlett.32.438
+    - doi:10.1103/physrevlett.54.1222
+    - doi:10.1103/physrevlett.55.2394
+    - doi:10.1103/physrevlett.57.1199
+    - doi:10.1103/physrevlett.83.3370
+    - doi:10.1140/epjc/s10052-015-3806-x
+    - doi:10.1140/epjc/s10052-016-4081-1
+    - doi:10.1140/epjc/s10052-017-4967-6
+    - doi:10.1140/epjc/s10052-017-5192-z
+    - doi:10.1142/s0217751x93001946
   matchmakereft-2021:
     identifiers:
     - arxiv:2112.10787
@@ -741,6 +3053,193 @@ papers:
     reference_count: 1
     references:
     - doi:10.13039/501100011033
+  matchotter-2026:
+    identifiers:
+    - arxiv:2604.21972
+    citation_count: null
+    reference_count: 2
+    references:
+    - doi:10.1007/978-3-319-31933-9
+    - doi:10.13039/501100011033
+  mssm-matchete-2025:
+    identifiers:
+    - arxiv:2506.05201
+    citation_count: null
+    reference_count: 4
+    references:
+    - doi:10.13039/501100011033
+    - doi:10.18154/rwth-2021-00828
+    - doi:10.5281/zenodo.15599937
+    - doi:10.5281/zenodo.15602469
+  nakonieczny-curved-eft-2020:
+    identifiers:
+    - arxiv:2004.12320
+    citation_count: null
+    reference_count: 0
+    references: []
+  onshell-matching-2025:
+    identifiers:
+    - arxiv:2507.17829
+    citation_count: null
+    reference_count: 31
+    references:
+    - arxiv:0708.2398
+    - arxiv:0801.2237
+    - arxiv:0806.4600
+    - arxiv:1006.2142
+    - arxiv:1111.2589
+    - arxiv:1402.7062
+    - arxiv:1412.1837
+    - arxiv:1604.01019
+    - arxiv:1604.02445
+    - arxiv:1705.01827
+    - arxiv:1709.04891
+    - arxiv:1802.06730
+    - arxiv:1809.09644
+    - arxiv:1902.06752
+    - arxiv:1902.06754
+    - arxiv:1909.10551
+    - arxiv:2005.00008
+    - arxiv:2008.09652
+    - arxiv:2011.02484
+    - arxiv:2103.12728
+    - arxiv:2103.15837
+    - arxiv:2201.10572
+    - arxiv:2202.08350
+    - arxiv:2211.09144
+    - arxiv:2301.11349
+    - arxiv:2308.00035
+    - arxiv:2411.12798
+    - arxiv:hep-ph/0212259
+    - arxiv:hep-ph/0404293
+    - arxiv:hep-ph/9212308
+    - arxiv:hep-th/0412103
+  packagex-2015:
+    identifiers:
+    - arxiv:1503.01469
+    citation_count: null
+    reference_count: 9
+    references:
+    - arxiv:0712.1851
+    - arxiv:1308.0463
+    - arxiv:1403.6344
+    - arxiv:1407.2727
+    - arxiv:hep-ph/0206081
+    - arxiv:hep-ph/0509141
+    - arxiv:hep-ph/0610330
+    - arxiv:hep-ph/9611299
+    - arxiv:hep-ph/9807565
+  perturbative-as-2023:
+    identifiers:
+    - arxiv:2309.08258
+    citation_count: null
+    reference_count: 98
+    references:
+    - arxiv:0709.3851
+    - arxiv:1301.4191
+    - arxiv:2209.07971
+    - arxiv:2212.07456
+    - arxiv:2301.10903
+    - arxiv:2304.08959
+    - doi:10.1007/bf01035006
+    - doi:10.1007/bf01212398
+    - doi:10.1007/jhep01(2010)084
+    - doi:10.1007/jhep01(2013)1
+    - doi:10.1007/jhep01(2018)030
+    - doi:10.1007/jhep01(2021)180
+    - doi:10.1007/jhep01(2022)051
+    - doi:10.1007/jhep04(2018)027
+    - doi:10.1007/jhep05(2011)119
+    - doi:10.1007/jhep06(2022)013
+    - doi:10.1007/jhep08(2012)098
+    - doi:10.1007/jhep08(2017)004
+    - doi:10.1007/jhep08(2022)262
+    - doi:10.1007/jhep09(2019)055
+    - doi:10.1007/jhep10(2012)140
+    - doi:10.1007/jhep11(2018)057
+    - doi:10.1007/jhep12(2013)089
+    - doi:10.1007/jhep12(2014)178
+    - doi:10.1007/s10714-010-1032-2
+    - doi:10.1016/0370-2693(96)00105-0
+    - doi:10.1016/0550-3213(74)900
+    - doi:10.1016/0550-3213(76)90412-0
+    - doi:10.1016/0550-3213(82)90035-9
+    - doi:10.1016/0550-3213(83)90610-7
+    - doi:10.1016/0550-3213(84)90533-9
+    - doi:10.1016/0550-3213(85)90040-9
+    - doi:10.1016/j.aop.2008.08.008
+    - doi:10.1016/j.aop.2014.07.023
+    - doi:10.1016/j.aop.2020.168282
+    - doi:10.1016/j.cpc.2014.02.018
+    - doi:10.1016/j.nuclphysb.2014.03.018
+    - doi:10.1016/j.nuclphysb.2018.12.001
+    - doi:10.1016/j.physletb.2007.11.072
+    - doi:10.1016/j.physletb.2009.12.022
+    - doi:10.1016/j.physletb.2010.09.037
+    - doi:10.1016/j.physletb.2012.02.002
+    - doi:10.1016/j.physletb.2012.08.020
+    - doi:10.1016/j.physletb.2012.08.021
+    - doi:10.1016/j.physletb.2017.04.047
+    - doi:10.1016/j.physletb.2020.135911
+    - doi:10.1016/j.physletb.2021.136455
+    - doi:10.1103/physrevd
+    - doi:10.1103/physrevd.100.015013
+    - doi:10.1103/physrevd.100.115001
+    - doi:10.1103/physrevd.101.074508
+    - doi:10.1103/physrevd.102.071901
+    - doi:10.1103/physrevd.102.095023
+    - doi:10.1103/physrevd.103.026006
+    - doi:10.1103/physrevd.103.115032
+    - doi:10.1103/physrevd.104.105002
+    - doi:10.1103/physrevd.105.105005
+    - doi:10.1103/physrevd.106.035015
+    - doi:10.1103/physrevd.106.115004
+    - doi:10.1103/physrevd.107.035018
+    - doi:10.1103/physrevd.65.025013
+    - doi:10.1103/physrevd.65.065016
+    - doi:10.1103/physrevd.66.025026
+    - doi:10.1103/physrevd.67.065019
+    - doi:10.1103/physrevd.77.124045
+    - doi:10.1103/physrevd.87.125017
+    - doi:10.1103/physrevd.93.104022
+    - doi:10.1103/physrevd.96.056028
+    - doi:10.1103/physrevd.96.086025
+    - doi:10.1103/physrevd.97.036019
+    - doi:10.1103/physrevd.97.095013
+    - doi:10.1103/physrevd.97.106012
+    - doi:10.1103/physrevd.98.016003
+    - doi:10.1103/physrevd.99.035030
+    - doi:10.1103/physrevlett.106.251302
+    - doi:10.1103/physrevlett.115.201802
+    - doi:10.1103/physrevlett.116.211302
+    - doi:10.1103/physrevlett.121.151302
+    - doi:10.1103/physrevlett.123.131602
+    - doi:10.1103/physrevlett.125.181301
+    - doi:10.1103/physrevlett.127.041801
+    - doi:10.1103/physrevlett.30.1343
+    - doi:10.1103/physrevlett.33.244
+    - doi:10.1103/physrevlett.80.4119
+    - doi:10.1103/physrevlett.92.201301
+    - doi:10.1103/physrevlett.96.231601
+    - doi:10.1134/s1063776115030152
+    - doi:10.1140/epjc/s10052-018-5806-0
+    - doi:10.1140/epjc/s10052-021-09072-1
+    - doi:10.1140/epjc/s10052-021-09142-4
+    - doi:10.1140/epjc/s10052-021-09957-1
+    - doi:10.1140/epjc/s10052-022-10885-x
+    - doi:10.1142/s0217732309031521
+    - doi:10.21468/scipostphys.12.1.001
+    - doi:10.3389/fphy.2020.00056
+    - doi:10.3389/fphy.2020.00269
+    - doi:10.3389/fspas.2018.00047
+    - doi:10.3390/sym15081497
+  pm-eft-2020:
+    identifiers:
+    - arxiv:2006.01184
+    citation_count: null
+    reference_count: 1
+    references:
+    - doi:10.1007/978-3-642-34886-0
   porto-review-2016:
     identifiers:
     - arxiv:1601.04914
@@ -1994,6 +4493,25 @@ papers:
     - arxiv:gr-qc/9811091
     - arxiv:hep-ph/9409265
     - arxiv:hep-th/0405239
+  sakharov-induced-review:
+    identifiers:
+    - arxiv:gr-qc/0204062
+    citation_count: null
+    reference_count: 13
+    references:
+    - arxiv:gr-qc/9907046
+    - arxiv:hep-ex/0202008
+    - arxiv:hep-ph/9604216
+    - arxiv:hep-ph/9705449
+    - arxiv:hep-th/0103110
+    - arxiv:hep-th/9407086
+    - arxiv:hep-th/9607104
+    - arxiv:hep-th/9702137
+    - arxiv:hep-th/9703178
+    - arxiv:hep-th/9705207
+    - arxiv:hep-th/9802010
+    - arxiv:hep-th/9901087
+    - arxiv:hep-th/9912205
   saueressig-frg-2023:
     identifiers:
     - arxiv:2302.14152
@@ -2053,6 +4571,62 @@ papers:
     - arxiv:2301.10542
     - arxiv:2302.03485
     - doi:10.13039/501100011033
+  stelle-1977:
+    identifiers:
+    - doi:10.1103/physrevd.16.953
+    citation_count: null
+    reference_count: 0
+    references: []
+  streamlining-2020:
+    identifiers:
+    - arxiv:2012.07851
+    citation_count: null
+    reference_count: 44
+    references:
+    - arxiv:1006.2142
+    - arxiv:1404.1058
+    - arxiv:1412.1837
+    - arxiv:1505.06334
+    - arxiv:1506.00840
+    - arxiv:1509.05942
+    - arxiv:1512.03003
+    - arxiv:1604.01019
+    - arxiv:1604.02445
+    - arxiv:1607.02142
+    - arxiv:1610.00710
+    - arxiv:1610.07922
+    - arxiv:1704.04504
+    - arxiv:1706.07765
+    - arxiv:1706.08945
+    - arxiv:1709.06492
+    - arxiv:1710.06445
+    - arxiv:1711.04774
+    - arxiv:1712.07825
+    - arxiv:1804.05033
+    - arxiv:1804.05863
+    - arxiv:1806.05171
+    - arxiv:1807.07546
+    - arxiv:1808.04403
+    - arxiv:1810.07698
+    - arxiv:1810.08132
+    - arxiv:1811.08878
+    - arxiv:1901.03501
+    - arxiv:1901.05965
+    - arxiv:1901.06573
+    - arxiv:1903.03622
+    - arxiv:1904.03204
+    - arxiv:1908.04798
+    - arxiv:1910.11003
+    - arxiv:1912.08814
+    - arxiv:2006.16260
+    - arxiv:2006.16285
+    - arxiv:2006.16532
+    - arxiv:2008.08597
+    - arxiv:2010.16341
+    - arxiv:2011.02484
+    - arxiv:2012.08506
+    - arxiv:hep-ph/0308266
+    - arxiv:hep-ph/9711391
   supertracer-2020:
     identifiers:
     - arxiv:2012.08506
@@ -2106,6 +4680,12 @@ papers:
     - arxiv:hep-ph/9505266
     - arxiv:hep-ph/9711391
     - arxiv:hep-th/0005255
+  thooft-veltman-1974:
+    identifiers:
+    - doi:10.1007/bf01646064
+    citation_count: null
+    reference_count: 0
+    references: []
   tree-dictionary-2017:
     identifiers:
     - arxiv:1711.10391
@@ -2248,52 +4828,48 @@ papers:
     citation_count: null
     reference_count: 0
     references: []
-unresolved:
-- appelquist-carazzone-1975
-- avramidi-book
-- barvinsky-cpt-2009
-- bern-3pm-2019
-- birrell-davies-book
-- black-hole-tidal-2022
-- buchbinder-shapiro-book
-- burgess-eft-book
-- cdt-review-2019
-- classical-loop-amplitudes-2021
-- codex-2018
-- composite-graviton-2017
-- critical-as-2020
-- d7-tree-dictionary-2023
-- dittmaier-functional-2026
-- donoghue-intro-gravity-eft-1995
-- donoghue-qgr-2022
-- drgt-2010
-- einstein-aether-review
-- feyncalc10
-- fire6-2019
-- geometric-uolea-2024
-- goroff-sagnotti-1985
-- gw-scattering-amplitudes-2022
-- hlm-smeft-2014
-- horava-review
-- kiefer-qg-book
-- kira2-2020
-- levi-review-2018
-- lqg-qi-2023
-- matchingtools-2017
-- matchotter-2026
-- mssm-matchete-2025
-- nakonieczny-curved-eft-2020
-- onshell-matching-2025
-- packagex-2015
-- parker-toms-book
-- percacci-as-book
-- perturbative-as-2023
-- pm-eft-2020
-- sakharov-induced-review
-- stelle-1977
-- streamlining-2020
-- thooft-veltman-1974
-- weinberg-eft-past-future
-- weinberg-phenomenological-1979
-- weinberg-witten-1980
-- xtras-2013
+  weinberg-eft-past-future:
+    identifiers:
+    - arxiv:0908.1964
+    citation_count: null
+    reference_count: 0
+    references: []
+  weinberg-phenomenological-1979:
+    identifiers:
+    - doi:10.1016/0378-4371(79)90223-1
+    citation_count: null
+    reference_count: 0
+    references: []
+  weinberg-witten-1980:
+    identifiers:
+    - doi:10.1016/0370-2693(80)90212-9
+    citation_count: null
+    reference_count: 0
+    references: []
+  xtras-2013:
+    identifiers:
+    - arxiv:1308.3493
+    citation_count: null
+    reference_count: 20
+    references:
+    - arxiv:0704.1756
+    - arxiv:0802.1274
+    - arxiv:0803.0862
+    - arxiv:0807.0824
+    - arxiv:1110.2662
+    - arxiv:1302.6174
+    - arxiv:gr-qc/9803023
+    - arxiv:hep-th/0506161
+    - arxiv:hep-th/0701238
+    - arxiv:math-ph/0107032
+    - doi:10.1007/s10714-009-0773-2
+    - doi:10.1016/j.cpc.2007.05.015
+    - doi:10.1016/j.cpc.2008.04.018
+    - doi:10.1016/j.cpc.2008.05.009
+    - doi:10.1016/j.cpc.2012.04.024
+    - doi:10.1016/s0010-4655(98)00117-9
+    - doi:10.1088/0264-9381/30/16/165002
+    - doi:10.1088/0305-4470/32/44/313
+    - doi:10.1088/1126-6708/2005/08/093
+    - doi:10.1142/s0129183102004571
+unresolved: []

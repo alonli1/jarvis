@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Effective Lagrangians from functional matching
+tags:
+- eft
+- functional_matching
+- one_loop_matching
+- background_field_method
+- one_loop_effective_action
+reference_id: dittmaier-functional-2026
+tier: T1
+authors:
+- Stefan Dittmaier
+- Sebastian Schuhmacher
+- Maximilian Stahlhofen
+year: 2026
+arxiv: '2608.11306'
+doi: null
+url: https://arxiv.org/abs/2608.11306

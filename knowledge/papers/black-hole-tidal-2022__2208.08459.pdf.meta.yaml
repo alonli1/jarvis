@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Revisiting the matching of black hole tidal responses: a systematic study
+  of relativistic and logarithmic corrections'
+tags:
+- gravity
+- eft
+- black_holes
+- tidal_response
+- observables
+- gravitational_eft
+reference_id: black-hole-tidal-2022
+tier: T1
+authors:
+- Mikhail M. Ivanov
+- Zihan Zhou
+year: 2022
+arxiv: '2208.08459'
+doi: null
+url: https://arxiv.org/abs/2208.08459

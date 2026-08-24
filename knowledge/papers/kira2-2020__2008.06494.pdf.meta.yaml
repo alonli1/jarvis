@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Kira 2.0: A novel framework for Feynman integral reduction'
+tags:
+- automation
+- loop_integrals
+- ibp
+- automated_eft_matching
+- computational_qft_tools
+reference_id: kira2-2020
+tier: T2
+authors:
+- J. Klappert
+- F. Lange
+- P. Maierhöfer
+- J. Usovitsch
+year: 2020
+arxiv: '2008.06494'
+doi: null
+url: https://arxiv.org/abs/2008.06494

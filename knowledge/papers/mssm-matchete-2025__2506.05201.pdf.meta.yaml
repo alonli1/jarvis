@@ -1,0 +1,22 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'SUSY meets SMEFT: Complete one-loop matching of the general MSSM'
+tags:
+- eft
+- one_loop_matching
+- matchete
+- smeft
+- validation
+- automated_eft_matching
+- one_loop_effective_action
+reference_id: mssm-matchete-2025
+tier: T1
+authors:
+- Sabine Kraml
+- Andre Lessa
+- Suraj Prakash
+- Felix Wilsch
+year: 2025
+arxiv: '2506.05201'
+doi: null
+url: https://arxiv.org/abs/2506.05201

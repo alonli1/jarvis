@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Einstein-Aether Theory
+tags:
+- gravity
+- lorentz_violation
+- preferred_frame
+- eft
+- gravitational_eft
+reference_id: einstein-aether-review
+tier: T1
+authors:
+- Christopher Eling
+- Ted Jacobson
+- David Mattingly
+year: 2004
+arxiv: gr-qc/0410001
+doi: null
+url: https://arxiv.org/abs/gr-qc/0410001

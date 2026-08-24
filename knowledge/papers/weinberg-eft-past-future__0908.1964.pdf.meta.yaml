@@ -1,0 +1,14 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Effective Field Theory, Past and Future
+tags:
+- eft
+- foundations
+reference_id: weinberg-eft-past-future
+tier: T1
+authors:
+- Steven Weinberg
+year: 2009
+arxiv: '0908.1964'
+doi: null
+url: https://arxiv.org/abs/0908.1964

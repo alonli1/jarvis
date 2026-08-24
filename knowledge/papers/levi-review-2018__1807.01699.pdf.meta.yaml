@@ -1,0 +1,18 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Effective Field Theories of Post-Newtonian Gravity: A comprehensive review'
+tags:
+- gravity
+- eft
+- post_newtonian
+- binary_dynamics
+- gravitational_eft
+- classical_gravity_observables
+reference_id: levi-review-2018
+tier: T1
+authors:
+- Michele Levi
+year: 2018
+arxiv: '1807.01699'
+doi: null
+url: https://arxiv.org/abs/1807.01699

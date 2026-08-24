@@ -1,0 +1,18 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'xTras: A field-theory inspired xAct package for Mathematica'
+tags:
+- automation
+- gravity_tools
+- tensor_algebra
+- xact
+- automated_eft_matching
+- computational_qft_tools
+reference_id: xtras-2013
+tier: T2
+authors:
+- Thomas Nutma
+year: 2013
+arxiv: '1308.3493'
+doi: null
+url: https://arxiv.org/abs/1308.3493

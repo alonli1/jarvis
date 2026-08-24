@@ -1,0 +1,17 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Top-down approach to the curved spacetime effective field theory
+tags:
+- curved_spacetime
+- eft
+- matching
+- heat_kernel
+- curved_spacetime_qft
+reference_id: nakonieczny-curved-eft-2020
+tier: T1
+authors:
+- Łukasz Nakonieczny
+year: 2020
+arxiv: '2004.12320'
+doi: null
+url: https://arxiv.org/abs/2004.12320

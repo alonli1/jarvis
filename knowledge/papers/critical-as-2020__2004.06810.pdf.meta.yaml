@@ -1,0 +1,16 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Critical reflections on asymptotically safe gravity
+tags:
+- quantum_gravity
+- asymptotic_safety
+- critical_review
+- quantum_gravity_rg
+reference_id: critical-as-2020
+tier: T2
+authors:
+- Alfio Bonanno et al.
+year: 2020
+arxiv: '2004.06810'
+doi: null
+url: https://arxiv.org/abs/2004.06810

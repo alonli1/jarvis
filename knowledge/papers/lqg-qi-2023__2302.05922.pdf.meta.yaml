@@ -1,0 +1,16 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Loop Quantum Gravity and Quantum Information
+tags:
+- quantum_gravity
+- loop_quantum_gravity
+- quantum_information
+reference_id: lqg-qi-2023
+tier: T2
+authors:
+- Eugenio Bianchi
+- Etera R. Livine
+year: 2023
+arxiv: '2302.05922'
+doi: null
+url: https://arxiv.org/abs/2302.05922

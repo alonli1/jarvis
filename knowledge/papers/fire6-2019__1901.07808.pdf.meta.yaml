@@ -1,0 +1,18 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'FIRE6: Feynman Integral REduction with Modular Arithmetic'
+tags:
+- automation
+- loop_integrals
+- ibp
+- automated_eft_matching
+- computational_qft_tools
+reference_id: fire6-2019
+tier: T2
+authors:
+- A. V. Smirnov
+- F. S. Chuharev
+year: 2019
+arxiv: '1901.07808'
+doi: null
+url: https://arxiv.org/abs/1901.07808

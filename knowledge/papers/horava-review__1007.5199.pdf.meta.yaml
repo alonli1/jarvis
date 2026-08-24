@@ -1,0 +1,16 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Horava-Lifshitz Cosmology: A Review'
+tags:
+- gravity
+- lorentz_violation
+- preferred_foliation
+- uv_completion
+reference_id: horava-review
+tier: T1
+authors:
+- Shinji Mukohyama
+year: 2010
+arxiv: '1007.5199'
+doi: null
+url: https://arxiv.org/abs/1007.5199

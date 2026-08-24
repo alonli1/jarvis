@@ -1,0 +1,18 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Package-X: A Mathematica package for the analytic calculation of one-loop
+  integrals'
+tags:
+- automation
+- qft_tools
+- one_loop_integrals
+- automated_eft_matching
+- computational_qft_tools
+reference_id: packagex-2015
+tier: T2
+authors:
+- Hiren H. Patel
+year: 2015
+arxiv: '1503.01469'
+doi: null
+url: https://arxiv.org/abs/1503.01469

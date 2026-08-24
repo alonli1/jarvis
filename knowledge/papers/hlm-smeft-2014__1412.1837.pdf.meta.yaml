@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: How to use the Standard Model effective field theory
+tags:
+- eft
+- smeft
+- matching
+- covariant_derivative_expansion
+- one_loop_effective_action
+- smeft_uv_dictionary
+reference_id: hlm-smeft-2014
+tier: T1
+authors:
+- Brian Henning
+- Xiaochuan Lu
+- Hitoshi Murayama
+year: 2014
+arxiv: '1412.1837'
+doi: null
+url: https://arxiv.org/abs/1412.1837

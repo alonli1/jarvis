@@ -1,0 +1,21 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Snowmass White Paper: Gravitational Waves and Scattering Amplitudes'
+tags:
+- gravity
+- amplitudes
+- gravitational_waves
+- radiation
+reference_id: gw-scattering-amplitudes-2022
+tier: T1
+authors:
+- Alessandra Buonanno
+- Mohammed Khalil
+- Donal O'Connell
+- Radu Roiban
+- Mikhail P. Solon
+- Mao Zeng
+year: 2022
+arxiv: '2204.05194'
+doi: null
+url: https://arxiv.org/abs/2204.05194

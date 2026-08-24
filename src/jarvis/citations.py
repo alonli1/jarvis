@@ -110,7 +110,8 @@ def sync_pdf_citations(root: Path) -> tuple[Path, int, int]:
     references = manifest["references"]
     by_id = {reference["id"]: reference for reference in references}
     papers = {}
-    for sidecar in sorted((root / "knowledge" / "papers").glob("*.pdf.meta.yaml")):
+    sidecars = sorted((root / "knowledge").glob("*/*.pdf.meta.yaml"))
+    for sidecar in sidecars:
         metadata = yaml.safe_load(sidecar.read_text(encoding="utf-8")) or {}
         reference_id = metadata.get("reference_id")
         pdf = sidecar.with_name(sidecar.name.removesuffix(".meta.yaml"))

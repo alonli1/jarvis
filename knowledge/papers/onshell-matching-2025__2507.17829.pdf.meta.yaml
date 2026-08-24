@@ -1,0 +1,23 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: An Efficient On-shell Framework for EFT Matching
+tags:
+- eft
+- one_loop_matching
+- amplitudes
+- automation
+- automated_eft_matching
+- one_loop_effective_action
+- computational_qft_tools
+reference_id: onshell-matching-2025
+tier: T1
+authors:
+- Ziyu Dong
+- Cihang Li
+- Teng Ma
+- Jing Shu
+- Zizheng Zhou
+year: 2025
+arxiv: '2507.17829'
+doi: null
+url: https://arxiv.org/abs/2507.17829

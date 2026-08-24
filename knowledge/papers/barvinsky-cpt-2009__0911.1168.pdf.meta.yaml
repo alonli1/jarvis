@@ -1,0 +1,20 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: Covariant Perturbation Theory (IV). Third Order in the Curvature
+tags:
+- curved_spacetime
+- heat_kernel
+- covariant_perturbation_theory
+- effective_action
+- curved_spacetime_qft
+reference_id: barvinsky-cpt-2009
+tier: T1
+authors:
+- A. O. Barvinsky
+- Yu. V. Gusev
+- G. A. Vilkovisky
+- V. V. Zhytnikov
+year: 2009
+arxiv: '0911.1168'
+doi: null
+url: https://arxiv.org/abs/0911.1168

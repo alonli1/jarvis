@@ -55,13 +55,16 @@ def test_batch_citation_response_maps_to_internal_ids():
 def test_local_pdf_sync_extracts_reference_ids(tmp_path, monkeypatch):
     knowledge = tmp_path / "knowledge"
     papers = knowledge / "papers"
+    books = knowledge / "books"
     papers.mkdir(parents=True)
+    books.mkdir()
     (tmp_path / "literature").mkdir()
     (knowledge / "references.yaml").write_text(
         yaml.safe_dump(
             {
                 "references": [
                     {"id": "source", "arxiv": "2401.00001", "doi": None},
+                    {"id": "book", "arxiv": None, "doi": "10.1000/book"},
                     {"id": "target", "arxiv": "2401.00002", "doi": None},
                 ]
             }
@@ -70,6 +73,9 @@ def test_local_pdf_sync_extracts_reference_ids(tmp_path, monkeypatch):
     pdf = papers / "source__2401.00001.pdf"
     pdf.write_bytes(b"placeholder")
     (papers / f"{pdf.name}.meta.yaml").write_text("reference_id: source\n")
+    book = books / "book.pdf"
+    book.write_bytes(b"placeholder")
+    (books / f"{book.name}.meta.yaml").write_text("reference_id: book\n")
 
     class Page:
         def extract_text(self):
@@ -78,6 +84,7 @@ def test_local_pdf_sync_extracts_reference_ids(tmp_path, monkeypatch):
     monkeypatch.setattr("jarvis.citations.PdfReader", lambda _: type("Reader", (), {"pages": [Page()]})())
     path, resolved, unresolved = sync_pdf_citations(tmp_path)
     data = yaml.safe_load(path.read_text())
-    assert resolved == 1
+    assert resolved == 2
     assert unresolved == 1
     assert data["papers"]["source"]["references"] == ["arxiv:2401.00002"]
+    assert data["papers"]["book"]["identifiers"] == ["doi:10.1000/book"]

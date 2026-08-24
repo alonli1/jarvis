@@ -1,0 +1,21 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'CoDEx: Wilson coefficient calculator connecting SMEFT to UV theory'
+tags:
+- eft
+- automation
+- smeft
+- matching
+- automated_eft_matching
+- computational_qft_tools
+- smeft_uv_dictionary
+reference_id: codex-2018
+tier: T1
+authors:
+- Subhadip Das Bakshi
+- Joydeep Chakrabortty
+- Sunando Kumar Patra
+year: 2018
+arxiv: '1808.04403'
+doi: null
+url: https://arxiv.org/abs/1808.04403

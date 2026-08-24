@@ -1,0 +1,19 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'MatchingTools: a Python library for symbolic effective field theory calculations'
+tags:
+- eft
+- automation
+- tree_matching
+- symbolic
+- automated_eft_matching
+- computational_qft_tools
+- smeft_uv_dictionary
+reference_id: matchingtools-2017
+tier: T1
+authors:
+- Juan C. Criado
+year: 2017
+arxiv: '1710.06445'
+doi: null
+url: https://arxiv.org/abs/1710.06445

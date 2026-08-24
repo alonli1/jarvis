@@ -1,0 +1,14 @@
+generated_by: scripts/download_open_arxiv.py
+visibility: public
+title: 'Quantum Gravity from Causal Dynamical Triangulations: A Review'
+tags:
+- quantum_gravity
+- causal_dynamical_triangulations
+reference_id: cdt-review-2019
+tier: T2
+authors:
+- Renate Loll
+year: 2019
+arxiv: '1905.08669'
+doi: null
+url: https://arxiv.org/abs/1905.08669
