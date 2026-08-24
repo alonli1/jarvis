@@ -34,6 +34,7 @@ def _paper_nodes(
             {
                 "id": f"paper:{reference['id']}",
                 "kind": "paper",
+                "visibility": "public",
                 "title": reference["title"],
                 "year": reference.get("year"),
                 "tier": reference.get("tier"),
@@ -65,6 +66,7 @@ def _manuscript_nodes(root: Path, taxonomy: dict[str, dict]) -> list[dict]:
             {
                 "id": f"manuscript:{data.get('project', path.parent.name)}",
                 "kind": "manuscript",
+                "visibility": "group",
                 "title": data.get("project", path.parent.name),
                 "topics": [],
                 "tags": tags,

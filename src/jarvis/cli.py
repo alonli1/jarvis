@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import webbrowser
 from datetime import date, timedelta
 
 import httpx
@@ -13,6 +14,7 @@ from .answering import answer_question
 from .antigravity import install_global_mcp
 from .citations import sync_citations, sync_pdf_citations
 from .config import find_repo_root, load_config
+from .graph_server import create_graph_server
 from .graph_view import render_graph_html
 from .index import HybridIndex
 from .literature import search_all
@@ -179,7 +181,7 @@ def citations_sync(
         console.print("Set SEMANTIC_SCHOLAR_API_KEY if the public endpoint is rate-limited.")
         raise typer.Exit(code=1) from exc
     console.print(
-        f"[green]Saved[/green] {resolved} papers to {path}; {unresolved} unresolved."
+        f"[green]Saved[/green] {resolved} sources to {path}; {unresolved} unresolved."
     )
 
 
@@ -214,6 +216,34 @@ def graph_report(
     renderer = render_graph_html if output_format == "html" else render_graph_markdown
     destination.write_text(renderer(graph, origin, limit=limit), encoding="utf-8")
     console.print(f"[green]Saved graph:[/green] {destination}")
+
+
+@app.command("graph-serve")
+def graph_serve(
+    host: str = typer.Option("127.0.0.1", "--host", help="Interface to bind."),
+    port: int = typer.Option(8765, "--port", min=0, max=65535),
+    open_browser: bool = typer.Option(True, "--open/--no-open"),
+) -> None:
+    """Serve one live local interface for the full literature graph."""
+    cfg = load_config()
+    try:
+        server = create_graph_server(cfg.root, host, port)
+    except OSError as exc:
+        console.print(f"[red]Could not start graph server:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    actual_port = server.server_address[1]
+    browser_host = "127.0.0.1" if host in {"0.0.0.0", "::"} else host
+    url = f"http://{browser_host}:{actual_port}/"
+    console.print(f"[green]Jarvis graph:[/green] {url}")
+    console.print("Press Ctrl+C to stop.")
+    if open_browser:
+        webbrowser.open(url)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        console.print("\nStopped.")
+    finally:
+        server.server_close()
 
 
 @app.command("init-project")

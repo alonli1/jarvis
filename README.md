@@ -177,9 +177,17 @@ uv run jarvis retrieve "Summarize our draft" --max-visibility group
 
 ### Use Jarvis from an IDE agent
 
-Jarvis includes a local MCP server with a `search_knowledge` tool. VS Code reads the
-public-only configuration from `.vscode/mcp.json`; start the `jarvis` server from the MCP
-panel, then enable its tool in Agent mode.
+Jarvis includes a local MCP server with retrieval and literature-graph tools:
+
+- `search_knowledge`
+- `find_related_papers`
+- `explain_relationship`
+- `find_citation_path`
+- `find_bridge_papers`
+- `papers_relevant_to_manuscript`
+
+VS Code reads the public-only configuration from `.vscode/mcp.json`; start the `jarvis`
+server from the MCP panel, then enable its tools in Agent mode.
 
 Current Antigravity versions read the portable workspace configuration from
 `.agents/mcp_config.json`. After cloning, open the repository as the workspace, ensure
@@ -205,6 +213,8 @@ uv run jarvis-mcp
 The MCP server defaults to public documents. To permit a trusted agent to retrieve more,
 set `JARVIS_MCP_MAX_VISIBILITY` to `group` or `confidential` in that client's MCP environment.
 Retrieved confidential text may still be sent to the IDE agent's model provider.
+Manuscript graph nodes are group-visible, so `papers_relevant_to_manuscript` requires
+`JARVIS_MCP_MAX_VISIBILITY=group` or higher.
 
 ## 4. Define topics
 
@@ -355,6 +365,18 @@ report instead:
 ```bash
 jarvis graph example_project --format markdown
 ```
+
+For one persistent full-corpus browser application, run:
+
+```bash
+jarvis graph-serve
+```
+
+The live view can focus any paper or manuscript and filter by controlled tag or
+relationship type without generating separate files. It reloads graph data from the
+manifests and citation cache on each browser refresh. Use `--no-open` to suppress browser
+launch or `--port 9000` to choose another port. It binds to `127.0.0.1` by default and has
+no authentication; do not expose it on an untrusted network.
 
 The generated JSON cache stays in `.jarvis/literature_graph.json`; views are written to
 `literature/reports/`. Scores are local relevance signals, not global scholarly
