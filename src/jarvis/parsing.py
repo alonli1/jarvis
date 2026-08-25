@@ -15,11 +15,6 @@ SUPPORTED_SUFFIXES = {".pdf", ".tex", ".md", ".txt"}
 REFERENCE_MANIFEST = "references.yaml"
 
 
-def default_visibility(path: Path) -> str:
-    parts = {p.lower() for p in path.parts}
-    return "group" if "group" in parts else "public"
-
-
 def load_sidecar(path: Path) -> dict:
     sidecar = path.with_name(path.name + ".meta.yaml")
     if not sidecar.exists():
@@ -110,7 +105,6 @@ def _reference_chunks(path: Path, rel: str, repo_root: Path) -> Iterable[Chunk]:
             text=text,
             source_path=rel,
             title=str(reference["title"]),
-            visibility="public",
             tags=tags,
             metadata=metadata,
         )
@@ -125,7 +119,6 @@ def iter_document_chunks(
         return
 
     sidecar = load_sidecar(path)
-    vis = sidecar.get("visibility", default_visibility(path))
     title = sidecar.get("title", path.stem)
     tags = sidecar.get("tags", [])
     if not isinstance(tags, list):
@@ -147,7 +140,6 @@ def iter_document_chunks(
                     source_path=rel,
                     title=title,
                     page=page_no,
-                    visibility=vis,
                     tags=tags,
                     metadata={"format": "pdf", **extra_metadata},
                 )
@@ -162,7 +154,6 @@ def iter_document_chunks(
             text=piece,
             source_path=rel,
             title=title,
-            visibility=vis,
             tags=tags,
             metadata={"format": path.suffix.lower().lstrip("."), **extra_metadata},
         )

@@ -27,7 +27,7 @@ class Client:
         return SimpleNamespace(points=[])
 
 
-def test_search_filters_visibility_inside_qdrant():
+def test_search_filters_tags_inside_qdrant():
     index = object.__new__(HybridIndex)
     index.config = SimpleNamespace(
         retrieval=SimpleNamespace(final_k=10),
@@ -38,8 +38,8 @@ def test_search_filters_visibility_inside_qdrant():
     index.sparse = Sparse()
     index.collection = "test"
 
-    index.search("gravity", max_visibility="group")
+    index.search("gravity", tags=["gravity"])
 
     conditions = index.client.query_filter.model_dump()["must"]
-    visibility = next(condition for condition in conditions if condition["key"] == "visibility")
-    assert visibility["match"]["any"] == ["public", "group"]
+    assert conditions[0]["key"] == "tags"
+    assert conditions[0]["match"]["value"] == "gravity"

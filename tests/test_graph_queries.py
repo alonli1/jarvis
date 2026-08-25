@@ -4,7 +4,6 @@ from jarvis.graph_queries import (
     bridge_papers,
     citation_path,
     explain_relationship,
-    filter_graph_visibility,
     manuscript_papers,
     related_papers,
 )
@@ -13,14 +12,13 @@ from jarvis.graph_queries import (
 @pytest.fixture
 def graph():
     nodes = [
-        {"id": "paper:a", "kind": "paper", "title": "A", "visibility": "public"},
-        {"id": "paper:b", "kind": "paper", "title": "B", "visibility": "public"},
-        {"id": "paper:c", "kind": "paper", "title": "C", "visibility": "public"},
+        {"id": "paper:a", "kind": "paper", "title": "A"},
+        {"id": "paper:b", "kind": "paper", "title": "B"},
+        {"id": "paper:c", "kind": "paper", "title": "C"},
         {
             "id": "manuscript:draft",
             "kind": "manuscript",
             "title": "Draft",
-            "visibility": "group",
         },
     ]
     edges = [
@@ -58,9 +56,6 @@ def test_citation_path_and_bridge_papers(graph):
     assert bridge_papers(graph, "a", "c")["bridges"][0]["paper"]["id"] == "paper:b"
 
 
-def test_manuscript_relevance_and_visibility(graph):
+def test_manuscript_relevance(graph):
     result = manuscript_papers(graph, "draft")
     assert result["papers"][0]["paper"]["id"] == "paper:b"
-    public = filter_graph_visibility(graph, "public")
-    assert all(node["kind"] == "paper" for node in public["nodes"])
-    assert all("manuscript:draft" not in edge.values() for edge in public["edges"])

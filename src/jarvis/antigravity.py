@@ -22,7 +22,6 @@ def install_global_mcp(repo_root: Path, config_path: Path | None = None) -> Path
     data["mcpServers"]["jarvis"] = {
         "command": str(Path(uv).resolve()),
         "args": ["run", "--directory", str(repo_root.resolve()), "jarvis-mcp"],
-        "env": {"JARVIS_MCP_MAX_VISIBILITY": "public"},
     }
 
     path.parent.mkdir(parents=True, exist_ok=True)

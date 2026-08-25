@@ -13,7 +13,6 @@ def sample_hits() -> list[SearchHit]:
                 text="A heavy scalar generates curvature-squared operators.",
                 source_path="knowledge/papers/scalar.pdf",
                 page=12,
-                visibility="public",
             ),
             score=0.9,
         )
@@ -74,8 +73,3 @@ async def test_mcp_graph_tools_return_structured_results(monkeypatch):
     assert path.structured_content["hops"] == 2
     assert bridges.structured_content["bridges"][0]["paper"]["id"] == "paper:b"
     assert manuscript.structured_content["papers"][0]["paper"]["id"] == "paper:b"
-
-
-def test_mcp_visibility_defaults_to_public(monkeypatch):
-    monkeypatch.delenv("JARVIS_MCP_MAX_VISIBILITY", raising=False)
-    assert mcp_server.configured_max_visibility() == "public"

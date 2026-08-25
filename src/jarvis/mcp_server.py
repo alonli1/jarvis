@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from typing import Annotated
 
 from mcp.server import MCPServer
@@ -10,7 +9,6 @@ from pydantic import Field
 from . import graph_queries
 from .config import load_config
 from .literature_graph import build_graph
-from .models import Visibility
 from .retrieval import retrieval_result, retrieve_hits
 
 mcp = MCPServer(
@@ -22,21 +20,9 @@ mcp = MCPServer(
 )
 
 
-def configured_max_visibility() -> str:
-    value = os.getenv("JARVIS_MCP_MAX_VISIBILITY", "public").lower()
-    try:
-        Visibility.parse(value)
-    except KeyError as exc:
-        raise ValueError(
-            "JARVIS_MCP_MAX_VISIBILITY must be public, group, or confidential"
-        ) from exc
-    return value
-
-
 def _graph() -> dict:
     config = load_config()
-    graph = build_graph(config.root, manuscript_neighbors=75)
-    return graph_queries.filter_graph_visibility(graph, configured_max_visibility())
+    return build_graph(config.root, manuscript_neighbors=75)
 
 
 @mcp.tool(
@@ -56,7 +42,6 @@ async def search_knowledge(
         load_config(),
         query,
         limit=limit,
-        max_visibility=configured_max_visibility(),
         tags=tags,
     )
     return retrieval_result(query, hits)

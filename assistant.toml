@@ -18,11 +18,6 @@ chunk_chars = 3200
 chunk_overlap = 400
 final_k = 10
 
-[privacy]
-local_model_prefixes = ["ollama/", "local/", "vllm/"]
-external_default_max_visibility = "public"
-local_default_max_visibility = "confidential"
-
 [literature]
 default_days = 2
 max_results_per_query = 40

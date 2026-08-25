@@ -4,7 +4,7 @@
 
 1. **The corpus is independent of the LLM.** Switching the reasoning model must not require rebuilding scientific knowledge.
 2. **Retrieval models are pinned.** All researchers should query the same vector/sparse representation unless the group deliberately migrates it.
-3. **Private manuscripts are data with policy.** A document's visibility is carried into every chunk and checked before context is sent to an LLM.
+3. **The corpus has one access class.** Every indexed document can be retrieved by every configured model and MCP client.
 4. **Novelty monitoring operates on claims, not whole-paper similarity.** Each manuscript keeps narrow, machine-readable claims in `novelty.yaml`.
 5. **Literature sources are adapters.** arXiv, INSPIRE, OpenAlex, Semantic Scholar, and future sources expose one common record type.
 6. **A novelty alert is triage.** The system ranks possible overlap and explains the signal; researchers make the scientific judgment.
@@ -13,10 +13,8 @@
 
 ```text
 question
-  -> privacy policy for selected model
   -> dense + sparse query embeddings
   -> Qdrant RRF hybrid retrieval
-  -> visibility filtering
   -> top-k passages with source/page metadata
   -> LiteLLM-selected reasoning model
   -> answer with [S1], [S2], ... citations
@@ -50,21 +48,11 @@ novelty.yaml claim
   -> GitHub Action commit + issue
 ```
 
-## Privacy model
+## Access model
 
-Visibility ordering is:
-
-```text
-public < group < confidential
-```
-
-By default:
-
-- external LLM providers receive only `public` passages;
-- local providers (`ollama/`, `local/`, `vllm/`) may receive up to `confidential`;
-- `--allow-private` is an explicit override and should only be used when the provider is approved by the group.
-
-For a production lab deployment, this should evolve into provider-specific policy, audit logging, and secrets management.
+Jarvis does not classify documents or filter retrieval by access tier. A model selected through
+the CLI and an agent connected through MCP can receive any indexed passage. Repository membership,
+the shared-storage account, and provider account settings are the access boundaries.
 
 ## Why Qdrant local mode first
 

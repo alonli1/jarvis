@@ -3,7 +3,6 @@ from __future__ import annotations
 from collections import deque
 
 from .literature_graph import find_node
-from .models import Visibility
 
 RELATIONSHIPS = {
     "cites",
@@ -11,25 +10,6 @@ RELATIONSHIPS = {
     "similar",
     "relevant_to_manuscript",
 }
-
-
-def filter_graph_visibility(graph: dict, max_visibility: str) -> dict:
-    maximum = Visibility.parse(max_visibility)
-    nodes = [
-        node
-        for node in graph["nodes"]
-        if Visibility.parse(node.get("visibility", "public")) <= maximum
-    ]
-    visible = {node["id"] for node in nodes}
-    return {
-        **graph,
-        "nodes": nodes,
-        "edges": [
-            edge
-            for edge in graph["edges"]
-            if edge["source"] in visible and edge["target"] in visible
-        ],
-    }
 
 
 def node_summary(node: dict) -> dict:

@@ -33,7 +33,6 @@ def write_sidecar(destination: Path, reference: dict, taxonomy: dict[str, dict])
     raw_tags = [str(tag) for tag in reference.get("topics", [])]
     data = {
         "generated_by": GENERATED_BY,
-        "visibility": "public",
         "title": reference["title"],
         "tags": expanded_tags(
             raw_tags,

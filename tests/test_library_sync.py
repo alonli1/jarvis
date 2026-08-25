@@ -13,42 +13,37 @@ def write_document(root: Path, relative: str, content: bytes) -> Path:
     return path
 
 
-def test_sync_maps_visibility_and_writes_portable_metadata(tmp_path):
+def test_sync_maps_categories_and_writes_portable_metadata(tmp_path):
     repo = tmp_path / "repo"
     source = tmp_path / "provider" / "Jarvis"
-    paper = write_document(source, "public/papers/paper.pdf", b"%PDF-test")
+    paper = write_document(source, "papers/paper.pdf", b"%PDF-test")
     paper.with_name("paper.pdf.meta.yaml").write_text(
         "title: Curved-space EFT\nauthors: [A. Researcher]\ntags: [gravity]\n"
-        "visibility: public\ndropbox_id: id:paper-1\n"
+        "dropbox_id: id:paper-1\n"
     )
-    write_document(source, "group/notes/calculation.md", b"# Group calculation\n")
-    write_document(source, "confidential/manuscripts/draft.tex", b"secret draft\n")
+    write_document(source, "notes/calculation.md", b"# Calculation\n")
+    write_document(source, "manuscripts/draft.tex", b"draft\n")
 
     result = sync_library(repo, source, provider="dropbox")
 
     assert result.copied == 3
-    public = repo / "knowledge" / "papers" / "paper.pdf"
-    group = repo / "group" / "library" / "group" / "notes" / "calculation.md"
-    private = (
-        repo / "group" / "library" / "confidential" / "manuscripts" / "draft.tex"
-    )
-    assert public.exists() and group.exists() and private.exists()
-    metadata = yaml.safe_load(public.with_name("paper.pdf.meta.yaml").read_text())
-    assert metadata["visibility"] == "public"
+    local_paper = repo / "knowledge" / "papers" / "paper.pdf"
+    note = repo / "knowledge" / "notes" / "calculation.md"
+    manuscript = repo / "group" / "manuscripts" / "draft.tex"
+    assert local_paper.exists() and note.exists() and manuscript.exists()
+    metadata = yaml.safe_load(local_paper.with_name("paper.pdf.meta.yaml").read_text())
     assert metadata["storage_provider"] == "dropbox"
-    assert metadata["storage_path"] == "public/papers/paper.pdf"
+    assert metadata["storage_path"] == "papers/paper.pdf"
     assert metadata["storage_id"].startswith("sha256:")
     assert metadata["dropbox_id"] == "id:paper-1"
-    private_metadata = yaml.safe_load(
-        private.with_name("draft.tex.meta.yaml").read_text()
-    )
-    assert private_metadata["visibility"] == "confidential"
+    manuscript_metadata = yaml.safe_load(manuscript.with_name("draft.tex.meta.yaml").read_text())
+    assert "visibility" not in manuscript_metadata
 
 
 def test_sync_dry_run_and_manual_conflict_are_non_destructive(tmp_path):
     repo = tmp_path / "repo"
     source = tmp_path / "provider"
-    remote = write_document(source, "public/notes/note.md", b"remote\n")
+    remote = write_document(source, "notes/note.md", b"remote\n")
 
     result = sync_library(repo, source, dry_run=True)
     destination = repo / "knowledge" / "notes" / "note.md"
@@ -64,14 +59,9 @@ def test_sync_dry_run_and_manual_conflict_are_non_destructive(tmp_path):
     assert remote.read_bytes() == b"remote\n"
 
 
-def test_sync_rejects_invalid_pdf_and_visibility_mismatch(tmp_path):
+def test_sync_rejects_invalid_pdf(tmp_path):
     repo = tmp_path / "repo"
     source = tmp_path / "provider"
-    paper = write_document(source, "public/papers/bad.pdf", b"not a pdf")
+    write_document(source, "papers/bad.pdf", b"not a pdf")
     with pytest.raises(ValueError, match="Invalid PDF header"):
-        sync_library(repo, source)
-
-    paper.write_bytes(b"%PDF-valid")
-    paper.with_name("bad.pdf.meta.yaml").write_text("visibility: confidential\n")
-    with pytest.raises(ValueError, match="Visibility mismatch"):
         sync_library(repo, source)

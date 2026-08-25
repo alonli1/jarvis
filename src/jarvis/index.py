@@ -7,7 +7,7 @@ from fastembed import SparseTextEmbedding, TextEmbedding
 from qdrant_client import QdrantClient, models
 
 from .config import Config
-from .models import Chunk, SearchHit, Visibility
+from .models import Chunk, SearchHit
 from .parsing import discover_documents, iter_document_chunks
 from .taxonomy import normalize_tag
 
@@ -107,20 +107,12 @@ class HybridIndex:
         self,
         query: str,
         k: int | None = None,
-        max_visibility: str = "public",
         tags: list[str] | None = None,
     ) -> list[SearchHit]:
         self._ensure_collection()
         k = k or self.config.retrieval.final_k
         tags = [normalize_tag(tag) for tag in tags or []]
-        max_level = Visibility.parse(max_visibility)
         conditions = [
-            models.FieldCondition(
-                key="visibility",
-                match=models.MatchAny(
-                    any=[visibility.name for visibility in Visibility if visibility <= max_level]
-                ),
-            ),
             *[
                 models.FieldCondition(key="tags", match=models.MatchValue(value=tag))
                 for tag in tags
@@ -145,7 +137,7 @@ class HybridIndex:
                 ),
             ],
             query=models.RrfQuery(rrf=models.Rrf()),
-            query_filter=models.Filter(must=conditions),
+            query_filter=models.Filter(must=conditions) if conditions else None,
             limit=max(k * 3, k),
             with_payload=True,
         )
@@ -153,8 +145,7 @@ class HybridIndex:
         for p in result.points:
             payload = dict(p.payload or {})
             chunk = Chunk.model_validate(payload)
-            if Visibility.parse(chunk.visibility) <= max_level:
-                hits.append(SearchHit(chunk=chunk, score=float(p.score)))
+            hits.append(SearchHit(chunk=chunk, score=float(p.score)))
             if len(hits) >= k:
                 break
         return hits

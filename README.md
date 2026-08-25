@@ -14,7 +14,7 @@ Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other Lite
 - Lets each researcher select a different LLM through LiteLLM.
 - Exports cited retrieval context for use with web AI subscriptions, without a model API.
 - Exposes local retrieval to compatible IDE agents through MCP.
-- Enforces a basic privacy boundary: external models see public material by default; local models can see group/confidential material.
+- Treats the configured corpus uniformly so every connected model and IDE agent searches the same material.
 - Searches arXiv, INSPIRE-HEP, OpenAlex, and Semantic Scholar.
 - Represents manuscript novelty claims in YAML.
 - Compares newly found literature against those claims and creates a ranked novelty-watch report.
@@ -105,8 +105,8 @@ uv run jarvis ingest
 
 Add `--tier T1` or `--tier T2` explicitly for broader downloads. The downloader derives
 all paths from the clone, validates PDF responses, and never downloads entries marked as
-metadata-only. It also writes a small `.meta.yaml` sidecar for each PDF with source IDs,
-visibility, and controlled research tags. Downloaded PDFs stay local because arXiv paper
+metadata-only. It also writes a small `.meta.yaml` sidecar for each PDF with source IDs
+and controlled research tags. Downloaded PDFs stay local because arXiv paper
 licenses vary; every clone can reproduce them with the command above. The 21
 continuous-discovery queries live in `literature/searches.yaml`.
 
@@ -127,16 +127,13 @@ jarvis library-sync "/path/to/team/Jarvis" --provider dropbox
 jarvis ingest
 ```
 
-The provider folder uses `public/`, `group/`, and `confidential/` visibility directories.
+The provider folder uses `papers/`, `books/`, `notes/`, and `manuscripts/` directories.
 See [docs/LIBRARY_SYNC.md](docs/LIBRARY_SYNC.md) for the layout, safety rules, and other
-providers.
+providers. All synced documents join one searchable corpus.
 
-### Visibility
+### Sidecar metadata
 
-Files under `knowledge/` are treated as `public` by default.
-Files under `group/` are treated as `group` by default.
-
-To override visibility, place a sidecar file next to a document:
+To add metadata, place a sidecar file next to a document:
 
 ```text
 paper.pdf
@@ -144,12 +141,9 @@ paper.pdf.meta.yaml
 ```
 
 ```yaml
-visibility: confidential
-title: Internal draft on inverse EFT matching
+title: Draft on inverse EFT matching
 tags: [eft, gravity, inverse-matching]
 ```
-
-Accepted visibility levels are `public`, `group`, and `confidential`.
 
 ## 3. Ask scientific questions
 
@@ -167,13 +161,8 @@ jarvis ask "Compare functional and diagrammatic matching." \
   --model ollama/qwen3:14b
 ```
 
-External models only receive public retrieved passages unless you explicitly opt in:
-
-```bash
-jarvis ask "Critique our current draft." --allow-private
-```
-
-Use `--allow-private` only when the selected provider is approved for unpublished group material.
+Every configured model can receive passages from every indexed document. Control who can access
+the corpus through repository, storage-provider, and model-account permissions.
 
 ### Use a web AI without an API
 
@@ -184,11 +173,7 @@ uv run jarvis retrieve \
   "What automated one-loop matching methods support gravity?"
 ```
 
-Retrieval defaults to public documents. Broader access must be explicit:
-
-```bash
-uv run jarvis retrieve "Summarize our draft" --max-visibility group
-```
+The exported prompt can contain passages from any indexed document.
 
 ### Use Jarvis from an IDE agent
 
@@ -201,7 +186,7 @@ Jarvis includes a local MCP server with retrieval and literature-graph tools:
 - `find_bridge_papers`
 - `papers_relevant_to_manuscript`
 
-VS Code reads the public-only configuration from `.vscode/mcp.json`; start the `jarvis`
+VS Code reads the workspace configuration from `.vscode/mcp.json`; start the `jarvis`
 server from the MCP panel, then enable its tools in Agent mode.
 
 Current Antigravity versions read the portable workspace configuration from
@@ -225,11 +210,8 @@ Other MCP-compatible clients can launch:
 uv run jarvis-mcp
 ```
 
-The MCP server defaults to public documents. To permit a trusted agent to retrieve more,
-set `JARVIS_MCP_MAX_VISIBILITY` to `group` or `confidential` in that client's MCP environment.
-Retrieved confidential text may still be sent to the IDE agent's model provider.
-Manuscript graph nodes are group-visible, so `papers_relevant_to_manuscript` requires
-`JARVIS_MCP_MAX_VISIBILITY=group` or higher.
+MCP tools search the full corpus. Retrieved text may be sent to the IDE agent's model provider,
+so grant repository and shared-library access only to intended group members.
 
 ## 4. Define topics
 

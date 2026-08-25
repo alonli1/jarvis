@@ -1,7 +1,7 @@
 # Jarvis implementation audit
 
 Audited 2026-08-25 against `README.md`, `docs/ARCHITECTURE.md`, and commit
-`10879cc`. This audit describes the working tree after the two Phase 0 privacy fixes listed
+`10879cc`. This audit describes the working tree after the Phase 0 implementation work listed
 below. The attached roadmap's 2026-08-22 inventory is a historical snapshot, not the current
 repository state.
 
@@ -12,11 +12,11 @@ repository state.
 | Source review | All 26 Python modules under `src/jarvis/` read against the documentation |
 | Runtime install | `uv sync` succeeds with uv 0.12.5 and Python 3.14.4 |
 | Diagnostics | `uv run jarvis doctor` passes all four repository-folder checks |
-| Tests | `uv sync --extra dev`; `uv run pytest -q`: 31 passed |
+| Tests | `uv sync --extra dev`; `uv run pytest -q`: 28 passed |
 | Coverage | 66%; weakest areas are the live adapters, CLI, novelty orchestration, and index integration |
 | Real retrieval smoke test | Existing local index returned three cited PDF passages for a gravity-EFT query |
 | Provider sync smoke test | The Dropbox-backed UOLEA PDF was synced, indexed into 36 chunks, and retrieved with citations to pages 1 and 13 |
-| Lint | Not clean: 22 pre-existing Ruff findings, mainly import ordering, timezone-aware dates, Typer `B008`, and two intentional broad exception boundaries |
+| Lint | Not clean: 19 pre-existing Ruff findings, mainly import ordering, timezone-aware dates, Typer `B008`, and two intentional broad exception boundaries |
 
 `uv sync` installs runtime dependencies only because test tools are an optional `dev` extra.
 Use `uv sync --extra dev` before running the test suite.
@@ -35,12 +35,12 @@ an in-memory identifier. Neither warning affected the checks.
 | Retrieval index | Local Qdrant index exists and answers real PDF queries |
 | Citation/relationship graph | Cached graph has 76 nodes and 611 edges |
 | Manuscripts | Only `example_project`; its claim is still a placeholder |
-| Shared storage | Dropbox library bootstrapped with 75 documents: 62 public and 13 group-visible |
+| Shared storage | Dropbox library bootstrapped with 75 documents in category-based folders |
 | Symbolic packages | No `packages/` registry exists |
 | Symbolic execution | No `workbench/` or provenance format exists |
 | Predictions | No numeric evaluation or theory-to-prediction pipeline exists |
 
-The 75 local documents now have canonical Dropbox copies organized by visibility. Dropbox client
+The 75 local documents now have canonical Dropbox copies organized by category. Dropbox client
 sync status remains an external operational concern; Jarvis verified the local Dropbox tree
 byte-for-byte against this clone.
 
@@ -53,7 +53,7 @@ byte-for-byte against this clone.
 | Source citations | Partially enforced | Retrieval emits stable `[S1]` records with paths/pages. LLM output is instructed, but not validated, to cite them. |
 | Model selection | Implemented, not live-tested | LiteLLM receives the configured or per-command model. No provider/API call was made during this audit. |
 | Web-subscription workflow | Implemented | `jarvis retrieve` produces a pasteable, cited prompt without calling an LLM. |
-| Visibility policy | Implemented with Phase 0 fix | External models default to public; local prefixes may receive confidential data. Qdrant now filters visibility before ranking, and external private-context use is logged locally before transmission. Provider-specific approval policy is not implemented. |
+| Uniform corpus access | Implemented | CLI models and MCP clients search the same complete corpus. Access is controlled through repository, shared-storage, and model-account membership. |
 | MCP | Implemented and tested | Retrieval plus five graph tools are exposed; workspace and global Antigravity configurations exist. |
 | Literature adapters | Implemented, not integration-tested | arXiv, INSPIRE, OpenAlex, and Semantic Scholar adapters normalize records. Live services, rate limits, and API changes remain outside unit coverage. |
 | Novelty triage | Implemented, placeholder-only | Claim parsing, deterministic lexical scoring, risk thresholds, optional LLM review, and reports exist. There are no real group claims to evaluate. |
@@ -68,23 +68,17 @@ byte-for-byte against this clone.
 - The novelty description now states that the date window filters discovery while
   publication/source metadata is reported rather than included in the overlap score.
 
-## Phase 0 fixes made
+## Phase 0 access decision
 
-1. Visibility is now included in the Qdrant query filter. Previously Jarvis retrieved a mixed
-   candidate set and removed private hits afterward. It did not return private text, but a
-   private-heavy candidate set could crowd out relevant public results.
-2. When an external model is explicitly allowed to receive retrieved group/confidential
-   passages, Jarvis writes an append-only event to `.jarvis/privacy-audit.jsonl` before the
-   model call. It records model, source paths, visibility, and timestamp, but not the prompt.
-3. Regression tests cover both changes.
+The group removed document access tiers. Jarvis now treats every indexed document uniformly;
+there are no per-document classifications, retrieval filters, CLI overrides, or MCP environment
+settings for tiered access.
 
 ## Known gaps to resolve before later phases
 
 - Retrieval model names are configured, but exact model artifact revisions are not pinned.
 - Index replacement deletes a source before its replacement chunks are fully upserted, and a
   directory re-ingest does not prune records for files that disappeared.
-- Sidecar visibility values are not validated during ingestion; malformed values fail later at
-  query time.
 - LLM answers have no post-generation citation validator.
 - Network adapters and the end-to-end novelty watch lack deterministic integration fixtures.
 - CI tests one runner-selected Python version rather than a declared supported-version matrix.

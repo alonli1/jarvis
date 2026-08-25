@@ -12,7 +12,6 @@ import yaml
 from .taxonomy import expanded_tags, load_taxonomy
 
 GENERATED_BY = "jarvis.library_sync"
-VISIBILITIES = ("public", "group", "confidential")
 CATEGORIES = ("papers", "books", "notes", "manuscripts")
 SUPPORTED_SUFFIXES = {".pdf", ".tex", ".md", ".txt"}
 IGNORED_NAMES = {".DS_Store", "Thumbs.db", "desktop.ini"}
@@ -72,13 +71,12 @@ def _validate_document(path: Path, root: Path) -> None:
                 raise ValueError(f"Invalid PDF header: {path}")
 
 
-def _destination(root: Path, visibility: str, category: str, relative: Path) -> Path:
+def _destination(root: Path, category: str, relative: Path) -> Path:
     if category in {"papers", "books"}:
         return root / "knowledge" / category / relative
-    if visibility == "public":
-        category_path = Path("notes/manuscripts") if category == "manuscripts" else Path(category)
-        return root / "knowledge" / category_path / relative
-    return root / "group" / "library" / visibility / category / relative
+    if category == "notes":
+        return root / "knowledge" / "notes" / relative
+    return root / "group" / "manuscripts" / relative
 
 
 def _atomic_copy(source: Path, destination: Path) -> None:
@@ -112,74 +110,74 @@ def _plan(root: Path, source_root: Path, provider: str) -> list[_Item]:
     items: list[_Item] = []
     conflicts: list[Path] = []
     destinations: set[Path] = set()
-    for visibility in VISIBILITIES:
-        for category in CATEGORIES:
-            folder = source_root / visibility / category
-            if not folder.exists():
+    for category in CATEGORIES:
+        folder = source_root / category
+        if not folder.exists():
+            continue
+        if not folder.is_dir():
+            raise NotADirectoryError(folder)
+        for source in sorted(folder.rglob("*")):
+            if not source.is_file():
                 continue
-            if not folder.is_dir():
-                raise NotADirectoryError(folder)
-            for source in sorted(folder.rglob("*")):
-                if not source.is_file():
-                    continue
-                if source.name.endswith(".meta.yaml") or source.name in IGNORED_NAMES:
-                    continue
-                if source.suffix.lower() not in SUPPORTED_SUFFIXES:
-                    raise ValueError(f"Unsupported library document: {source}")
-                _validate_document(source, source_root)
-                source_metadata = _read_metadata(source)
-                declared = source_metadata.get("visibility")
-                if declared and declared != visibility:
-                    raise ValueError(
-                        f"Visibility mismatch for {source}: folder={visibility}, sidecar={declared}"
-                    )
-                relative = source.relative_to(folder)
-                destination = _destination(root, visibility, category, relative)
-                destination.resolve(strict=False).relative_to(root)
-                if destination in destinations:
-                    raise ValueError(f"Multiple provider documents map to {destination}")
-                destinations.add(destination)
-                digest = _digest(source)
-                raw_tags = [str(tag) for tag in source_metadata.get("tags", [])]
-                metadata = {
-                    key: value
-                    for key, value in source_metadata.items()
-                    if key not in {"generated_by", "visibility", "storage_provider", "storage_path", "storage_id"}
+            if source.name.endswith(".meta.yaml") or source.name in IGNORED_NAMES:
+                continue
+            if source.suffix.lower() not in SUPPORTED_SUFFIXES:
+                raise ValueError(f"Unsupported library document: {source}")
+            _validate_document(source, source_root)
+            source_metadata = _read_metadata(source)
+            relative = source.relative_to(folder)
+            destination = _destination(root, category, relative)
+            destination.resolve(strict=False).relative_to(root)
+            if destination in destinations:
+                raise ValueError(f"Multiple provider documents map to {destination}")
+            destinations.add(destination)
+            digest = _digest(source)
+            raw_tags = [str(tag) for tag in source_metadata.get("tags", [])]
+            metadata = {
+                key: value
+                for key, value in source_metadata.items()
+                if key
+                not in {
+                    "generated_by",
+                    "visibility",
+                    "storage_provider",
+                    "storage_path",
+                    "storage_id",
                 }
-                metadata.update(
-                    {
-                        "generated_by": GENERATED_BY,
-                        "visibility": visibility,
-                        "title": str(source_metadata.get("title") or source.stem),
-                        "authors": [str(author) for author in source_metadata.get("authors", [])],
-                        "tags": expanded_tags(
-                            raw_tags,
-                            taxonomy,
-                            f"{source_metadata.get('title', source.stem)} {' '.join(raw_tags)}",
-                        ),
-                        "storage_provider": provider,
-                        "storage_path": str(source.relative_to(source_root)),
-                        "storage_id": f"sha256:{digest}",
-                    }
-                )
-                target_sidecar = _sidecar(destination)
-                current_metadata = _read_metadata(destination) if target_sidecar.exists() else {}
-                preserve_sidecar = bool(
-                    target_sidecar.exists() and current_metadata.get("generated_by") != GENERATED_BY
-                )
-                if not destination.exists():
-                    action = "copied"
-                elif not destination.is_file():
-                    conflicts.append(destination)
-                    continue
-                elif _digest(destination) == digest:
-                    action = "unchanged"
-                elif preserve_sidecar or not target_sidecar.exists():
-                    conflicts.append(destination)
-                    continue
-                else:
-                    action = "updated"
-                items.append(_Item(source, destination, metadata, action, preserve_sidecar))
+            }
+            metadata.update(
+                {
+                    "generated_by": GENERATED_BY,
+                    "title": str(source_metadata.get("title") or source.stem),
+                    "authors": [str(author) for author in source_metadata.get("authors", [])],
+                    "tags": expanded_tags(
+                        raw_tags,
+                        taxonomy,
+                        f"{source_metadata.get('title', source.stem)} {' '.join(raw_tags)}",
+                    ),
+                    "storage_provider": provider,
+                    "storage_path": str(source.relative_to(source_root)),
+                    "storage_id": f"sha256:{digest}",
+                }
+            )
+            target_sidecar = _sidecar(destination)
+            current_metadata = _read_metadata(destination) if target_sidecar.exists() else {}
+            preserve_sidecar = bool(
+                target_sidecar.exists() and current_metadata.get("generated_by") != GENERATED_BY
+            )
+            if not destination.exists():
+                action = "copied"
+            elif not destination.is_file():
+                conflicts.append(destination)
+                continue
+            elif _digest(destination) == digest:
+                action = "unchanged"
+            elif preserve_sidecar or not target_sidecar.exists():
+                conflicts.append(destination)
+                continue
+            else:
+                action = "updated"
+            items.append(_Item(source, destination, metadata, action, preserve_sidecar))
     if conflicts:
         paths = "\n".join(f"- {path}" for path in conflicts)
         raise FileExistsError(f"Refusing to overwrite locally managed documents:\n{paths}")

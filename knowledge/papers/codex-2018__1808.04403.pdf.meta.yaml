@@ -1,5 +1,4 @@
 generated_by: scripts/download_open_arxiv.py
-visibility: public
 title: 'CoDEx: Wilson coefficient calculator connecting SMEFT to UV theory'
 tags:
 - eft

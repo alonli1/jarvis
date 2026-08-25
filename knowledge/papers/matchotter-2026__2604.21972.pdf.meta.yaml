@@ -1,5 +1,4 @@
 generated_by: scripts/download_open_arxiv.py
-visibility: public
 title: 'Matchotter: An Automated Tool for Dimensional Reduction at Finite Temperature'
 tags:
 - eft

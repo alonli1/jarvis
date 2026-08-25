@@ -1,19 +1,9 @@
 from __future__ import annotations
 
 from datetime import date
-from enum import IntEnum
 from typing import Any
+
 from pydantic import BaseModel, Field
-
-
-class Visibility(IntEnum):
-    public = 0
-    group = 1
-    confidential = 2
-
-    @classmethod
-    def parse(cls, value: str) -> "Visibility":
-        return cls[value]
 
 
 class Chunk(BaseModel):
@@ -23,7 +13,6 @@ class Chunk(BaseModel):
     title: str | None = None
     page: int | None = None
     section: str | None = None
-    visibility: str = "public"
     tags: list[str] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
 

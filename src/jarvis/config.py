@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import tomllib
 from dataclasses import dataclass
 from pathlib import Path
-import tomllib
 
 
 @dataclass(frozen=True)
@@ -32,13 +32,6 @@ class RetrievalConfig:
 
 
 @dataclass(frozen=True)
-class PrivacyConfig:
-    local_model_prefixes: tuple[str, ...]
-    external_default_max_visibility: str
-    local_default_max_visibility: str
-
-
-@dataclass(frozen=True)
 class LiteratureConfig:
     default_days: int
     max_results_per_query: int
@@ -58,7 +51,6 @@ class Config:
     assistant: AssistantConfig
     index: IndexConfig
     retrieval: RetrievalConfig
-    privacy: PrivacyConfig
     literature: LiteratureConfig
     novelty: NoveltyConfig
 
@@ -81,11 +73,6 @@ def load_config(root: Path | None = None) -> Config:
         assistant=AssistantConfig(**raw["assistant"]),
         index=IndexConfig(**raw["index"]),
         retrieval=RetrievalConfig(**raw["retrieval"]),
-        privacy=PrivacyConfig(
-            local_model_prefixes=tuple(raw["privacy"]["local_model_prefixes"]),
-            external_default_max_visibility=raw["privacy"]["external_default_max_visibility"],
-            local_default_max_visibility=raw["privacy"]["local_default_max_visibility"],
-        ),
         literature=LiteratureConfig(**raw["literature"]),
         novelty=NoveltyConfig(**raw["novelty"]),
     )

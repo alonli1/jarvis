@@ -1,5 +1,4 @@
 generated_by: scripts/download_open_arxiv.py
-visibility: public
 title: 'FIRE6: Feynman Integral REduction with Modular Arithmetic'
 tags:
 - automation

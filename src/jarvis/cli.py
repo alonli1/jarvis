@@ -19,6 +19,7 @@ from .config import find_repo_root, load_config
 from .graph_server import create_graph_server
 from .graph_view import render_graph_html
 from .index import HybridIndex
+from .library_sync import sync_library
 from .literature import search_all
 from .literature_graph import (
     build_graph,
@@ -26,7 +27,6 @@ from .literature_graph import (
     render_graph_markdown,
     save_graph,
 )
-from .library_sync import sync_library
 from .novelty import evaluate_project, render_markdown
 from .retrieval import render_retrieval_prompt, retrieve_hits
 from .taxonomy import normalize_tag
@@ -112,38 +112,31 @@ def library_sync_command(
 def ask(
     question: str = typer.Argument(...),
     model: str | None = typer.Option(None, "--model"),
-    allow_private: bool = typer.Option(
-        False, "--allow-private", help="Allow group/confidential context to external models"
-    ),
 ) -> None:
     """Answer a question using retrieved group knowledge and a selected LLM."""
     cfg = load_config()
     selected = model or cfg.assistant.default_model
-    answer, hits = answer_question(cfg, question, selected, allow_private=allow_private)
+    answer, hits = answer_question(cfg, question, selected)
     console.print(answer)
     if hits:
         console.print("\n[bold]Retrieved sources[/bold]")
         for i, hit in enumerate(hits, start=1):
             c = hit.chunk
             loc = c.source_path + (f":p{c.page}" if c.page else "")
-            console.print(f"[S{i}] {loc} (score={hit.score:.3f}, visibility={c.visibility})")
+            console.print(f"[S{i}] {loc} (score={hit.score:.3f})")
 
 
 @app.command()
 def retrieve(
     question: str = typer.Argument(...),
     limit: int | None = typer.Option(None, "--limit", min=1, max=50),
-    max_visibility: str = typer.Option("public", "--max-visibility"),
     tag: list[str] | None = typer.Option(  # noqa: B008
         None, "--tag", help="Require a research tag."
     ),
 ) -> None:
     """Retrieve cited context for a web chat or another AI client without calling an LLM."""
-    visibility = max_visibility.lower()
-    if visibility not in {"public", "group", "confidential"}:
-        raise typer.BadParameter("--max-visibility must be public, group, or confidential")
     cfg = load_config()
-    hits = retrieve_hits(cfg, question, limit=limit, max_visibility=visibility, tags=tag)
+    hits = retrieve_hits(cfg, question, limit=limit, tags=tag)
     console.print(render_retrieval_prompt(question, hits), markup=False)
 
 

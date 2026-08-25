@@ -10,7 +10,6 @@ def sample_hits() -> list[SearchHit]:
                 text="A heavy scalar generates curvature-squared operators.",
                 source_path="knowledge/papers/scalar.pdf",
                 page=12,
-                visibility="public",
             ),
             score=0.9,
         )
