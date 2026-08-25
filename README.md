@@ -6,6 +6,8 @@ Jarvis is a Git-friendly scientific knowledge and literature-monitoring assistan
 
 Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other LiteLLM-compatible backends while sharing the same papers, books, group notes, active manuscripts, novelty claims, and retrieval index.
 
+See [docs/ROADMAP.md](docs/ROADMAP.md) for the current implementation phases and research workflow.
+
 ## What v1 already does
 
 - Ingests PDF, LaTeX, Markdown, text, and curated reference manifests.
