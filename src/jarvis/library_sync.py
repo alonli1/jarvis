@@ -73,8 +73,11 @@ def _validate_document(path: Path, root: Path) -> None:
 
 
 def _destination(root: Path, visibility: str, category: str, relative: Path) -> Path:
+    if category in {"papers", "books"}:
+        return root / "knowledge" / category / relative
     if visibility == "public":
-        return root / "knowledge" / "library" / visibility / category / relative
+        category_path = Path("notes/manuscripts") if category == "manuscripts" else Path(category)
+        return root / "knowledge" / category_path / relative
     return root / "group" / "library" / visibility / category / relative
 
 
@@ -108,6 +111,7 @@ def _plan(root: Path, source_root: Path, provider: str) -> list[_Item]:
     taxonomy = load_taxonomy(root)
     items: list[_Item] = []
     conflicts: list[Path] = []
+    destinations: set[Path] = set()
     for visibility in VISIBILITIES:
         for category in CATEGORIES:
             folder = source_root / visibility / category
@@ -132,6 +136,9 @@ def _plan(root: Path, source_root: Path, provider: str) -> list[_Item]:
                 relative = source.relative_to(folder)
                 destination = _destination(root, visibility, category, relative)
                 destination.resolve(strict=False).relative_to(root)
+                if destination in destinations:
+                    raise ValueError(f"Multiple provider documents map to {destination}")
+                destinations.add(destination)
                 digest = _digest(source)
                 raw_tags = [str(tag) for tag in source_metadata.get("tags", [])]
                 metadata = {

@@ -27,7 +27,7 @@ def test_sync_maps_visibility_and_writes_portable_metadata(tmp_path):
     result = sync_library(repo, source, provider="dropbox")
 
     assert result.copied == 3
-    public = repo / "knowledge" / "library" / "public" / "papers" / "paper.pdf"
+    public = repo / "knowledge" / "papers" / "paper.pdf"
     group = repo / "group" / "library" / "group" / "notes" / "calculation.md"
     private = (
         repo / "group" / "library" / "confidential" / "manuscripts" / "draft.tex"
@@ -51,7 +51,7 @@ def test_sync_dry_run_and_manual_conflict_are_non_destructive(tmp_path):
     remote = write_document(source, "public/notes/note.md", b"remote\n")
 
     result = sync_library(repo, source, dry_run=True)
-    destination = repo / "knowledge" / "library" / "public" / "notes" / "note.md"
+    destination = repo / "knowledge" / "notes" / "note.md"
     assert result.copied == 1
     assert not destination.exists()
 

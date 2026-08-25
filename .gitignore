@@ -17,11 +17,20 @@ knowledge/papers/*.pdf
 knowledge/books/*.pdf
 knowledge/papers/**/*.pdf
 knowledge/books/**/*.pdf
-# Synced bytes stay in the approved provider; generated metadata remains trackable.
-knowledge/library/**/*.pdf
-knowledge/library/**/*.tex
-knowledge/library/**/*.md
-knowledge/library/**/*.txt
+# Synced paper/book bytes stay in the approved provider; metadata remains trackable.
+knowledge/papers/*.tex
+knowledge/papers/*.md
+knowledge/papers/*.txt
+knowledge/papers/**/*.tex
+knowledge/papers/**/*.md
+knowledge/papers/**/*.txt
+knowledge/books/*.tex
+knowledge/books/*.md
+knowledge/books/*.txt
+knowledge/books/**/*.tex
+knowledge/books/**/*.md
+knowledge/books/**/*.txt
+# Group/private notes and manuscripts stay provider-managed.
 group/library/**/*.pdf
 group/library/**/*.tex
 group/library/**/*.md

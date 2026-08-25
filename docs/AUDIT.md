@@ -15,7 +15,7 @@ repository state.
 | Tests | `uv sync --extra dev`; `uv run pytest -q`: 31 passed |
 | Coverage | 66%; weakest areas are the live adapters, CLI, novelty orchestration, and index integration |
 | Real retrieval smoke test | Existing local index returned three cited PDF passages for a gravity-EFT query |
-| Provider sync smoke test | A real UOLEA PDF was synced from an isolated Dropbox-style folder, indexed into 36 chunks, and retrieved with a page citation |
+| Provider sync smoke test | The Dropbox-backed UOLEA PDF was synced, indexed into 36 chunks, and retrieved with citations to pages 1 and 13 |
 | Lint | Not clean: 22 pre-existing Ruff findings, mainly import ordering, timezone-aware dates, Typer `B008`, and two intentional broad exception boundaries |
 
 `uv sync` installs runtime dependencies only because test tools are an optional `dev` extra.
@@ -35,14 +35,14 @@ an in-memory identifier. Neither warning affected the checks.
 | Retrieval index | Local Qdrant index exists and answers real PDF queries |
 | Citation/relationship graph | Cached graph has 76 nodes and 611 edges |
 | Manuscripts | Only `example_project`; its claim is still a placeholder |
-| Shared storage | Provider-neutral mounted-folder sync is implemented; no real provider mount has been configured yet |
+| Shared storage | Dropbox library bootstrapped with 75 documents: 62 public and 13 group-visible |
 | Symbolic packages | No `packages/` registry exists |
 | Symbolic execution | No `workbench/` or provenance format exists |
 | Predictions | No numeric evaluation or theory-to-prediction pipeline exists |
 
-The PDFs make this installation useful locally, but they do not satisfy Phase 1's durable,
-shared-library goal until the group places them in Dropbox or another approved provider and
-runs the documented sync.
+The 75 local documents now have canonical Dropbox copies organized by visibility. Dropbox client
+sync status remains an external operational concern; Jarvis verified the local Dropbox tree
+byte-for-byte against this clone.
 
 ## Capability audit
 
@@ -91,5 +91,5 @@ runs the documented sync.
 - The local graph server has no authentication; documentation correctly limits it to localhost.
 - Qdrant server mode has no authentication/TLS configuration in this repository.
 
-These are recorded rather than silently expanded into later-phase work. The next Phase 1 gate is
-connecting the real provider folder and verifying one provider-hosted paper end to end.
+These are recorded rather than silently expanded into later-phase work. Phase 1's first-paper
+gate is complete; Phase 2 starts by identifying the symbolic packages the group actually uses.

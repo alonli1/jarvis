@@ -35,12 +35,13 @@ Visibility comes from the first directory and cannot be weakened by a sidecar:
 - `group`: unpublished group material; external use requires `--allow-private`.
 - `confidential`: restricted material; external use requires `--allow-private` and is logged.
 
-Within each category, subdirectories are preserved. Public files land under
-`knowledge/library/public/<category>/`; group and confidential files land under
-`group/library/<visibility>/<category>/`. `jarvis ingest` discovers all of these destinations.
-Synced document bytes are Git-ignored while generated sidecars remain available to commit as
-metadata. Review confidential metadata before committing it to any repository whose membership
-is broader than the confidential tier.
+Within each category, subdirectories are preserved. Papers and books reuse
+`knowledge/papers/` and `knowledge/books/`, with explicit sidecar visibility. Public notes use
+`knowledge/notes/`; public manuscripts use `knowledge/notes/manuscripts/`. Group and confidential
+notes/manuscripts use `group/library/<visibility>/<category>/`. `jarvis ingest` discovers every
+destination. Synced document bytes are Git-ignored while generated sidecars remain available to
+commit as metadata. Review confidential metadata before committing it to any repository whose
+membership is broader than the confidential tier.
 
 ## Run
 
