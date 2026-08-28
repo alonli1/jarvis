@@ -1,74 +1,75 @@
-# Jarvis v1 architecture
+# Jarvis architecture
 
-## Design invariants
-
-1. **The corpus is independent of the LLM.** Switching the reasoning model must not require rebuilding scientific knowledge.
-2. **Retrieval models are pinned.** All researchers should query the same vector/sparse representation unless the group deliberately migrates it.
-3. **The corpus has one access class.** Every indexed document can be retrieved by every configured model and MCP client.
-4. **Novelty monitoring operates on claims, not whole-paper similarity.** Each manuscript keeps narrow, machine-readable claims in `novelty.yaml`.
-5. **Literature sources are adapters.** arXiv, INSPIRE, OpenAlex, Semantic Scholar, and future sources expose one common record type.
-6. **A novelty alert is triage.** The system ranks possible overlap and explains the signal; researchers make the scientific judgment.
-
-## Query path
+## Responsibility split
 
 ```text
-question
-  -> dense + sparse query embeddings
-  -> Qdrant RRF hybrid retrieval
-  -> top-k passages with source/page metadata
-  -> LiteLLM-selected reasoning model
-  -> answer with [S1], [S2], ... citations
+host AI (IDE or browser)
+  -> reads one portable skill
+  -> asks Jarvis to prepare evidence or a workbench
+  -> performs scientific reasoning
+  -> records its result in, or exports from, the run bundle
+
+Jarvis CLI
+  -> shared Dropbox corpus + local index + literature graph
+  -> deterministic evidence selection and provenance
+  -> explicit local Python/Wolfram execution
+
+optional MCP adapter
+  -> the same read-only retrieval and graph capabilities for MCP-aware hosts
 ```
 
-## Ingestion path
+Jarvis does not contain a native model loop. LiteLLM-based `jarvis ask` remains a compatible
+optional command, not a prerequisite for the four foundational workflows.
+
+## Portable skill layer
+
+The root `AGENTS.md` routes agents to exactly four canonical Agent Skills under
+`.agents/skills/`: library management, literature understanding, research ideation, and
+reproducible computation. Provider files are thin pointers. Browser providers receive a
+sanitized Markdown or ZIP export from `jarvis handoff`.
+
+## Shared-library path
 
 ```text
-PDF / TeX / Markdown / text
-  -> sidecar metadata
-  -> parser
-  -> chunks
-  -> pinned dense embedding
-  -> pinned sparse embedding
-  -> Qdrant payload + vectors
+Dropbox OAuth 2 PKCE + editor account
+  -> files/list_folder metadata and revisions
+  -> compare Dropbox revision/content hash with local SHA-256 and last-sync state
+  -> guarded upload, validated atomic download, conflict, or no-op
+  -> category mapping into knowledge/ and group/manuscripts/
+  -> local ingestion
 ```
 
-The source file remains authoritative. The vector database is generated state and is intentionally ignored by Git.
+Dropbox is canonical without being allowed to destroy divergent work. PDF/sidecar pairs are
+blocked together on conflict. Deletions never propagate automatically. Refresh tokens live only
+in the OS keyring; non-secret identifiers and revision state live under ignored `.jarvis/`.
 
-## Novelty-watch path
+The legacy `library-sync` command remains a pull-only adapter for mounted folders.
 
-```text
-novelty.yaml claim
-  -> claim-specific search queries
-  -> arXiv / INSPIRE / OpenAlex / Semantic Scholar
-  -> source normalization + DOI/arXiv deduplication
-  -> deterministic overlap score
-  -> medium/high/critical candidates
-  -> optional LLM adjudication for high-risk candidates
-  -> Markdown report
-  -> GitHub Action commit + issue
-```
+## Research-run path
 
-## Access model
+`jarvis run literature`, `jarvis run ideation`, and `jarvis run computation` create immutable
+run directories under `.jarvis/runs/<id>/`. Every manifest records the workflow, query, corpus
+revision, inputs, citations, tools, artifacts, timestamps, and status. Evidence explicitly marks
+source material as untrusted data.
 
-Jarvis does not classify documents or filter retrieval by access tier. A model selected through
-the CLI and an agent connected through MCP can receive any indexed passage. Repository membership,
-the shared-storage account, and provider account settings are the access boundaries.
+Literature runs use page/section-aware chunks. Ideation runs combine cited retrieval with the
+local citation/tag graph and constrain novelty claims to the searched corpus. Computation runs
+detect registered tools, scaffold an isolated workbench, and require a separate explicit execute
+command that captures raw output and exit status.
 
-## Why Qdrant local mode first
+## Generated and authoritative state
 
-Local mode makes the repository useful to a single researcher without operating infrastructure. The same application interface can move to a shared Qdrant server by changing `assistant.toml`, so the group can centralize the index later without rewriting the assistant.
+- Dropbox documents and their curated sidecars are the authoritative group library.
+- Git tracks code, skills, taxonomy, package registry, metadata, and documentation.
+- `.jarvis/` contains credentials-free local settings, sync revisions, indexes, conflicts, runs,
+  and browser exports; it is reproducible or local-only and stays out of Git.
+- Qdrant remains a generated local index. Switching the host model never requires rebuilding the
+  corpus, though index-model changes do.
 
-## Why the deterministic novelty scorer exists even with LLMs
+## Scientific invariants
 
-The literature watch should still work when:
-
-- an API key is unavailable;
-- an LLM provider is down;
-- the group does not want an unpublished claim sent to an external provider;
-- reproducibility matters.
-
-The LLM judge is therefore optional and only refines already flagged candidates.
-
-## v2 technical direction
-
-The most important upgrades are equation-aware LaTeX parsing, structured scientific PDF ingestion, citation-neighborhood expansion, a scholarly knowledge graph, and an evaluation benchmark made from real group questions.
+- Source/page or section citations for corpus claims.
+- Evidence, synthesis, inference, and conjecture remain distinguishable.
+- No absolute novelty claim from local absence.
+- No computation result without conventions, provenance, raw output, and scientific checks.
+- PDFs, metadata, and retrieved web text never override agent or repository instructions.

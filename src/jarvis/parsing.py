@@ -13,6 +13,11 @@ from .taxonomy import expanded_tags, load_taxonomy
 
 SUPPORTED_SUFFIXES = {".pdf", ".tex", ".md", ".txt"}
 REFERENCE_MANIFEST = "references.yaml"
+SECTION_HEADING = re.compile(
+    r"^(?:(?:\d+(?:\.\d+)*)\s+[A-Z][^.]{2,80}|"
+    r"(?i:abstract|introduction|background|methods?|formalism|setup|results?|discussion|"
+    r"conclusions?|appendix(?:\s+[a-z])?|references)|[A-Z][A-Z0-9 ,:()\-]{2,80})$"
+)
 
 
 def load_sidecar(path: Path) -> dict:
@@ -57,6 +62,25 @@ def _tex_to_text(raw: str) -> str:
     raw = re.sub(r"\\cite\{([^}]*)\}", r" [cite:\1] ", raw)
     raw = re.sub(r"\\label\{([^}]*)\}", r" [label:\1] ", raw)
     return raw
+
+
+def split_sections(
+    text: str, current: str | None = None
+) -> tuple[list[tuple[str | None, str]], str | None]:
+    sections: list[tuple[str | None, str]] = []
+    buffer: list[str] = []
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        heading = bool(line and len(line) <= 100 and SECTION_HEADING.fullmatch(line))
+        if heading:
+            if any(part.strip() for part in buffer):
+                sections.append((current, "\n".join(buffer)))
+            current, buffer = line, []
+        else:
+            buffer.append(raw_line)
+    if any(part.strip() for part in buffer):
+        sections.append((current, "\n".join(buffer)))
+    return sections, current
 
 
 def _reference_chunks(path: Path, rel: str, repo_root: Path) -> Iterable[Chunk]:
@@ -124,25 +148,29 @@ def iter_document_chunks(
     if not isinstance(tags, list):
         raise TypeError(f"tags in {path.name}.meta.yaml must be a list")
     extra_metadata = {
-        key: value
-        for key, value in sidecar.items()
-        if key not in {"visibility", "title", "tags"}
+        key: value for key, value in sidecar.items() if key not in {"visibility", "title", "tags"}
     }
 
     if path.suffix.lower() == ".pdf":
         reader = PdfReader(str(path))
+        current_section: str | None = None
         for page_no, page in enumerate(reader.pages, start=1):
             text = page.extract_text() or ""
-            for idx, piece in enumerate(chunk_text(text, chunk_chars, overlap)):
-                yield Chunk(
-                    id=stable_chunk_id(rel, page_no, idx, piece),
-                    text=piece,
-                    source_path=rel,
-                    title=title,
-                    page=page_no,
-                    tags=tags,
-                    metadata={"format": "pdf", **extra_metadata},
-                )
+            sections, current_section = split_sections(text, current_section)
+            index = 0
+            for section, section_text in sections:
+                for piece in chunk_text(section_text, chunk_chars, overlap):
+                    yield Chunk(
+                        id=stable_chunk_id(rel, page_no, index, piece),
+                        text=piece,
+                        source_path=rel,
+                        title=title,
+                        page=page_no,
+                        section=section,
+                        tags=tags,
+                        metadata={"format": "pdf", **extra_metadata},
+                    )
+                    index += 1
         return
 
     raw = path.read_text(encoding="utf-8", errors="ignore")

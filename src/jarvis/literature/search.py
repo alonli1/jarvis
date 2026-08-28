@@ -2,12 +2,23 @@ from __future__ import annotations
 
 from datetime import date
 
+import httpx
+
+from ..config import Config
+from ..models import LiteratureRecord
 from .arxiv import ArxivSource
 from .inspire import InspireSource
 from .openalex import OpenAlexSource
 from .semantic_scholar import SemanticScholarSource
-from ..config import Config
-from ..models import LiteratureRecord
+
+
+def _source_error(exc: Exception) -> str:
+    if isinstance(exc, httpx.HTTPStatusError):
+        status = exc.response.status_code
+        if status == 429:
+            return "rate limited (HTTP 429); retry later or configure this source's API key"
+        return f"HTTP {status} from literature provider"
+    return f"{type(exc).__name__}: {exc}"
 
 
 def source_registry(config: Config):
@@ -56,6 +67,6 @@ def search_all(
             records.extend(
                 registry[name].search(query, since, config.literature.max_results_per_query)
             )
-        except Exception as exc:  # source outages should not kill the whole watch
-            errors[name] = f"{type(exc).__name__}: {exc}"
+        except Exception as exc:  # noqa: BLE001 - one source outage must not kill the watch
+            errors[name] = _source_error(exc)
     return deduplicate(records), errors

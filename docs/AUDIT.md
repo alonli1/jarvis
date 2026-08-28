@@ -1,5 +1,8 @@
 # Jarvis implementation audit
 
+> Historical Phase 0 snapshot. See [ARCHITECTURE.md](ARCHITECTURE.md) and
+> [ROADMAP.md](ROADMAP.md) for the current harness, Dropbox, skills, and computation design.
+
 Audited 2026-08-25 against `README.md`, `docs/ARCHITECTURE.md`, and commit
 `10879cc`. This audit describes the working tree after the Phase 0 implementation work listed
 below. The attached roadmap's 2026-08-22 inventory is a historical snapshot, not the current
@@ -55,16 +58,16 @@ byte-for-byte against this clone.
 | Web-subscription workflow | Implemented | `jarvis retrieve` produces a pasteable, cited prompt without calling an LLM. |
 | Uniform corpus access | Implemented | CLI models and MCP clients search the same complete corpus. Access is controlled through repository, shared-storage, and model-account membership. |
 | MCP | Implemented and tested | Retrieval plus five graph tools are exposed; workspace and global Antigravity configurations exist. |
-| Literature adapters | Implemented, not integration-tested | arXiv, INSPIRE, OpenAlex, and Semantic Scholar adapters normalize records. Live services, rate limits, and API changes remain outside unit coverage. |
+| Literature adapters | Implemented, locally tested | arXiv, INSPIRE, OpenAlex, and Semantic Scholar adapters normalize records. Live services and rate limits remain outside deterministic coverage; provider failures are reported as partial coverage. |
 | Novelty triage | Implemented, placeholder-only | Claim parsing, deterministic lexical scoring, risk thresholds, optional LLM review, and reports exist. There are no real group claims to evaluate. |
 | Citation graph | Implemented and tested | Direct citations, bibliographic coupling, topic similarity, manuscript relevance, MCP queries, static views, and the live local application exist. |
-| Daily GitHub workflow | Defined, not run here | The workflow installs Jarvis, runs the watch, commits a report, and creates an issue. It creates new issues; it does not update an existing one. |
+| Literature surveillance | Skill-owned and on demand | `literature-understanding` defines report review. A manual GitHub workflow can commit a report but never creates an issue. |
 | Shared Qdrant | Configurable, not deployed | Server mode and Docker Compose exist. The image is `latest`, not version-pinned, and access control is not configured. |
 
 ## Documentation corrections made
 
-- The README no longer says the workflow updates an existing GitHub issue; the workflow only
-  creates one.
+- Literature surveillance is an on-demand `literature-understanding` mode; automatic scheduling
+  and issue creation were removed.
 - The novelty description now states that the date window filters discovery while
   publication/source metadata is reported rather than included in the overlap score.
 

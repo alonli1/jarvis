@@ -43,3 +43,39 @@ research_tags:
     any: [uv_ir_dictionary, tree_matching, operator_basis]
     all: [smeft, matching]
     phrases: [smeft uv dictionary, smeft matching]
+  renormalization_and_eft:
+    label: Renormalization and effective field theory
+    any: [renormalization, effective_field_theory, wilson_coefficients, operator_mixing]
+    phrases: [renormalization group, wilson coefficient, effective field theory]
+  black_hole_physics:
+    label: Black-hole physics
+    any: [black_holes, horizons, hawking_radiation, tidal_response]
+    phrases: [black hole, event horizon, hawking radiation, tidal response]
+  quantum_cosmology:
+    label: Quantum cosmology
+    any: [quantum_cosmology, inflation, early_universe, cosmological_perturbations]
+    phrases: [quantum cosmology, early universe, cosmological perturbation]
+  scattering_amplitudes:
+    label: Scattering amplitudes
+    any: [amplitudes, unitarity, double_copy, on_shell_methods]
+    phrases: [scattering amplitude, double copy, unitarity cut, on-shell method]
+  canonical_quantum_gravity:
+    label: Canonical quantum gravity
+    any: [canonical_gravity, loop_quantum_gravity, hamiltonian_constraint]
+    phrases: [canonical quantum gravity, loop quantum gravity, hamiltonian constraint]
+  path_integral_quantum_gravity:
+    label: Path-integral quantum gravity
+    any: [path_integral, causal_dynamical_triangulations, spin_foams]
+    phrases: [gravitational path integral, causal dynamical triangulation, spin foam]
+  quantum_information_gravity:
+    label: Quantum information and gravity
+    any: [entanglement, holography, quantum_information, complexity]
+    phrases: [quantum information, entanglement entropy, holographic complexity]
+  semiclassical_gravity:
+    label: Semiclassical gravity
+    any: [semiclassical_gravity, backreaction, stress_energy_tensor, particle_creation]
+    phrases: [semiclassical gravity, semiclassical einstein equation, particle creation]
+  gravitational_observables:
+    label: Gravitational observables
+    any: [observables, gravitational_waves, lensing, memory_effect, ppn]
+    phrases: [gravitational observable, gravitational wave, memory effect, ppn parameter]

@@ -1,6 +1,6 @@
 from typing import ClassVar
 
-from jarvis.parsing import chunk_text, discover_documents, iter_document_chunks
+from jarvis.parsing import chunk_text, discover_documents, iter_document_chunks, split_sections
 
 
 def test_chunk_text_overlap_and_content():
@@ -8,6 +8,12 @@ def test_chunk_text_overlap_and_content():
     chunks = chunk_text(text, size=200, overlap=30)
     assert len(chunks) >= 2
     assert all(chunks)
+
+
+def test_pdf_section_headings_are_preserved_for_citations():
+    sections, current = split_sections("1 Introduction\nEvidence.\n2 Results\nA result.")
+    assert sections == [("1 Introduction", "Evidence."), ("2 Results", "A result.")]
+    assert current == "2 Results"
 
 
 def test_reference_manifest_creates_one_searchable_chunk_per_reference(tmp_path):

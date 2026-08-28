@@ -27,3 +27,8 @@ user_agent = "Jarvis/0.1 research-assistant"
 high_threshold = 0.62
 critical_threshold = 0.78
 medium_threshold = 0.42
+
+[dropbox]
+# Public PKCE application key. A group administrator may commit it here, or each
+# researcher may set JARVIS_DROPBOX_APP_KEY before running `jarvis setup`.
+app_key = ""

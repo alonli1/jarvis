@@ -30,7 +30,15 @@ knowledge/books/*.txt
 knowledge/books/**/*.tex
 knowledge/books/**/*.md
 knowledge/books/**/*.txt
-# Group/private notes and manuscripts stay provider-managed.
+# Shared notes and manuscripts stay provider-managed; metadata sidecars remain trackable.
+knowledge/notes/**/*.pdf
+knowledge/notes/**/*.tex
+knowledge/notes/**/*.md
+knowledge/notes/**/*.txt
+group/manuscripts/**/*.pdf
+group/manuscripts/**/*.tex
+group/manuscripts/**/*.md
+group/manuscripts/**/*.txt
 group/library/**/*.pdf
 group/library/**/*.tex
 group/library/**/*.md

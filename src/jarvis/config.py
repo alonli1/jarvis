@@ -46,6 +46,11 @@ class NoveltyConfig:
 
 
 @dataclass(frozen=True)
+class DropboxConfig:
+    app_key: str = ""
+
+
+@dataclass(frozen=True)
 class Config:
     root: Path
     assistant: AssistantConfig
@@ -53,6 +58,7 @@ class Config:
     retrieval: RetrievalConfig
     literature: LiteratureConfig
     novelty: NoveltyConfig
+    dropbox: DropboxConfig
 
 
 def find_repo_root(start: Path | None = None) -> Path:
@@ -75,4 +81,5 @@ def load_config(root: Path | None = None) -> Config:
         retrieval=RetrievalConfig(**raw["retrieval"]),
         literature=LiteratureConfig(**raw["literature"]),
         novelty=NoveltyConfig(**raw["novelty"]),
+        dropbox=DropboxConfig(**raw.get("dropbox", {})),
     )

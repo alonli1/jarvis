@@ -1,0 +1,46 @@
+version: 1
+tools:
+  - id: wolfram
+    ecosystem: mathematica
+    executable: wolframscript
+    version_args: [--version]
+    purpose: Wolfram Language symbolic and numerical calculations
+    related_topics: [computational_qft_tools, curved_spacetime_qft]
+  - id: xact
+    ecosystem: mathematica
+    executable: wolframscript
+    package: xAct`xTensor`
+    marker: xAct/xTensor/xTensor.m
+    version_regex: '\$Version=\{"([0-9.]+)"'
+    purpose: Tensor algebra and perturbation theory for GR
+    related_topics: [curved_spacetime_qft, gravitational_eft]
+  - id: feyncalc
+    ecosystem: mathematica
+    executable: wolframscript
+    package: FeynCalc`
+    marker: FeynCalc/FeynCalc.m
+    version_regex: '\$FeynCalcVersion = "([0-9.]+)"'
+    purpose: Perturbative QFT and amplitude calculations
+    related_topics: [computational_qft_tools]
+  - id: matchete
+    ecosystem: mathematica
+    executable: wolframscript
+    package: Matchete`
+    marker: Matchete/Package/Matchete.m
+    version_file: Matchete/version
+    purpose: Automated effective-field-theory matching
+    related_topics: [automated_eft_matching, one_loop_effective_action]
+  - id: fire7
+    ecosystem: mathematica
+    executable: wolframscript
+    package: FIRE`
+    marker: FIRE7/FIRE7.m
+    version_regex: 'FIRE, version ([0-9.]+)'
+    purpose: Integration-by-parts reduction of loop integrals
+    related_topics: [computational_qft_tools]
+  - id: python
+    ecosystem: python
+    executable: python
+    package: sympy
+    purpose: Reproducible symbolic and numerical cross-checks
+    related_topics: [computational_qft_tools]

@@ -1,14 +1,15 @@
-name: daily-literature-watch
+name: on-demand-literature-watch
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "17 6 * * *"
-      timezone: "Asia/Jerusalem"
+    inputs:
+      days:
+        description: Recent publication window in days
+        required: true
+        default: "2"
 
 permissions:
   contents: write
-  issues: write
 
 jobs:
   watch:
@@ -29,15 +30,7 @@ jobs:
           SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: uv run jarvis watch --days 2
-
-      - name: Locate report
-        id: report
-        shell: bash
-        run: |
-          REPORT="literature/reports/$(date +%F)-daily.md"
-          echo "path=$REPORT" >> "$GITHUB_OUTPUT"
-          echo "title=Literature watch $(date +%F)" >> "$GITHUB_OUTPUT"
+        run: uv run jarvis watch --days "${{ inputs.days }}"
 
       - name: Commit report
         shell: bash
@@ -51,13 +44,3 @@ jobs:
             git commit -m "literature watch: $(date +%F)"
             git push
           fi
-
-      - name: Open GitHub issue for report
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPORT: ${{ steps.report.outputs.path }}
-          TITLE: ${{ steps.report.outputs.title }}
-        shell: bash
-        run: |
-          gh issue create --title "$TITLE" --body-file "$REPORT" --label "literature-watch" || \
-          gh issue create --title "$TITLE" --body-file "$REPORT"

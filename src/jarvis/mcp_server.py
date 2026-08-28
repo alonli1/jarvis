@@ -14,8 +14,8 @@ from .retrieval import retrieval_result, retrieve_hits
 mcp = MCPServer(
     "Jarvis",
     instructions=(
-        "Search the research group's indexed scientific knowledge and query its "
-        "literature relationship graph."
+        "Optional compatibility adapter for searching the research group's indexed scientific "
+        "knowledge and literature graph. Jarvis workflows and skills remain available without MCP."
     ),
 )
 

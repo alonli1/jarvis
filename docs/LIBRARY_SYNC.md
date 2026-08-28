@@ -1,87 +1,72 @@
-# Shared library sync
+# Shared Dropbox library
 
-Jarvis accepts any storage service that presents a normal local folder: Dropbox Desktop,
-OneDrive, Google Drive for desktop, Nextcloud, Syncthing, or a mounted network share. The
-storage provider is canonical; Jarvis pulls validated working copies into the clone for
-ingestion. No provider API is required.
+Dropbox is the canonical group document store. Jarvis uses OAuth 2 PKCE so each researcher acts
+through their own Dropbox account; a shared download link alone cannot upload changes.
 
-Supported documents are PDF, LaTeX, Markdown, and plain text. Unsupported files stop the sync
-instead of disappearing silently.
+## One-time group setup
 
-## Canonical provider layout
+1. Create a scoped Dropbox app with Full Dropbox access and offline refresh tokens.
+2. Grant only the file metadata/content read-write scopes needed by Jarvis.
+3. Put the public app key in `[dropbox].app_key` in `assistant.toml`. Never commit a client
+   secret, access token, or refresh token.
+4. Share the canonical folder with group members as editors.
 
-```text
-Jarvis/
-├── papers/
-├── books/
-├── notes/
-└── manuscripts/
-```
+The folder contains `papers/`, `books/`, `notes/`, and `manuscripts/`. Jarvis creates missing
+category folders after successful editor authorization.
 
-Within each category, subdirectories are preserved. Papers and books reuse
-`knowledge/papers/` and `knowledge/books/`. Notes use `knowledge/notes/`, and manuscripts use
-`group/manuscripts/`. `jarvis ingest` discovers every destination. Synced document bytes are
-Git-ignored while generated sidecars remain available to commit as metadata.
-
-## Run
-
-Preview first:
+## Researcher onboarding
 
 ```bash
-uv run jarvis library-sync "/absolute/path/to/Jarvis" --provider dropbox --dry-run
+uv sync
+uv run jarvis setup --dropbox-link "https://www.dropbox.com/scl/fo/..."
 ```
 
-Then sync and rebuild the index:
+The browser authorization uses PKCE. The refresh token is stored in the OS credential vault;
+`.jarvis/settings.toml` contains only the public app key, account ID, folder ID/path, and link.
+Setup downloads the library and builds the local index.
+
+Run `jarvis doctor` first and require `OK OS keyring`. Linux sessions need an unlocked Secret
+Service-compatible vault such as GNOME Keyring; Jarvis refuses plaintext-token fallback.
+
+## Daily use
 
 ```bash
-uv run jarvis library-sync "/absolute/path/to/Jarvis" --provider dropbox
-uv run jarvis ingest
+uv run jarvis library add ~/Downloads/paper.pdf --category papers
+uv run jarvis library status
+uv run jarvis library sync --dry-run
+uv run jarvis library sync
 ```
 
-The per-machine path may instead be supplied by the shell:
+`library add` validates and copies the document, creates or preserves its `.meta.yaml` sidecar,
+uploads both, and ingests the local document. Files copied manually into managed folders upload
+on the next sync.
+
+Synchronization compares the last local SHA-256 and Dropbox revision/content hash:
+
+- one-sided changes propagate;
+- simultaneous changes become conflicts;
+- local deletions are restored from Dropbox;
+- Dropbox deletions are reported but not mirrored or automatically resurrected;
+- no operation silently overwrites a newer Dropbox revision.
+
+Resolve a reviewed conflict explicitly:
 
 ```bash
-export JARVIS_LIBRARY_ROOT="/absolute/path/to/Jarvis"
-uv run jarvis library-sync --provider dropbox
+uv run jarvis library resolve papers/example.pdf --use local
+uv run jarvis library resolve papers/example.pdf --use dropbox
+uv run jarvis library resolve papers/example.pdf --use keep-both
 ```
 
-Use another label for another mounted service, for example `--provider nextcloud`. The
-compatibility script requested by the original roadmap is also available:
+`keep-both` saves the local version with a timestamp and restores Dropbox to the canonical path;
+the renamed local copy uploads as a separate document on the next sync.
+
+## Mounted-folder compatibility
+
+The old pull-only interface remains available for Dropbox Desktop, Nextcloud, or a network mount:
 
 ```bash
-uv run python scripts/sync_dropbox_library.py "/absolute/path/to/Jarvis" --dry-run
+uv run jarvis library-sync /path/to/Jarvis --provider synced-folder --dry-run
+uv run jarvis library-sync /path/to/Jarvis --provider synced-folder
 ```
 
-## Metadata
-
-An optional provider-side sidecar sits beside its document:
-
-```text
-paper.pdf
-paper.pdf.meta.yaml
-```
-
-```yaml
-title: Curved-space EFT matching
-authors: [A. Researcher, B. Researcher]
-tags: [gravitational_eft, one_loop_effective_action]
-dropbox_id: "id:optional-real-dropbox-id"
-```
-
-Jarvis writes local sidecars containing the title, authors, controlled tags, provider-relative
-`storage_path`, provider label, and a stable `sha256:` content ID. A real
-`dropbox_id` is copied when the provider sidecar supplies it; a synced filesystem does not expose
-Dropbox's internal ID on its own.
-
-## Safety rules
-
-- The operation is pull-only: it never changes or deletes provider files.
-- All documents are validated before any copy begins; PDFs must have a PDF header.
-- Manually curated local sidecars are never overwritten.
-- A differing locally managed document causes the whole sync to stop before writes.
-- Files previously generated by this sync may be updated atomically.
-- Remote deletions are not mirrored automatically; remove obsolete local copies only after
-  review, then rebuild the index.
-
-Do not commit a personal mount path. All synced content is searchable by every configured model
-and MCP client; manage membership at the repository and storage-provider level.
+It does not provide bidirectional API synchronization or OAuth state.

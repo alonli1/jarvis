@@ -12,10 +12,18 @@ from rich.console import Console
 from rich.table import Table
 
 from . import __version__
-from .answering import answer_question
 from .antigravity import install_global_mcp
 from .citations import sync_citations, sync_pdf_citations
+from .cloud_library import add_document, resolve_conflict, sync_dropbox
 from .config import find_repo_root, load_config
+from .dropbox_client import (
+    DropboxClient,
+    DropboxSettings,
+    authorize,
+    project_app_key,
+    save_refresh_token,
+    save_settings,
+)
 from .graph_server import create_graph_server
 from .graph_view import render_graph_html
 from .index import HybridIndex
@@ -27,14 +35,42 @@ from .literature_graph import (
     render_graph_markdown,
     save_graph,
 )
-from .novelty import evaluate_project, render_markdown
 from .retrieval import render_retrieval_prompt, retrieve_hits
 from .taxonomy import normalize_tag
+from .workflows import (
+    execute_computation,
+    prepare_computation,
+    prepare_ideation,
+    prepare_literature,
+    tool_status,
+)
+from .workflows import handoff as export_handoff
 
 app = typer.Typer(
-    no_args_is_help=True, help="Model-agnostic scientific assistant for physics research groups"
+    no_args_is_help=True, help="Provider-neutral research harness for physics research groups"
 )
 console = Console()
+library_app = typer.Typer(no_args_is_help=True, help="Manage the shared research library.")
+run_app = typer.Typer(no_args_is_help=True, help="Prepare provider-neutral research workflows.")
+compute_app = typer.Typer(no_args_is_help=True, help="Execute explicit computation workbenches.")
+app.add_typer(library_app, name="library")
+app.add_typer(run_app, name="run")
+app.add_typer(compute_app, name="compute")
+
+
+def _print_cloud_result(result, dry_run: bool = False) -> None:
+    prefix = "Would apply" if dry_run else "Applied"
+    console.print(
+        f"[green]{prefix}[/green] {result.uploaded} uploads, {result.downloaded} downloads, "
+        f"{result.unchanged} unchanged, {result.conflicts} conflicts, "
+        f"{result.remote_deletions} Dropbox deletions preserved."
+    )
+    for action in result.actions:
+        if action.action not in {"unchanged", "removed-both"}:
+            console.print(
+                f"- {action.action}: {action.relative}"
+                + (f" ({action.detail})" if action.detail else "")
+            )
 
 
 @app.command()
@@ -50,6 +86,151 @@ def doctor() -> None:
     for folder in ["knowledge", "group", "topics", "literature"]:
         ok = (cfg.root / folder).exists()
         console.print(f"{'[green]OK[/green]' if ok else '[red]MISSING[/red]'} {folder}/")
+    settings = cfg.root / ".jarvis" / "settings.toml"
+    console.print(
+        f"{'[green]OK[/green]' if settings.exists() else '[yellow]NOT CONFIGURED[/yellow]'} Dropbox"
+    )
+    try:
+        import keyring
+
+        secure_keyring = getattr(keyring.get_keyring(), "priority", 0) > 0
+    except (ImportError, RuntimeError):
+        secure_keyring = False
+    console.print(
+        f"{'[green]OK[/green]' if secure_keyring else '[yellow]UNAVAILABLE[/yellow]'} OS keyring"
+    )
+    for tool in tool_status(cfg.root):
+        status = tool["status"]
+        color = "green" if status == "available" else "yellow"
+        version = f" {tool.get('version')}" if tool.get("version") else ""
+        console.print(f"[{color}]{status.upper()}[/{color}] {tool['id']}{version}")
+
+
+@app.command()
+def setup(
+    dropbox_link: str = typer.Option(..., "--dropbox-link", help="Shared Dropbox folder URL."),
+    app_key: str | None = typer.Option(None, "--app-key", help="Public Dropbox PKCE app key."),
+    open_browser: bool = typer.Option(True, "--open/--no-open"),
+) -> None:
+    """Authorize Dropbox, synchronize the group library, and build the local index."""
+    cfg = load_config()
+    try:
+        key = project_app_key(app_key or cfg.dropbox.app_key)
+        refresh_token, account_id = authorize(
+            key, open_browser=webbrowser.open if open_browser else lambda url: console.print(url)
+        )
+        save_refresh_token(account_id, refresh_token)
+        provisional = DropboxSettings(key, account_id, "", "", "", dropbox_link)
+        with DropboxClient(provisional, refresh_token=refresh_token) as client:
+            folder = client.resolve_shared_folder(dropbox_link)
+            settings = DropboxSettings(
+                key, account_id, folder["id"], folder["path"], folder["name"], dropbox_link
+            )
+            client.settings = settings
+            client.ensure_layout()
+            save_settings(cfg.root, settings)
+            result = sync_dropbox(cfg.root, client)
+        _print_cloud_result(result)
+        index = HybridIndex(cfg)
+        for target in (cfg.root / "knowledge", cfg.root / "group"):
+            docs, chunks = index.ingest(target)
+            console.print(f"Indexed {docs} documents / {chunks} chunks from {target}")
+    except (
+        FileNotFoundError,
+        PermissionError,
+        RuntimeError,
+        TypeError,
+        ValueError,
+        httpx.HTTPError,
+    ) as exc:
+        console.print(f"[red]Setup failed:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+
+
+@library_app.command("sync")
+def cloud_library_sync(dry_run: bool = typer.Option(False, "--dry-run")) -> None:
+    """Synchronize local additions and Dropbox changes without propagating deletions."""
+    root = find_repo_root()
+    try:
+        with DropboxClient.from_repo(root) as client:
+            result = sync_dropbox(root, client, dry_run=dry_run)
+        _print_cloud_result(result, dry_run)
+        if not dry_run and result.changed_local:
+            cfg = load_config(root)
+            index = HybridIndex(cfg)
+            for path in result.changed_local:
+                index.ingest(path)
+    except (
+        FileNotFoundError,
+        PermissionError,
+        RuntimeError,
+        TypeError,
+        ValueError,
+        httpx.HTTPError,
+    ) as exc:
+        console.print(f"[red]Library sync failed:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+
+
+@library_app.command("status")
+def cloud_library_status() -> None:
+    """Report pending transfers and conflicts without changing the library."""
+    cloud_library_sync(dry_run=True)
+
+
+@library_app.command("add")
+def cloud_library_add(
+    file: Path = typer.Argument(..., exists=True, dir_okay=False),  # noqa: B008
+    category: str = typer.Option(..., "--category"),
+) -> None:
+    """Add a document, upload its PDF/sidecar pair, and ingest the local copy."""
+    root = find_repo_root()
+    try:
+        with DropboxClient.from_repo(root) as client:
+            destination, result = add_document(root, file, category, client)
+        _print_cloud_result(result)
+        cfg = load_config(root)
+        docs, chunks = HybridIndex(cfg).ingest(destination)
+        console.print(f"[green]Added[/green] {destination}: {docs} document / {chunks} chunks")
+    except (
+        FileNotFoundError,
+        FileExistsError,
+        PermissionError,
+        RuntimeError,
+        TypeError,
+        ValueError,
+        httpx.HTTPError,
+    ) as exc:
+        console.print(f"[red]Could not add document:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+
+
+@library_app.command("resolve")
+def cloud_library_resolve(
+    path: str = typer.Argument(..., help="Provider-relative path such as papers/work.pdf."),
+    strategy: str = typer.Option(..., "--use", help="local, dropbox, or keep-both"),
+) -> None:
+    """Resolve a preserved Dropbox conflict explicitly."""
+    root = find_repo_root()
+    try:
+        with DropboxClient.from_repo(root) as client:
+            changed = resolve_conflict(root, client, path, strategy)
+        if changed:
+            index = HybridIndex(load_config(root))
+            for item in changed:
+                if not item.name.endswith(".meta.yaml"):
+                    index.ingest(item)
+        console.print(f"[green]Resolved[/green] {path} using {strategy}.")
+    except (
+        FileNotFoundError,
+        PermissionError,
+        RuntimeError,
+        TypeError,
+        ValueError,
+        httpx.HTTPError,
+    ) as exc:
+        console.print(f"[red]Could not resolve conflict:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
 
 
 @app.command("install-antigravity")
@@ -114,6 +295,8 @@ def ask(
     model: str | None = typer.Option(None, "--model"),
 ) -> None:
     """Answer a question using retrieved group knowledge and a selected LLM."""
+    from .answering import answer_question
+
     cfg = load_config()
     selected = model or cfg.assistant.default_model
     answer, hits = answer_question(cfg, question, selected)
@@ -138,6 +321,82 @@ def retrieve(
     cfg = load_config()
     hits = retrieve_hits(cfg, question, limit=limit, tags=tag)
     console.print(render_retrieval_prompt(question, hits), markup=False)
+
+
+@run_app.command("literature")
+def run_literature(
+    question: str = typer.Option(..., "--question"),
+    paper: str | None = typer.Option(None, "--paper"),
+    limit: int | None = typer.Option(None, "--limit", min=1, max=50),
+) -> None:
+    """Prepare a page-grounded literature-reading evidence bundle."""
+    try:
+        bundle = prepare_literature(load_config(), question, paper, limit)
+    except (FileNotFoundError, RuntimeError, TypeError, ValueError) as exc:
+        console.print(f"[red]Could not prepare literature run:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Prepared[/green] {bundle.id}: {bundle.path}")
+
+
+@run_app.command("ideation")
+def run_ideation(
+    topic: str = typer.Option(..., "--topic"),
+    project: Path | None = typer.Option(None, "--project"),  # noqa: B008
+    limit: int | None = typer.Option(None, "--limit", min=1, max=50),
+) -> None:
+    """Prepare corpus and graph evidence for testable research directions."""
+    try:
+        bundle = prepare_ideation(load_config(), topic, project, limit)
+    except (FileNotFoundError, RuntimeError, TypeError, ValueError) as exc:
+        console.print(f"[red]Could not prepare ideation run:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Prepared[/green] {bundle.id}: {bundle.path}")
+
+
+@run_app.command("computation")
+def run_computation(
+    task: str = typer.Option(..., "--task"),
+    engine: str = typer.Option("auto", "--engine"),
+) -> None:
+    """Prepare a Python or Wolfram workbench with provenance."""
+    try:
+        bundle = prepare_computation(load_config(), task, engine)
+    except (FileNotFoundError, RuntimeError, TypeError, ValueError) as exc:
+        console.print(f"[red]Could not prepare computation run:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Prepared[/green] {bundle.id}: {bundle.path}")
+    console.print(f"Inspect the script, then run `jarvis compute execute {bundle.id} SCRIPT`.")
+
+
+@compute_app.command("execute")
+def compute_execute(
+    run_id: str = typer.Argument(...),
+    script: Path = typer.Argument(...),  # noqa: B008
+    timeout: int = typer.Option(300, "--timeout", min=1, max=86400),
+) -> None:
+    """Explicitly execute a script contained in a computation run."""
+    try:
+        code, log = execute_computation(load_config(), run_id, script, timeout)
+    except (FileNotFoundError, RuntimeError, TypeError, ValueError, OSError) as exc:
+        console.print(f"[red]Computation failed to start:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"Execution exit code {code}; log: {log}")
+    if code:
+        raise typer.Exit(code=code)
+
+
+@app.command()
+def handoff(
+    run_id: str = typer.Argument(...),
+    output_format: str = typer.Option("markdown", "--format", help="markdown or zip"),
+) -> None:
+    """Export a sanitized research run for a browser-only AI provider."""
+    try:
+        output = export_handoff(load_config(), run_id, output_format)
+    except (FileNotFoundError, RuntimeError, TypeError, ValueError) as exc:
+        console.print(f"[red]Could not export handoff:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Exported[/green] {output}")
 
 
 @app.command("literature")
@@ -194,16 +453,12 @@ def citations_sync(
         if source == "pdf":
             path, resolved, unresolved = sync_pdf_citations(cfg.root)
         else:
-            path, resolved, unresolved = sync_citations(
-                cfg.root, cfg.literature.user_agent
-            )
+            path, resolved, unresolved = sync_citations(cfg.root, cfg.literature.user_agent)
     except (httpx.HTTPError, ValueError) as exc:
         console.print(f"[red]Citation sync failed:[/red] {exc}")
         console.print("Set SEMANTIC_SCHOLAR_API_KEY if the public endpoint is rate-limited.")
         raise typer.Exit(code=1) from exc
-    console.print(
-        f"[green]Saved[/green] {resolved} sources to {path}; {unresolved} unresolved."
-    )
+    console.print(f"[green]Saved[/green] {resolved} sources to {path}; {unresolved} unresolved.")
 
 
 @app.command("graph")
@@ -228,10 +483,7 @@ def graph_report(
     destination = (
         cfg.root / output
         if output
-        else cfg.root
-        / "literature"
-        / "reports"
-        / f"graph-{normalize_tag(origin['id'])}.{suffix}"
+        else cfg.root / "literature" / "reports" / f"graph-{normalize_tag(origin['id'])}.{suffix}"
     )
     destination.parent.mkdir(parents=True, exist_ok=True)
     renderer = render_graph_html if output_format == "html" else render_graph_markdown
@@ -301,6 +553,8 @@ def novelty(
     judge_model: str | None = typer.Option(None, "--judge-model"),
 ) -> None:
     """Check one manuscript's novelty claims against recent literature."""
+    from .novelty import evaluate_project, render_markdown
+
     cfg = load_config()
     project_dir = cfg.root / "group" / "manuscripts" / project
     if not (project_dir / "novelty.yaml").exists():
@@ -321,6 +575,8 @@ def watch(
     judge_model: str | None = typer.Option(None, "--judge-model"),
 ) -> None:
     """Run novelty surveillance for every manuscript containing novelty.yaml."""
+    from .novelty import evaluate_project, render_markdown
+
     cfg = load_config()
     manuscript_root = cfg.root / "group" / "manuscripts"
     projects = sorted(p.parent for p in manuscript_root.glob("*/novelty.yaml"))

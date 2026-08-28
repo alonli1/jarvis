@@ -1,10 +1,13 @@
-# Jarvis — Model-Agnostic Scientific Research Assistant
+# Jarvis — Provider-Neutral Scientific Research Harness
 
-Jarvis is a Git-friendly scientific knowledge and literature-monitoring assistant for research groups. It is designed around a simple rule:
+Jarvis coordinates shared evidence and reproducible research workflows for physics groups. The
+host IDE or browser model reasons; Jarvis supplies the corpus, portable skills, graph, and local
+computation workbenches. No model API or MCP server is required for core workflows.
 
 > The research group's knowledge base is persistent; the reasoning model is replaceable.
 
-Researchers can use OpenAI, Anthropic, Gemini, OpenRouter, Ollama, or other LiteLLM-compatible backends while sharing the same papers, books, group notes, active manuscripts, novelty claims, and retrieval index.
+Researchers can use different AI providers while sharing the same papers, books, group notes,
+active manuscripts, novelty claims, and reproducible runs.
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the current implementation phases and research workflow.
 
@@ -13,6 +16,9 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the current implementation phases and
 - Ingests PDF, LaTeX, Markdown, text, and curated reference manifests.
 - Keeps source/page metadata for citations.
 - Builds hybrid dense + sparse retrieval with Qdrant/FastEmbed.
+- Discovers exactly four portable research skills under `.agents/skills/`.
+- Synchronizes PDF/sidecar pairs bidirectionally through per-user Dropbox PKCE authorization.
+- Creates cited literature, research-ideation, and reproducible computation run bundles.
 - Lets each researcher select a different LLM through LiteLLM.
 - Exports cited retrieval context for use with web AI subscriptions, without a model API.
 - Exposes local retrieval to compatible IDE agents through MCP.
@@ -20,7 +26,7 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the current implementation phases and
 - Searches arXiv, INSPIRE-HEP, OpenAlex, and Semantic Scholar.
 - Represents manuscript novelty claims in YAML.
 - Compares newly found literature against those claims and creates a ranked novelty-watch report.
-- Runs a daily novelty watch through GitHub Actions.
+- Supports skill-guided, on-demand novelty surveillance locally or through a manual GitHub Action.
 - Includes tests that do not require an LLM API key.
 
 ## Repository layout
@@ -43,8 +49,11 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the current implementation phases and
 │   ├── reports/
 │   └── seed/
 ├── scripts/
+├── packages/registry.yaml
 ├── src/jarvis/
 ├── tests/
+├── AGENTS.md
+├── .agents/skills/
 ├── .agents/mcp_config.json
 ├── .vscode/mcp.json
 ├── .github/workflows/
@@ -118,20 +127,21 @@ You can also index one path only:
 jarvis ingest knowledge/papers/example.pdf
 ```
 
-### Sync a shared library
+### Connect the shared Dropbox library
 
-Dropbox and similar desktop clients can expose the group's library as a normal local folder.
-Jarvis uses that mounted folder without a provider API or a machine-specific path in Git:
+Each collaborator authorizes through their own Dropbox account. The OS keyring stores the refresh
+token; no personal path or secret is committed:
 
 ```bash
-jarvis library-sync "/path/to/team/Jarvis" --provider dropbox --dry-run
-jarvis library-sync "/path/to/team/Jarvis" --provider dropbox
-jarvis ingest
+jarvis setup --dropbox-link "https://www.dropbox.com/scl/fo/..."
+jarvis library add ~/Downloads/paper.pdf --category papers
+jarvis library sync --dry-run
+jarvis library sync
 ```
 
 The provider folder uses `papers/`, `books/`, `notes/`, and `manuscripts/` directories.
-See [docs/LIBRARY_SYNC.md](docs/LIBRARY_SYNC.md) for the layout, safety rules, and other
-providers. All synced documents join one searchable corpus.
+See [docs/LIBRARY_SYNC.md](docs/LIBRARY_SYNC.md) for OAuth setup, conflict behavior, and the
+legacy mounted-folder interface.
 
 ### Sidecar metadata
 
@@ -176,6 +186,31 @@ uv run jarvis retrieve \
 ```
 
 The exported prompt can contain passages from any indexed document.
+
+### Use the research harness
+
+IDE agents discover the four skills automatically. The deterministic CLI prepares their evidence
+and workspaces without calling a model API:
+
+```bash
+jarvis run literature --question "Compare heat-kernel conventions" --paper vassilevich
+jarvis run ideation --topic "curved-spacetime EFT matching"
+jarvis run computation --task "Check the curvature-squared basis" --engine auto
+```
+
+Runs are stored under `.jarvis/runs/`. Inspect generated computation code, then execute it
+explicitly:
+
+```bash
+jarvis compute execute RUN_ID main.py
+```
+
+For a browser-only provider, export the skill, sanitized manifest, evidence, and current result:
+
+```bash
+jarvis handoff RUN_ID --format markdown
+jarvis handoff RUN_ID --format zip
+```
 
 ### Use Jarvis from an IDE agent
 
@@ -381,13 +416,18 @@ The generated JSON cache stays in `.jarvis/literature_graph.json`; views are wri
 `literature/reports/`. Scores are local relevance signals, not global scholarly
 importance.
 
-## 9. Daily GitHub Actions watch
+## 9. On-demand literature surveillance
 
-`.github/workflows/literature-watch.yml` runs once per day using the repository's configured timezone and can open a GitHub issue with the generated report.
+The `literature-understanding` skill contains the surveillance procedure. Run it locally with
+`jarvis novelty` or `jarvis watch`; source failures are recorded as partial-coverage warnings and
+must not be interpreted as evidence that no relevant work exists.
 
-Required repository secret for model adjudication (optional): your provider API key.
+`.github/workflows/literature-watch.yml` is a manual convenience wrapper. It commits the generated
+report but does not run on a schedule or open an issue. Optional provider API keys can be stored as
+repository secrets to improve rate limits; no model key is required for deterministic scoring.
 
-The workflow works without an LLM judge; in that mode it produces the deterministic retrieval/similarity report.
+The workflow works without an LLM judge; in that mode it produces the deterministic
+retrieval/similarity report.
 
 ## 10. Shared group deployment
 
@@ -441,7 +481,7 @@ For copyrighted or private material, store metadata in Git and keep bytes in an 
 - Citation coverage depends on exact arXiv/DOI resolution in Semantic Scholar.
 - Novelty risk is triage, not a proof of novelty.
 - Exact equation-level semantic retrieval will benefit from a later math-aware parser/normalizer.
-- GitHub issue publication is implemented in the workflow using `gh`; local `jarvis watch` only writes reports.
+- Literature reports are triage artifacts. Jarvis never publishes them as GitHub issues automatically.
 
 ## 13. Suggested v2 milestones
 

@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from datetime import date, datetime, time, timezone
 import re
+from datetime import UTC, date, datetime, time
 
 import feedparser
 import httpx
 
-from .base import LiteratureSource
 from ..models import LiteratureRecord
+from .base import LiteratureSource
 
 
 class ArxivSource(LiteratureSource):
@@ -18,8 +18,8 @@ class ArxivSource(LiteratureSource):
         self.user_agent = user_agent
 
     def search(self, query: str, since: date, limit: int) -> list[LiteratureRecord]:
-        start = datetime.combine(since, time.min, tzinfo=timezone.utc).strftime("%Y%m%d%H%M")
-        end = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
+        start = datetime.combine(since, time.min, tzinfo=UTC).strftime("%Y%m%d%H%M")
+        end = datetime.now(UTC).strftime("%Y%m%d%H%M")
         cleaned = re.sub(r'["()]', ' ', query)
         cleaned = re.sub(r"\s+", " ", cleaned).strip()
         terms = [t for t in cleaned.split(" ") if len(t) > 2][:8]
@@ -37,7 +37,7 @@ class ArxivSource(LiteratureSource):
                 },
             )
             response.raise_for_status()
-        feed = feedparser.loads(response.text)
+        feed = feedparser.parse(response.text)
         records: list[LiteratureRecord] = []
         for entry in feed.entries:
             arxiv_id = entry.id.rsplit("/", 1)[-1].split("v", 1)[0]
