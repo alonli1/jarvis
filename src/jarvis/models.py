@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import Any
+from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class Chunk(BaseModel):
@@ -61,3 +61,78 @@ class NoveltyMatch(BaseModel):
     risk: str
     reasons: list[str]
     judge_assessment: str | None = None
+
+
+class EvidenceReference(BaseModel):
+    kind: str
+    reference: str
+    locator: str | None = None
+
+
+class ScientificClaim(BaseModel):
+    id: str
+    statement: str
+    kind: str
+    status: Literal[
+        "candidate",
+        "source_grounded",
+        "derived_once",
+        "computed_once",
+        "independently_checked",
+        "contradicted",
+        "ai_verified",
+        "human_verified",
+        "published_or_external",
+        "retired",
+    ]
+    scope: dict[str, Any] = Field(default_factory=dict)
+    conventions: dict[str, Any] = Field(default_factory=dict)
+    evidence: list[EvidenceReference] = Field(default_factory=list)
+    known_issues: list[str] = Field(default_factory=list)
+    created_by: str
+    human_reviewed: bool = False
+
+    @model_validator(mode="after")
+    def human_verification_requires_review(self) -> ScientificClaim:
+        if self.status == "human_verified" and not self.human_reviewed:
+            raise ValueError("human_verified claims require human_reviewed=True")
+        return self
+
+
+class VerificationRecord(BaseModel):
+    id: str
+    method: str
+    outcome: str
+    artifact: str
+    notes: str | None = None
+
+
+class ModelUsage(BaseModel):
+    provider: str
+    model: str
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    latency_ms: int | None = None
+    estimated_cost: float | None = None
+
+
+class ResearchTask(BaseModel):
+    id: str
+    description: str
+    status: str
+    dependencies: list[str] = Field(default_factory=list)
+    artifacts: list[str] = Field(default_factory=list)
+
+
+class DecisionRecord(BaseModel):
+    id: str
+    decision: str
+    rationale: str
+    artifacts: list[str] = Field(default_factory=list)
+
+
+class ScientificFlag(BaseModel):
+    code: str
+    severity: str
+    message: str
+    artifact: str | None = None

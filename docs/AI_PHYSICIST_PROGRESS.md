@@ -10,7 +10,7 @@
 
 ## Next milestone
 
-Phase C: add backward-compatible Manifest v2 scientific result types while preserving v1 run-bundle workflows.
+Phase D: add provider-neutral model profiles and telemetry without changing retrieval behavior.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -18,3 +18,10 @@ Phase C: add backward-compatible Manifest v2 scientific result types while prese
 - Added `jarvis eval run`, which produces a machine-readable report without a model call and treats case failures as report data.
 - Validation: focused evaluation/CLI tests, full suite (`50 passed`), new-code Ruff check, and a real local report (`20 passed`, `0 failed`).
 - Scope: this is evidence/tool availability evaluation only; it does not validate scientific answers, derivations, or claims.
+
+## 2026-08-29 — Phase C Manifest v2 scientific result types complete
+
+- Added provider-neutral typed evidence, claim, verification, model-usage, task, decision, and flag records.
+- New runs write Manifest v2 defaults; `load_manifest()` provides a non-mutating v2-shaped view of v1 manifests.
+- `human_verified` claim status requires `human_reviewed=True`; this guards data consistency but is not human-actor authorization.
+- Validation: manifest/workflow tests and full suite (`54 passed`).

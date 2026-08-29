@@ -83,7 +83,7 @@ def _new_run(config: Config, workflow: str, query: str) -> tuple[RunBundle, dict
     folder.mkdir(parents=True)
     run_id = folder.name
     manifest = {
-        "version": 1,
+        "version": 2,
         "id": run_id,
         "workflow": workflow,
         "query": query,
@@ -95,8 +95,32 @@ def _new_run(config: Config, workflow: str, query: str) -> tuple[RunBundle, dict
         "tools": [],
         "artifacts": ["manifest.json", "evidence.md", "result.md"],
         "instruction": INSTRUCTIONS[workflow],
+        "plan": None,
+        "tasks": [],
+        "claims": [],
+        "model_usage": [],
+        "verification": [],
+        "flags": [],
+        "decision_log": [],
     }
     return RunBundle(run_id, folder, workflow), manifest
+
+
+def load_manifest(path: Path) -> dict:
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict):
+        raise TypeError("Manifest must be a JSON mapping")
+    version = manifest.get("version")
+    if isinstance(version, bool) or version not in {1, 2}:
+        raise ValueError(f"Unsupported manifest version: {version!r}")
+    for key in ("id", "workflow", "query", "created_at", "corpus_revision", "status"):
+        if not isinstance(manifest.get(key), str) or not manifest[key]:
+            raise ValueError(f"Manifest requires a non-empty {key!r} string")
+    normalized = dict(manifest)
+    normalized.setdefault("plan", None)
+    for key in ("tasks", "claims", "model_usage", "verification", "flags", "decision_log"):
+        normalized.setdefault(key, [])
+    return normalized
 
 
 def _write_json(path: Path, data: dict) -> None:
