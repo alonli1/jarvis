@@ -91,3 +91,15 @@ remain to be run in independent disposable workspaces.
   inventing a model name.
 - Case contract: [PHASE_F_CASES.md](PHASE_F_CASES.md) defines F01--F05, their
   literature/deterministic bases, and withheld seeded checks.
+
+## 2026-08-29 — Phase F F02 dispatch capability blocked
+
+- A fresh F02 EFT workspace was successfully bootstrapped and populated with
+  only its bounded question and evidence pointer.
+- The recovered plugin-disabled `codex exec` process reaches the model, but its
+  PhysicsIntern coordinator exposes no usable fresh-context `spawn_agent`:
+  the trace shows a `wait` collaboration call with no receiver at the required
+  survey dispatch point.  No F02 scientific artifact was accepted or imported.
+- This is a distinct external runtime-host limitation, not the repaired model
+  catalog issue.  The F02 workspace is preserved pending a plugin-disabled
+  invocation mode with generated-role dispatch support; see `BLOCKER.md`.

@@ -55,3 +55,22 @@ the Phase F runtime.  The old `0.144.1` PATH CLI is not used for Phase F.
 
 F01 subsequently completed and was imported as provisional evidence; Phase F
 is no longer runtime-blocked, but remains incomplete pending F02--F05.
+
+## Current Phase F execution blocker: fresh-context dispatch unavailable
+
+The recovered extension runtime starts models and isolates plugins correctly,
+but its noninteractive `codex exec` host does not expose a usable
+`spawn_agent` capability to the PhysicsIntern coordinator.  In the fresh F02
+workspace, the user-invoked `autoresearch` run reached the survey dispatch and
+emitted a collaboration `wait` call with no spawned receiver instead of a role
+dispatch.  No F02 survey, derivation, computation, review, critique, answer,
+or import was accepted.
+
+PhysicsIntern requires fresh-context role dispatch; substituting the Honey-active
+parent coordinator or manually performing scientific work would violate the
+isolation and methodology contracts.  F02's prepared disposable workspace is
+preserved at `/tmp/jarvis-physicsintern-phase-f02`.  The remaining requirement
+is an authenticated, plugin-disabled Codex invocation mode that exposes both
+`spawn_agent` and `wait_agent` to the generated local roles (or a documented
+equivalent supplied by the installed runtime).  This is separate from the
+resolved model-cache defect.

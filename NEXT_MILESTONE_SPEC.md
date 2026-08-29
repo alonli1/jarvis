@@ -15,7 +15,8 @@ Before each remaining execution:
 - `codex --disable plugins` must report `plugins=false` and runtime evidence
   must show no Honey directives.
 - The recovered Codex executable must remain usable with `--disable plugins`
-  and permit fresh-context dispatches.
+  and expose usable fresh-context `spawn_agent`/`wait_agent` dispatches to the
+  generated PhysicsIntern workspace roles.
 
 `BLOCKER.md` records the historical standalone defect and recovery evidence.
 
