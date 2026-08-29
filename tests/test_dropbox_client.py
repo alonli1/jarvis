@@ -1,4 +1,10 @@
-from jarvis.dropbox_client import DropboxSettings, authorize, load_settings, save_settings
+from jarvis.dropbox_client import (
+    DropboxClient,
+    DropboxSettings,
+    authorize,
+    load_settings,
+    save_settings,
+)
 
 
 class Response:
@@ -49,3 +55,30 @@ def test_local_settings_are_toml_and_contain_no_credentials(tmp_path):
     assert path.name == "settings.toml"
     assert load_settings(tmp_path) == settings
     assert "refresh_token" not in path.read_text()
+
+
+def test_list_files_preserves_dropbox_display_case():
+    settings = DropboxSettings(
+        "public-key", "dbid:1", "id:folder", "/jarvis", "Jarvis", "https://dropbox/link"
+    )
+    client = DropboxClient(settings, access_token="access", client=Client())
+    client.rpc = lambda *_args, **_kwargs: {
+        "entries": [
+            {
+                ".tag": "file",
+                "id": "id:readme",
+                "name": "README.md",
+                "path_lower": "/jarvis/manuscripts/example_project/readme.md",
+                "path_display": "/Jarvis/manuscripts/example_project/README.md",
+                "rev": "1",
+                "content_hash": "hash",
+                "server_modified": "2026-08-28T00:00:00Z",
+            }
+        ],
+        "has_more": False,
+    }
+
+    files = client.list_files()
+
+    assert "manuscripts/example_project/README.md" in files
+    assert files["manuscripts/example_project/README.md"].path.endswith("/readme.md")

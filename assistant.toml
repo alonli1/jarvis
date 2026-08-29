@@ -31,4 +31,4 @@ medium_threshold = 0.42
 [dropbox]
 # Public PKCE application key. A group administrator may commit it here, or each
 # researcher may set JARVIS_DROPBOX_APP_KEY before running `jarvis setup`.
-app_key = ""
+app_key = "9s700q8g1sjp0c4"

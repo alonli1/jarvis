@@ -273,6 +273,7 @@ class DropboxClient:
             data = self.rpc("files/list_folder/continue", {"cursor": data["cursor"]})
             entries.extend(data.get("entries", []))
         prefix = self.settings.folder_path.rstrip("/") + "/"
+        root_parts = PurePosixPath(self.settings.folder_path).parts
         files: dict[str, RemoteFile] = {}
         for entry in entries:
             if entry.get(".tag") != "file":
@@ -280,7 +281,9 @@ class DropboxClient:
             full_path = str(entry["path_lower"])
             if not full_path.startswith(prefix):
                 continue
-            relative = full_path[len(prefix) :]
+            display_path = str(entry.get("path_display") or full_path)
+            display_parts = PurePosixPath(display_path).parts
+            relative = str(PurePosixPath(*display_parts[len(root_parts) :]))
             files[relative] = RemoteFile(
                 id=str(entry["id"]),
                 path=full_path,
