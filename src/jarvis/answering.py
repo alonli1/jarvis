@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .config import Config
-from .llm import complete
+from .llm import CompletionResult, complete_result
 from .retrieval import render_retrieval_prompt, retrieve_hits
 
 SYSTEM_PROMPT = """You are a careful scientific research assistant for theoretical physics.
@@ -16,10 +16,10 @@ def answer_question(
     config: Config,
     question: str,
     model: str,
-) -> tuple[str, list]:
+) -> tuple[CompletionResult, list]:
     hits = retrieve_hits(
         config,
         question,
         limit=config.assistant.max_context_chunks,
     )
-    return complete(model, SYSTEM_PROMPT, render_retrieval_prompt(question, hits)), hits
+    return complete_result(model, SYSTEM_PROMPT, render_retrieval_prompt(question, hits)), hits

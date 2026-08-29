@@ -3,6 +3,9 @@ name = "Jarvis"
 default_model = "ollama/qwen3:14b"
 max_context_chunks = 10
 
+[model_profiles.local]
+model = "ollama/qwen3:14b"
+
 [index]
 mode = "local"
 path = ".jarvis/qdrant"

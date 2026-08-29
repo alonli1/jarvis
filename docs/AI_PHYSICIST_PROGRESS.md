@@ -25,3 +25,9 @@ Phase D: add provider-neutral model profiles and telemetry without changing retr
 - New runs write Manifest v2 defaults; `load_manifest()` provides a non-mutating v2-shaped view of v1 manifests.
 - `human_verified` claim status requires `human_reviewed=True`; this guards data consistency but is not human-actor authorization.
 - Validation: manifest/workflow tests and full suite (`54 passed`).
+
+## 2026-08-29 — Phase D profiles and telemetry complete
+
+- Added optional configured model profiles, structured completion telemetry, and `jarvis ask --profile`.
+- Preserved the existing default model and text-only completion API; no routing or retrieval behavior changed.
+- Validation: focused configuration/runtime/CLI tests and full suite (`61 passed`).

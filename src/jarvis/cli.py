@@ -297,14 +297,19 @@ def library_sync_command(
 def ask(
     question: str = typer.Argument(...),
     model: str | None = typer.Option(None, "--model"),
+    profile: str | None = typer.Option(None, "--profile"),
 ) -> None:
     """Answer a question using retrieved group knowledge and a selected LLM."""
     from .answering import answer_question
 
     cfg = load_config()
-    selected = model or cfg.assistant.default_model
-    answer, hits = answer_question(cfg, question, selected)
-    console.print(answer)
+    if profile and profile not in cfg.assistant.profiles:
+        raise typer.BadParameter(f"Unknown model profile: {profile}", param_hint="--profile")
+    selected = model or (
+        cfg.assistant.profiles[profile].model if profile else cfg.assistant.default_model
+    )
+    result, hits = answer_question(cfg, question, selected)
+    console.print(result.text)
     if hits:
         console.print("\n[bold]Retrieved sources[/bold]")
         for i, hit in enumerate(hits, start=1):

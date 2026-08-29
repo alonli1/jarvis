@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import tomllib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 
@@ -10,6 +10,14 @@ class AssistantConfig:
     name: str
     default_model: str
     max_context_chunks: int
+    profiles: dict[str, "ModelProfile"] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class ModelProfile:
+    name: str
+    provider: str
+    model: str
 
 
 @dataclass(frozen=True)
@@ -74,9 +82,17 @@ def load_config(root: Path | None = None) -> Config:
     with (root / "assistant.toml").open("rb") as f:
         raw = tomllib.load(f)
 
+    profiles = {}
+    for name, values in raw.get("model_profiles", {}).items():
+        model = values.get("model") if isinstance(values, dict) else None
+        if not isinstance(model, str) or not model.strip():
+            raise ValueError(f"Model profile {name!r} must define a non-empty model")
+        provider = model.split("/", 1)[0] if "/" in model else "unknown"
+        profiles[name] = ModelProfile(name=name, provider=provider, model=model)
+
     return Config(
         root=root,
-        assistant=AssistantConfig(**raw["assistant"]),
+        assistant=AssistantConfig(**raw["assistant"], profiles=profiles),
         index=IndexConfig(**raw["index"]),
         retrieval=RetrievalConfig(**raw["retrieval"]),
         literature=LiteratureConfig(**raw["literature"]),
