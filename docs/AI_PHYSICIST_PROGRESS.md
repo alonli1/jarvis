@@ -37,3 +37,7 @@ Phase F: evaluate a bounded PhysicsIntern bootstrap integration using existing J
 - Added deterministic `jarvis route --dry-run` with explicit role priors, eleven bounded risk features, configurable capability tiers, reasons, and safe unavailable-profile failures.
 - The router makes no provider request and cannot silently route below its computed epistemic floor.
 - Validation: focused router tests, CLI smoke test, and full suite (`67 passed`).
+
+## Current blocker
+
+Phase F requires an available PhysicsIntern integration in a Honey-isolated research environment. Neither is available locally; see `BLOCKER.md`.
