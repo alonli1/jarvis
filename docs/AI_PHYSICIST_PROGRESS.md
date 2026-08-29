@@ -10,7 +10,8 @@
 
 ## Next milestone
 
-Phase F: evaluate a bounded PhysicsIntern bootstrap integration using existing Jarvis evidence and computation interfaces.
+Phase F execution: run bounded PhysicsIntern/Jarvis known-answer experiments in a
+Honey-isolated session where the plugin skill is live.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -40,4 +41,20 @@ Phase F: evaluate a bounded PhysicsIntern bootstrap integration using existing J
 
 ## Current blocker
 
-The official PhysicsIntern Codex plugin is installed. A Codex restart is required for its bootstrap skill, and Honey isolation remains unavailable; see `BLOCKER.md`.
+## 2026-08-29 — Phase F preparation complete
+
+- Added provider-neutral provisional-artifact import into Manifest v2 runs:
+  contained copy, stable SHA-256 digest, source/role metadata, duplicate and
+  traversal rejection, and ZIP/Markdown handoff support.
+- Added optional role-tagged `ModelUsage` and run-persisted usage records.
+- Validation: focused manifest/workflow tests (`9 passed`), full suite (`70
+  passed`), and changed-file Ruff/format checks. Repository-wide Ruff still has
+  15 pre-existing findings outside this milestone.
+- Scope: no PhysicsIntern workspace, scientific agent, scientific claim, or
+  known-answer investigation was run.
+
+## Current blocker
+
+The official PhysicsIntern plugin is installed in the local cache, but its
+bootstrap skill is absent from this session's live catalog. Honey is active and
+has no supported writable isolation mechanism; see `BLOCKER.md`.

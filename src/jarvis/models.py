@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field, model_validator
@@ -110,10 +110,20 @@ class VerificationRecord(BaseModel):
 class ModelUsage(BaseModel):
     provider: str
     model: str
+    role: str | None = None
     input_tokens: int | None = None
     output_tokens: int | None = None
     latency_ms: int | None = None
     estimated_cost: float | None = None
+
+
+class ProvisionalArtifact(BaseModel):
+    id: str
+    source_label: str
+    role: str | None = None
+    path: str
+    sha256: str
+    imported_at: datetime
 
 
 class ResearchTask(BaseModel):

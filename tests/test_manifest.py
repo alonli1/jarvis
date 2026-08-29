@@ -9,6 +9,7 @@ from jarvis.models import (
     DecisionRecord,
     EvidenceReference,
     ModelUsage,
+    ProvisionalArtifact,
     ResearchTask,
     ScientificClaim,
     ScientificFlag,
@@ -41,9 +42,23 @@ def test_scientific_records_are_provider_neutral_and_serializable():
     )
     records = [
         claim,
-        VerificationRecord(id="VERIFY-1", method="symbolic", outcome="passed", artifact="checks.md"),
-        ModelUsage(provider="local", model="example", input_tokens=1, output_tokens=2),
-        ResearchTask(id="TASK-1", description="Check result", status="pending", artifacts=["checks.md"]),
+        VerificationRecord(
+            id="VERIFY-1", method="symbolic", outcome="passed", artifact="checks.md"
+        ),
+        ModelUsage(
+            provider="local", model="example", role="research", input_tokens=1, output_tokens=2
+        ),
+        ProvisionalArtifact(
+            id="ART-1",
+            source_label="test",
+            role="research",
+            path="provisional/ART-1/result.txt",
+            sha256="0" * 64,
+            imported_at="2026-08-29T00:00:00+00:00",
+        ),
+        ResearchTask(
+            id="TASK-1", description="Check result", status="pending", artifacts=["checks.md"]
+        ),
         DecisionRecord(id="DEC-1", decision="Check independently", rationale="Required"),
         ScientificFlag(code="GAP", severity="warning", message="Needs review"),
     ]
@@ -84,7 +99,18 @@ def test_load_manifest_normalizes_v1_without_rewriting(tmp_path):
 
     assert manifest["version"] == 1
     assert manifest["plan"] is None
-    assert all(manifest[key] == [] for key in ("tasks", "claims", "model_usage", "verification", "flags", "decision_log"))
+    assert all(
+        manifest[key] == []
+        for key in (
+            "tasks",
+            "claims",
+            "model_usage",
+            "verification",
+            "flags",
+            "decision_log",
+            "provisional_artifacts",
+        )
+    )
     assert path.read_bytes() == before
 
 
@@ -93,7 +119,9 @@ def test_new_runs_write_v2_manifest_defaults(tmp_path, monkeypatch):
     monkeypatch.setattr("jarvis.workflows.retrieve_hits", lambda *args, **kwargs: [])
     monkeypatch.setattr("jarvis.workflows.importlib.metadata.version", lambda _: "1.0")
 
-    literature = json.loads((prepare_literature(cfg, "Question").path / "manifest.json").read_text())
+    literature = json.loads(
+        (prepare_literature(cfg, "Question").path / "manifest.json").read_text()
+    )
     computation = json.loads(
         (prepare_computation(cfg, "Check identity", "python").path / "manifest.json").read_text()
     )
@@ -102,5 +130,16 @@ def test_new_runs_write_v2_manifest_defaults(tmp_path, monkeypatch):
         assert manifest["version"] == 2
         assert manifest["workflow"] == workflow
         assert manifest["plan"] is None
-        assert all(manifest[key] == [] for key in ("tasks", "claims", "model_usage", "verification", "flags", "decision_log"))
+        assert all(
+            manifest[key] == []
+            for key in (
+                "tasks",
+                "claims",
+                "model_usage",
+                "verification",
+                "flags",
+                "decision_log",
+                "provisional_artifacts",
+            )
+        )
     assert computation["engine"] == "python"
