@@ -40,4 +40,4 @@ Phase F: evaluate a bounded PhysicsIntern bootstrap integration using existing J
 
 ## Current blocker
 
-Phase F requires an available PhysicsIntern integration in a Honey-isolated research environment. Neither is available locally; see `BLOCKER.md`.
+The official PhysicsIntern Codex plugin is installed. A Codex restart is required for its bootstrap skill, and Honey isolation remains unavailable; see `BLOCKER.md`.

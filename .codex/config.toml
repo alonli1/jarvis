@@ -1,0 +1,15 @@
+# Project-local Codex configuration for developing Jarvis.
+# Loaded only when the repository is trusted by Codex.
+
+# Default parent/coordinator: efficient enough for daily implementation,
+# strong enough to integrate subagent results and own the final patch.
+model = "gpt-5.6-terra"
+model_reasoning_effort = "high"
+
+# Keep normal coding changes inside the repository and request approval
+# for actions outside the ordinary workspace policy.
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+# Named custom agents in `.codex/agents/` are auto-discovered by current Codex.
+# The former `[agents]` enablement table is not accepted by Codex CLI 0.151.
