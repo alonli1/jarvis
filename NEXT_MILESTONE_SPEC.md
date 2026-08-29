@@ -8,12 +8,13 @@ and role-telemetry provenance.
 
 ## Preconditions and blocker
 
-This milestone is blocked in the current session. Before execution:
+This milestone is blocked in the current CLI runtime. Before execution:
 
-- `init-physics-intern` must appear in the live skill catalog.
-- Honey isolation must be mechanically verified from installed/runtime evidence.
-- The user must explicitly invoke `$init-physics-intern` for a dedicated empty
-  workspace; the official bootstrap skill prohibits implicit invocation.
+- The official upstream bootstrap script must create a dedicated empty workspace.
+- `codex --disable plugins` must report `plugins=false` and runtime evidence
+  must show no Honey directives.
+- The Codex model catalog must load with `base_instructions` for the selected
+  model and permit repeated fresh-context dispatches.
 
 `BLOCKER.md` records the current evidence and no scientific agent may be spawned
 until all three conditions hold.
@@ -24,8 +25,9 @@ until all three conditions hold.
   file-level import, role-tagged `ModelUsage`, and portable ZIP handoffs.
 - `prepare_literature`, retrieval/graph tools, and `prepare_computation` remain
   the existing evidence and deterministic-computation substrates.
-- No PhysicsIntern workspace, agent output, scientific result, or known-answer
-  experiment has been created in this repository.
+- PhysicsIntern upstream commit `41d75f9` bootstrapped a disposable Codex
+  workspace and an isolated free-scalar survey completed; no full investigation
+  or accepted scientific result exists.
 
 ## Interfaces and boundaries
 
@@ -64,11 +66,13 @@ permitted while Honey is active.
 
 ## Ordered execution
 
-1. Verify the preconditions and isolate Honey reversibly.
-2. Bootstrap the dedicated empty workspace only through the explicit official
-   skill invocation.
-3. Define five known-answer cases and their seeded-error checks before execution.
-4. Run the cases with JARVIS retrieval/computation substrates and import their
+1. Repair or upgrade the external Codex runtime without altering Jarvis, then
+   verify the corrected model catalog and provider reachability.
+2. Re-run the plugin-disabled isolation audit and retain its runtime evidence.
+3. Resume the official upstream-script workspace or bootstrap a fresh disposable
+   one if needed.
+4. Define five known-answer cases and their seeded-error checks before execution.
+5. Run the cases with JARVIS retrieval/computation substrates and import their
    selected provisional artifacts plus telemetry.
-5. Verify reproducibility, update progress/blocker, and commit the validated
+6. Verify reproducibility, update progress/blocker, and commit the validated
    Phase F execution milestone.

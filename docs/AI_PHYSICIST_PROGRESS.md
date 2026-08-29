@@ -10,8 +10,8 @@
 
 ## Next milestone
 
-Phase F execution: run bounded PhysicsIntern/Jarvis known-answer experiments in a
-Honey-isolated session where the plugin skill is live.
+Phase F execution: resume the five bounded PhysicsIntern/Jarvis known-answer
+experiments after Codex's model-catalog runtime defect is repaired.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -39,8 +39,6 @@ Honey-isolated session where the plugin skill is live.
 - The router makes no provider request and cannot silently route below its computed epistemic floor.
 - Validation: focused router tests, CLI smoke test, and full suite (`67 passed`).
 
-## Current blocker
-
 ## 2026-08-29 — Phase F preparation complete
 
 - Added provider-neutral provisional-artifact import into Manifest v2 runs:
@@ -53,8 +51,22 @@ Honey-isolated session where the plugin skill is live.
 - Scope: no PhysicsIntern workspace, scientific agent, scientific claim, or
   known-answer investigation was run.
 
+## 2026-08-29 — Phase F bootstrap and isolation verified; execution blocked
+
+- Bootstrap: official upstream script with `host=codex`, PhysicsIntern commit
+  `41d75f998710948e90b9254fba1cc501fe09fc84`, disposable workspace under
+  `/tmp/jarvis-physicsintern-phase-f`.
+- Isolation: `codex --disable plugins` sets `plugins=false`; an isolated runtime
+  audit found no Honey and found all eight local PhysicsIntern skills plus seven
+  local roles.
+- Pilot: the free-scalar survey was produced and a separate symbolic oracle
+  rejected a seeded wrong sign, but the autonomous workflow could not continue.
+- Blocker: every isolated `codex exec` fails on a malformed model catalog
+  (`base_instructions` absent for eight models); see `BLOCKER.md`. No five-case
+  evaluation, imported run, scientific claim, or Phase F acceptance decision was
+  made.
+
 ## Current blocker
 
-The official PhysicsIntern plugin is installed in the local cache, but its
-bootstrap skill is absent from this session's live catalog. Honey is active and
-has no supported writable isolation mechanism; see `BLOCKER.md`.
+The external Codex CLI runtime cannot load its model catalog consistently;
+`BLOCKER.md` preserves the exact repair preconditions and evidence.
