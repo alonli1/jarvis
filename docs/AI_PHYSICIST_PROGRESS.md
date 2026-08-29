@@ -116,3 +116,12 @@ remain to be run in independent disposable workspaces.
   disabled by the kernel, preventing the required filesystem boundary.
 - F02--F05 remain unaccepted.  This is an external OS-isolation blocker, not a
   PhysicsIntern methodology result; see `BLOCKER.md`.
+
+## 2026-08-29 — Strict Landlock recovery stopped at Codex state dependency
+
+- Landlock ABI 8 directly proved a fail-closed read allowlist and denied the
+  F02 parent path in a launcher test.
+- The recovered Codex executable then failed before a model turn because its
+  app-server client needs denied global Codex IPC/state. Granting it would break
+  the required dedicated-state confidentiality boundary.
+- F02--F05 cannot run locally under the contract; see `BLOCKER.md`.

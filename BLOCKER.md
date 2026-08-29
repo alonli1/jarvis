@@ -92,3 +92,20 @@ read a private oracle or forbidden review if it knew a path.  Continuing would
 violate the required oracle and reviewer isolation.  The adapter and smoke
 capsules remain only under `/tmp`; no Jarvis or global Codex configuration was
 modified.
+
+## Final local containment result: Landlock enforces, Codex cannot use it strictly
+
+Kernel `Linux 7.0.0-29-generic` exposes Landlock ABI 8. The fail-closed direct
+syscall probe under `/tmp/phase-f-landlock` allowed its staged directory and
+denied `/etc/hostname` with `EACCES`; the launcher also denied a parent-workspace
+read in a direct shell test.
+
+The recovered Codex runtime cannot complete a model turn under that policy. An
+external capsule with only the exact authentication file, binary, TLS/DNS paths,
+and runtime libraries reaches Codex but fails to initialize its in-process
+app-server client with `Permission denied`. Granting global `.codex` IPC/state
+would violate the dedicated-state and confidentiality requirements. No global
+configuration or kernel setting was changed.
+
+F02--F05 require an isolated worker/runtime with a dedicated Codex state home
+under a strict read allowlist. F01 remains valid.

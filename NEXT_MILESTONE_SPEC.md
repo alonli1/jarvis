@@ -71,6 +71,8 @@ permitted while Honey is active.
 ## Ordered execution
 
 1. Reconfirm the recovered plugin-disabled runtime before each scientific run.
+   The current local runtime requires an isolated worker with a dedicated state
+   home before this can satisfy strict filesystem isolation.
 2. Bootstrap a fresh disposable workspace for each remaining case.
 3. Run F02--F05 from `docs/PHASE_F_CASES.md` with JARVIS
    retrieval/computation substrates and import their
