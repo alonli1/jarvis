@@ -1,92 +1,74 @@
-# Milestone spec — Phase F preparation: provisional imports and role telemetry
+# Milestone spec — Phase F execution: PhysicsIntern/Jarvis experiments
 
 ## Objective
 
-Prepare the existing Manifest v2 run substrate for a later, Honey-isolated
-PhysicsIntern experiment. Import one explicitly selected external artifact into
-an existing run as immutable, provisional evidence and record model usage with
-an optional execution role.
+Run five bounded known-answer investigations in a dedicated PhysicsIntern
+workspace while preserving JARVIS evidence, computation, provisional-artifact,
+and role-telemetry provenance.
 
-## Non-goals
+## Preconditions and blocker
 
-- Do not create or run a PhysicsIntern workspace.
-- Do not execute scientific agents, classify scientific tasks, create scientific
-  claims, or run known-answer investigations.
-- Do not add a PhysicsIntern-specific output schema, provider dependency, or
-  second run-bundle format.
-- Do not alter retrieval, graph, computation execution, router selection, or
-  existing `jarvis ask` behavior.
+This milestone is blocked in the current session. Before execution:
+
+- `init-physics-intern` must appear in the live skill catalog.
+- Honey isolation must be mechanically verified from installed/runtime evidence.
+- The user must explicitly invoke `$init-physics-intern` for a dedicated empty
+  workspace; the official bootstrap skill prohibits implicit invocation.
+
+`BLOCKER.md` records the current evidence and no scientific agent may be spawned
+until all three conditions hold.
 
 ## Current-state evidence
 
-- `src/jarvis/workflows.py::_new_run` writes Manifest v2 run bundles;
-  `load_manifest` normalizes v1/v2 reads without mutation.
-- `prepare_literature`, `prepare_computation`, and `handoff` already provide
-  evidence, explicit computation, and portable export substrates.
-- `src/jarvis/models.py::ModelUsage` already carries provider/model/token/cost
-  telemetry but lacks a role and is not persisted into a run.
-- No external-artifact import API exists.
+- Commit `89cdccd` provides Manifest v2 `provisional_artifacts`, contained
+  file-level import, role-tagged `ModelUsage`, and portable ZIP handoffs.
+- `prepare_literature`, retrieval/graph tools, and `prepare_computation` remain
+  the existing evidence and deterministic-computation substrates.
+- No PhysicsIntern workspace, agent output, scientific result, or known-answer
+  experiment has been created in this repository.
 
-## Interfaces and data
+## Interfaces and boundaries
 
-- Add optional `role` to `ModelUsage`; its enclosing run supplies association.
-- Add `ProvisionalArtifact` with an id, source label, role, run-relative path,
-  SHA-256 digest, and import timestamp.
-- `import_provisional_artifact(config, run_id, source, source_label, artifact_id,
-  role=None)` accepts one regular source file, copies it under the target run,
-  refuses source symlinks, duplicate ids, and paths outside the run, and appends
-  its record to `manifest.json`.
-- `record_model_usage(config, run_id, usage)` appends a validated `ModelUsage`
-  record to the run manifest.
-- `load_manifest` supplies an empty `provisional_artifacts` list for legacy
-  manifests without rewriting them. New imported records remain provisional;
-  importing cannot set a claim or verification status.
-- Zip handoffs include imported artifacts; Markdown handoffs list their
-  provenance metadata without treating their contents as instructions.
+- Use `import_provisional_artifact` only for selected regular output files,
+  retaining source label, role, run-relative path, digest, and timestamp.
+- Use `record_model_usage` for each role/model invocation in its associated
+  Manifest v2 run.
+- Keep imported material provisional. Only recorded checks can change claim or
+  verification status; no AI action may mark a result human verified.
+- Do not add a PhysicsIntern dependency or nested workspace inside this repo.
 
-## Compatibility and provenance invariants
+## Scientific/provenance invariants
 
-- Existing v1 reads remain non-mutating; all current v2 fields and workflows
-  remain compatible.
-- Imported files are copied, never linked; their original absolute path is not
-  stored. The manifest records a stable content digest and run-relative path.
-- Imported material is untrusted/provisional evidence, not a verified result.
-- No API may set `human_verified`, modify an existing artifact, or overwrite an
-  existing imported artifact id.
-- Preserve existing sanitization and never emit credentials in handoffs.
+- Survey outputs must cite JARVIS evidence with source path plus page/section.
+- Computation must use explicit JARVIS workbench execution and retain scripts,
+  raw logs, conventions, assumptions, and independent checks.
+- Seeded mistakes must be declared before testing and independent checks must
+  detect at least some of them.
+- Preserve original artifacts by digest; do not import credentials or absolute
+  source paths into run bundles or exports.
 
-## Required tests
+## Required validation and acceptance
 
-- Valid import copies content, records a digest and provisional metadata, and is
-  present in a ZIP handoff.
-- Symlink and duplicate-id imports fail without modifying the target run.
-- Role-tagged usage is serialized in the target run.
-- Legacy manifest normalization includes the new empty field without rewriting
-  the original file.
-- Existing workflow, manifest, CLI, routing, and full test suites remain green.
+- Five known-answer investigations have complete reproducible artifacts.
+- At least one retrieval/graph output and one computation workbench are used
+  where applicable.
+- Each run records model/provider/role telemetry and provisional imported output.
+- Independent checks catch seeded mistakes.
+- Existing test suite and relevant new integration checks pass.
 
-## Acceptance criteria
+## Model/routing implication
 
-- A future external research workspace can hand one selected artifact and its
-  role telemetry to a JARVIS v2 run reproducibly.
-- The imported artifact has a stable digest, run-local copy, explicit
-  provisional status, and portable ZIP inclusion.
-- No PhysicsIntern or scientific-agent action was taken in this milestone.
+The generic coding router is not scientific classification. PhysicsIntern may be
+used only after Honey isolation; no architecture or critical-review agent is
+permitted while Honey is active.
 
-## Model/routing and review limitation
+## Ordered execution
 
-Honey is active in the current session. Its installed cache exposes skills only,
-not a supported writable state or hook implementation, and the live skill
-catalog does not expose PhysicsIntern. Therefore no architecture, critical
-review, PhysicsIntern, or scientific subagent was used. The main coordinator
-selected this bounded, reversible preparation interface; the next scientific
-step remains blocked pending a Honey-isolated session with PhysicsIntern
-available.
-
-## Ordered implementation
-
-1. Extend the manifest models and normalizer.
-2. Add contained-copy import and usage-record helpers to `workflows.py`.
-3. Include import artifacts in ZIP handoffs and provenance metadata in Markdown.
-4. Add focused manifest/workflow tests, then run narrow and full verification.
-5. Update the progress and blocker checkpoint; commit only milestone files.
+1. Verify the preconditions and isolate Honey reversibly.
+2. Bootstrap the dedicated empty workspace only through the explicit official
+   skill invocation.
+3. Define five known-answer cases and their seeded-error checks before execution.
+4. Run the cases with JARVIS retrieval/computation substrates and import their
+   selected provisional artifacts plus telemetry.
+5. Verify reproducibility, update progress/blocker, and commit the validated
+   Phase F execution milestone.
