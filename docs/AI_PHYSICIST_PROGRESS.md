@@ -68,5 +68,26 @@ experiments after Codex's model-catalog runtime defect is repaired.
 
 ## Current blocker
 
-The external Codex CLI runtime cannot load its model catalog consistently;
-`BLOCKER.md` preserves the exact repair preconditions and evidence.
+Phase F remains in progress: F01 is complete and provisionally imported; F02--F05
+remain to be run in independent disposable workspaces.
+
+## 2026-08-29 — Phase F runtime recovery and F01 complete
+
+- Recovery: reused Antigravity's installed OpenAI Codex extension runtime
+  `0.151.0-alpha.7.1` at its recorded absolute path.  It passed a
+  plugin-disabled model smoke test without the old `base_instructions` failure.
+- Isolation: the recovered process reported `plugins=false`; its audit found no
+  Honey directive/skill and found all eight PhysicsIntern skills and seven
+  PhysicsIntern roles.  No global cache, authentication, or plugin setting was
+  changed.
+- F01 (free scalar, QFT): PhysicsIntern's completed, reviewed derivation and
+  finite-difference calculation agree with an independent deterministic oracle;
+  the seeded opposite mass sign is rejected.  The disposable workspace revision
+  is `baa91ee`.
+- Provenance: selected F01 artifacts were imported as provisional material into
+  `20260829T154526Z-literature-phase-f-f01-evidence-context-for-a-f`.  Raw
+  session logs were not imported.  The runtime did not report a per-role model
+  identifier, so telemetry records `not-reported-by-runtime` rather than
+  inventing a model name.
+- Case contract: [PHASE_F_CASES.md](PHASE_F_CASES.md) defines F01--F05, their
+  literature/deterministic bases, and withheld seeded checks.

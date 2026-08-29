@@ -8,16 +8,16 @@ and role-telemetry provenance.
 
 ## Preconditions and blocker
 
-This milestone is blocked in the current CLI runtime. Before execution:
+The runtime prerequisite is satisfied by the recovered extension runtime.
+Before each remaining execution:
 
 - The official upstream bootstrap script must create a dedicated empty workspace.
 - `codex --disable plugins` must report `plugins=false` and runtime evidence
   must show no Honey directives.
-- The Codex model catalog must load with `base_instructions` for the selected
-  model and permit repeated fresh-context dispatches.
+- The recovered Codex executable must remain usable with `--disable plugins`
+  and permit fresh-context dispatches.
 
-`BLOCKER.md` records the current evidence and no scientific agent may be spawned
-until all three conditions hold.
+`BLOCKER.md` records the historical standalone defect and recovery evidence.
 
 ## Current-state evidence
 
@@ -26,8 +26,8 @@ until all three conditions hold.
 - `prepare_literature`, retrieval/graph tools, and `prepare_computation` remain
   the existing evidence and deterministic-computation substrates.
 - PhysicsIntern upstream commit `41d75f9` bootstrapped a disposable Codex
-  workspace and an isolated free-scalar survey completed; no full investigation
-  or accepted scientific result exists.
+  workspace; F01 has complete reviewed artifacts, an independent deterministic
+  check, and provisional import.  See `docs/PHASE_F_CASES.md`.
 
 ## Interfaces and boundaries
 
@@ -66,13 +66,11 @@ permitted while Honey is active.
 
 ## Ordered execution
 
-1. Repair or upgrade the external Codex runtime without altering Jarvis, then
-   verify the corrected model catalog and provider reachability.
-2. Re-run the plugin-disabled isolation audit and retain its runtime evidence.
-3. Resume the official upstream-script workspace or bootstrap a fresh disposable
-   one if needed.
-4. Define five known-answer cases and their seeded-error checks before execution.
-5. Run the cases with JARVIS retrieval/computation substrates and import their
+1. Reconfirm the recovered plugin-disabled runtime before each scientific run.
+2. Bootstrap a fresh disposable workspace for each remaining case.
+3. Run F02--F05 from `docs/PHASE_F_CASES.md` with JARVIS
+   retrieval/computation substrates and import their
    selected provisional artifacts plus telemetry.
-6. Verify reproducibility, update progress/blocker, and commit the validated
+4. Verify reproducibility, produce the five-case evaluation, update
+   progress/blocker, and commit the validated
    Phase F execution milestone.

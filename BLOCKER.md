@@ -41,3 +41,17 @@ would require modifying user-global Codex state or bypassing the CLI sandbox,
 neither of which is authorized by the Phase F instruction. The workspace and
 Jarvis evidence bundles were left intact; no scientific result was accepted,
 imported, or claimed.
+
+## Resolved by compatible extension runtime
+
+This historical standalone-CLI blocker was resolved without modifying global
+state.  The Antigravity OpenAI Codex extension executable at
+`/home/alonli/.antigravity-ide/extensions/openai.chatgpt-26.825.41651-linux-x64/bin/linux-x86_64/codex`
+reports `0.151.0-alpha.7.1`, starts a trivial authenticated model `exec`, and
+does not emit the `base_instructions` failure.  Its `--disable plugins` feature
+reports `plugins=false`; a fresh audit found no Honey directive/skill and the
+expected eight PhysicsIntern skills plus seven roles.  This exact executable is
+the Phase F runtime.  The old `0.144.1` PATH CLI is not used for Phase F.
+
+F01 subsequently completed and was imported as provisional evidence; Phase F
+is no longer runtime-blocked, but remains incomplete pending F02--F05.
