@@ -10,7 +10,7 @@
 
 ## Next milestone
 
-Phase D: add provider-neutral model profiles and telemetry without changing retrieval behavior.
+Phase F: evaluate a bounded PhysicsIntern bootstrap integration using existing Jarvis evidence and computation interfaces.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -31,3 +31,9 @@ Phase D: add provider-neutral model profiles and telemetry without changing retr
 - Added optional configured model profiles, structured completion telemetry, and `jarvis ask --profile`.
 - Preserved the existing default model and text-only completion API; no routing or retrieval behavior changed.
 - Validation: focused configuration/runtime/CLI tests and full suite (`61 passed`).
+
+## 2026-08-29 — Phase E science-aware router v1 complete
+
+- Added deterministic `jarvis route --dry-run` with explicit role priors, eleven bounded risk features, configurable capability tiers, reasons, and safe unavailable-profile failures.
+- The router makes no provider request and cannot silently route below its computed epistemic floor.
+- Validation: focused router tests, CLI smoke test, and full suite (`67 passed`).

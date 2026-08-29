@@ -38,6 +38,7 @@ from .literature_graph import (
     save_graph,
 )
 from .retrieval import render_retrieval_prompt, retrieve_hits
+from .routing import TaskFeatures, route as route_task
 from .taxonomy import normalize_tag
 from .workflows import (
     execute_computation,
@@ -316,6 +317,40 @@ def ask(
             c = hit.chunk
             loc = c.source_path + (f":p{c.page}" if c.page else "")
             console.print(f"[S{i}] {loc} (score={hit.score:.3f})")
+
+
+@app.command()
+def route(
+    question: str = typer.Argument(...),
+    role: str = typer.Option(..., "--role"),
+    dry_run: bool = typer.Option(False, "--dry-run"),
+    profile: str | None = typer.Option(None, "--profile"),
+    novelty: int = typer.Option(0, "--novelty", min=0, max=3),
+    ambiguity: int = typer.Option(0, "--ambiguity", min=0, max=3),
+    mathematical_depth: int = typer.Option(0, "--mathematical-depth", min=0, max=3),
+    convention_sensitivity: int = typer.Option(0, "--convention-sensitivity", min=0, max=3),
+    tool_dependence: int = typer.Option(0, "--tool-dependence", min=0, max=3),
+    verification_strength: int = typer.Option(0, "--verification-strength", min=0, max=3),
+    literature_uncertainty: int = typer.Option(0, "--literature-uncertainty", min=0, max=3),
+    coupling: int = typer.Option(0, "--coupling", min=0, max=3),
+    consequence: int = typer.Option(0, "--consequence", min=0, max=3),
+    context_burden: int = typer.Option(0, "--context-burden", min=0, max=3),
+    creative_search: int = typer.Option(0, "--creative-search", min=0, max=3),
+) -> None:
+    """Explain a deterministic model-profile choice without calling a provider."""
+    if not dry_run:
+        raise typer.BadParameter("Only --dry-run is supported", param_hint="--dry-run")
+    del question
+    features = TaskFeatures(
+        novelty, ambiguity, mathematical_depth, convention_sensitivity, tool_dependence,
+        verification_strength, literature_uncertainty, coupling, consequence, context_burden,
+        creative_search,
+    )
+    try:
+        decision = route_task(load_config().assistant.profiles, role, features, profile)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(json.dumps(decision.as_dict(), sort_keys=True))
 
 
 @app.command()

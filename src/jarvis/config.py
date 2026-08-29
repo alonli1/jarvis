@@ -10,7 +10,7 @@ class AssistantConfig:
     name: str
     default_model: str
     max_context_chunks: int
-    profiles: dict[str, "ModelProfile"] = field(default_factory=dict)
+    profiles: dict[str, ModelProfile] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -18,6 +18,7 @@ class ModelProfile:
     name: str
     provider: str
     model: str
+    capability: str
 
 
 @dataclass(frozen=True)
@@ -85,10 +86,15 @@ def load_config(root: Path | None = None) -> Config:
     profiles = {}
     for name, values in raw.get("model_profiles", {}).items():
         model = values.get("model") if isinstance(values, dict) else None
+        capability = values.get("capability") if isinstance(values, dict) else None
         if not isinstance(model, str) or not model.strip():
             raise ValueError(f"Model profile {name!r} must define a non-empty model")
+        if capability not in ("extract", "science_fast", "science_standard", "science_deep", "science_critical"):
+            raise ValueError(f"Model profile {name!r} must define a valid capability")
         provider = model.split("/", 1)[0] if "/" in model else "unknown"
-        profiles[name] = ModelProfile(name=name, provider=provider, model=model)
+        profiles[name] = ModelProfile(
+            name=name, provider=provider, model=model, capability=capability
+        )
 
     return Config(
         root=root,

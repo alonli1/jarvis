@@ -1,36 +1,35 @@
-# Milestone spec — Phase D runtime model profiles and telemetry
+# Milestone spec — Phase E science-aware router v1
 
 ## Objective
 
-Add provider-neutral configured model profiles and request telemetry around the existing LiteLLM boundary, without changing retrieval behavior or adding task routing.
+Add a deterministic, explainable `jarvis route --dry-run` that selects only configured model profiles using request features and explicit epistemic floors. It must not execute models, spawn agents, or alter `jarvis ask` defaults.
 
-## Scope
+## Boundaries
 
-- Extend `assistant.toml`/`config.py` with optional profiles while preserving `assistant.default_model`.
-- Replace the bare `llm.complete()` return path with a structured internal result that preserves the existing text-returning compatibility wrapper.
-- Record provider/model, latency, and usage when LiteLLM exposes it; telemetry absence must not fail an answer.
-- Add explicit profile selection to `jarvis ask`; no automatic routing.
+- Input: request text, requested role, optional profile override.
+- Output: provider-neutral `TaskFeatures` and `RouteDecision`, selected configured profile, reason codes, and an explanation.
+- Deterministic role priors and explicit floor/escalation rules only. No classifier call in this milestone.
+- Reuse Phase B eval infrastructure for router fixtures; do not treat evidence/tool cases as physics-answer grading.
 
-## Non-goals
+## Deterministic policy
 
-- No router, classifier, budget policy, orchestration, claim promotion, or provider migration.
-- No change to retrieval source selection, prompt instructions, or document-access semantics.
+`TaskFeatures` contains the roadmap's eleven `0..3` dimensions: novelty, ambiguity, mathematical_depth, convention_sensitivity, tool_dependence, verification_strength, literature_uncertainty, coupling, consequence, context_burden, and creative_search. Profile capability tiers are ordered: `extract`, `science_fast`, `science_standard`, `science_deep`, `science_critical`.
 
-## Compatibility/provenance invariants
+Role priors are `metadata`/`triage` → extract; `retrieval`/`computation` → science_fast; `literature`/`derivation` → science_standard; `research_planning`/`review` → science_deep; `critical_review` → science_critical. Unknown roles fail clearly.
 
-- Existing `jarvis ask QUESTION --model MODEL` remains valid and semantically unchanged.
-- Default behavior continues to use `assistant.default_model` when no profile/override is selected.
-- Telemetry is additive, provider-neutral, and never fabricates unavailable usage values.
-- Model usage records retain the existing run-bundle provenance boundary; no new run is required for ordinary `ask`.
+Raise the role floor to science_deep for novelty, convention sensitivity, literature uncertainty, coupling, or creative search at `>=2`; for mathematical depth or ambiguity at `>=3`; and for high consequence (`>=2`) when verification strength is `<=1`. Do not select science_critical automatically: only the critical-review role may require it. `verification_strength` follows the roadmap's stated meaning—availability of deterministic verification—so low, not high, strength is an escalation signal.
 
-## Required tests and acceptance
+Configuration adds a required `capability` to each model profile. The router selects the lowest configured profile meeting the computed floor. If none exists, dry-run fails safely and names the unmet tier; it must not relabel a lower-capability profile.
 
-1. Old configuration loads unchanged; profiles validate unique names and required model IDs.
-2. Text compatibility wrapper returns unchanged output.
-3. Structured result captures supplied usage/latency and safely handles missing usage.
-4. `jarvis ask` accepts a configured profile and rejects unknown profiles clearly.
-5. Existing tests and Phase B eval report remain green.
+`jarvis route --dry-run QUESTION --role ROLE` accepts every feature as an optional bounded integer and emits sorted JSON with selected profile/model, features, floor, reason codes, and explanation. An explicit `--profile` is allowed only if its configured capability satisfies the computed floor.
+
+## Invariants/tests
+
+- Profile override is validated and explained.
+- High convention sensitivity, novelty, verification strength, or consequence cannot select below the defined floor.
+- Unknown role/profile fails clearly; no provider request is made.
+- Dry-run JSON is machine-readable, existing commands remain compatible, and Phase B/C/D tests remain green.
 
 ## Review limitation
 
-Honey isolation remains unavailable, so the main coordinator must make the bounded profile/telemetry design decision and perform a parent-level compatibility review; do not spawn architecture or critical-review agents.
+Honey isolation remains unavailable. The coordinator must make the minimum routing-policy decision, record thresholds and adverse cases, and perform a parent-level adversarial review; do not spawn architecture or critical-review agents.

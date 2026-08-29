@@ -24,7 +24,9 @@ def test_retrieve_command_prints_pasteable_sources(monkeypatch):
 
 def test_ask_selects_profile_and_model_override(monkeypatch):
     selected = []
-    profile = ModelProfile(name="fast", provider="openai", model="openai/gpt-5.6")
+    profile = ModelProfile(
+        name="fast", provider="openai", model="openai/gpt-5.6", capability="science_fast"
+    )
     config = type(
         "Config",
         (),
