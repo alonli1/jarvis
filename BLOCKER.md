@@ -74,3 +74,21 @@ is an authenticated, plugin-disabled Codex invocation mode that exposes both
 `spawn_agent` and `wait_agent` to the generated local roles (or a documented
 equivalent supplied by the installed runtime).  This is separate from the
 resolved model-cache defect.
+
+## Current Phase F execution blocker: process capsule filesystem escape
+
+The Phase-F-only process dispatcher successfully created separate fresh Codex
+sessions, disabled plugins, staged a harmless input, and validated the surveyor
+and planner smoke artifacts.  However, a planner process could see the parent
+F02 workspace through `../../../` (its own `git status` showed parent files),
+so the capsule is not a mechanical information boundary.  No F02 artifact from
+that workspace is accepted on this transport.
+
+`bubblewrap 0.11.1` is installed, but its minimal namespace test fails with
+`No permissions to create a new namespace, likely because the kernel does not
+allow non-privileged user namespaces.`  Without a kernel-supported filesystem
+namespace (or an equivalent OS-level containment mechanism), a process could
+read a private oracle or forbidden review if it knew a path.  Continuing would
+violate the required oracle and reviewer isolation.  The adapter and smoke
+capsules remain only under `/tmp`; no Jarvis or global Codex configuration was
+modified.

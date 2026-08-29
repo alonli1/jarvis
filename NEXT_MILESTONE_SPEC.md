@@ -17,6 +17,9 @@ Before each remaining execution:
 - The recovered Codex executable must remain usable with `--disable plugins`
   and expose usable fresh-context `spawn_agent`/`wait_agent` dispatches to the
   generated PhysicsIntern workspace roles.
+- If native dispatch is unavailable, a process-isolated transport must enforce
+  an OS-level capsule filesystem boundary; prompt-only or path-based staging is
+  insufficient because it cannot protect private oracle material.
 
 `BLOCKER.md` records the historical standalone defect and recovery evidence.
 

@@ -103,3 +103,16 @@ remain to be run in independent disposable workspaces.
 - This is a distinct external runtime-host limitation, not the repaired model
   catalog issue.  The F02 workspace is preserved pending a plugin-disabled
   invocation mode with generated-role dispatch support; see `BLOCKER.md`.
+
+## 2026-08-29 — Process-isolated dispatch capsule blocked
+
+- A Phase-F-only adapter under `/tmp` created fresh, plugin-disabled recovered
+  Codex sessions, role/prompt hashes, staged-input manifests, stdout/stderr
+  provenance, and output-contract validation.  Two non-scientific role smoke
+  artifacts passed those local checks.
+- The planner smoke trace could still see the parent F02 workspace through
+  `../../../`, so the capsule cannot protect hidden oracles and forbidden
+  reviews.  `bubblewrap` is present but non-privileged user namespaces are
+  disabled by the kernel, preventing the required filesystem boundary.
+- F02--F05 remain unaccepted.  This is an external OS-isolation blocker, not a
+  PhysicsIntern methodology result; see `BLOCKER.md`.
