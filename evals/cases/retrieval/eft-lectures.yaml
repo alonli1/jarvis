@@ -1,0 +1,8 @@
+id: retrieval-eft-lectures
+category: retrieval
+mode: retrieval
+question: Locate local EFT lectures covering matching and power counting.
+expected_evidence:
+  - source_path: knowledge/papers/manohar-eft-lectures__1804.05863.pdf
+criteria:
+  minimum_matches: 1

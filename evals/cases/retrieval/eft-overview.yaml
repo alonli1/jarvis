@@ -1,0 +1,8 @@
+id: retrieval-eft-overview
+category: retrieval
+mode: retrieval
+question: Locate a local overview of effective field theory.
+expected_evidence:
+  - source_path: knowledge/papers/weinberg-eft-past-future__0908.1964.pdf
+criteria:
+  minimum_matches: 1

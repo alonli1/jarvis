@@ -1,0 +1,8 @@
+id: qft-covariant-derivative-expansion
+category: qft
+mode: retrieval
+question: Locate a local QFT source on covariant derivative expansion.
+expected_evidence:
+  - source_path: knowledge/papers/hlm-cde-2016__1604.01019.pdf
+criteria:
+  minimum_matches: 1

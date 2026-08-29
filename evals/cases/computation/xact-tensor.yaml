@@ -1,0 +1,7 @@
+id: computation-xact-tensor
+category: computation
+mode: tool_status
+expected_evidence:
+  - tool_id: xact
+criteria:
+  minimum_matches: 1

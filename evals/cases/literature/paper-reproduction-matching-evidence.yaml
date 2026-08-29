@@ -1,0 +1,8 @@
+id: paper-reproduction-matching-evidence
+category: literature
+mode: retrieval
+question: Locate the source-evidence prerequisite for reproducing functional EFT matching work.
+expected_evidence:
+  - source_path: knowledge/papers/functional-prescription-2020__2011.02484.pdf
+criteria:
+  minimum_matches: 1

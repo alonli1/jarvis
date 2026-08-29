@@ -1,0 +1,9 @@
+id: qft-functional-matching
+category: qft
+mode: retrieval
+question: Locate a local QFT source on functional EFT matching.
+expected_evidence:
+  - source_path: knowledge/papers/hlm-smeft-2014__1412.1837.pdf
+  - source_path: knowledge/papers/field-redefs-2018__1811.09413.pdf
+criteria:
+  minimum_matches: 1

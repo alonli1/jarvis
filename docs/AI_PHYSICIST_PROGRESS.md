@@ -10,4 +10,11 @@
 
 ## Next milestone
 
-Phase B: implement a small, machine-readable scientific evaluation-suite skeleton before any model routing or orchestration behavior.
+Phase C: add backward-compatible Manifest v2 scientific result types while preserving v1 run-bundle workflows.
+
+## 2026-08-29 — Phase B evaluation-suite foundation complete
+
+- Added 20 source/tool-evidence cases across retrieval, literature (including paper-reproduction prerequisites), QFT, GR, and computation.
+- Added `jarvis eval run`, which produces a machine-readable report without a model call and treats case failures as report data.
+- Validation: focused evaluation/CLI tests, full suite (`50 passed`), new-code Ruff check, and a real local report (`20 passed`, `0 failed`).
+- Scope: this is evidence/tool availability evaluation only; it does not validate scientific answers, derivations, or claims.

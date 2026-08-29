@@ -1,0 +1,9 @@
+id: retrieval-gravity-eft
+category: retrieval
+mode: retrieval
+question: Locate a canonical local source on gravity as an effective field theory.
+expected_evidence:
+  - source_path: knowledge/papers/donoghue-gravity-eft-1994__gr-qc_9405057.pdf
+  - source_path: knowledge/papers/donoghue-qgr-2022__2211.09902.pdf
+criteria:
+  minimum_matches: 1

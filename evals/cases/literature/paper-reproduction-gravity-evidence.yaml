@@ -1,0 +1,8 @@
+id: paper-reproduction-gravity-evidence
+category: literature
+mode: retrieval
+question: Locate the source-evidence prerequisite for reproducing gravity EFT operator results.
+expected_evidence:
+  - source_path: knowledge/papers/gravity-all-orders-2019__1908.08050.pdf
+criteria:
+  minimum_matches: 1

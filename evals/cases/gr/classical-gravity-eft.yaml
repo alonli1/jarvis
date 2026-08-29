@@ -1,0 +1,9 @@
+id: gr-classical-gravity-eft
+category: gr
+mode: retrieval
+question: Locate local evidence for effective field theory methods in classical gravity.
+expected_evidence:
+  - source_path: knowledge/papers/levi-review-2018__1807.01699.pdf
+  - source_path: knowledge/papers/porto-review-2016__1601.04914.pdf
+criteria:
+  minimum_matches: 1

@@ -1,0 +1,9 @@
+id: literature-gravity-eft-review
+category: literature
+mode: retrieval
+question: Locate a literature source reviewing quantum gravity as an EFT.
+expected_evidence:
+  - source_path: knowledge/papers/burgess-gravity-eft-2003__gr-qc_0311082.pdf
+  - source_path: knowledge/papers/donoghue-qgr-2022__2211.09902.pdf
+criteria:
+  minimum_matches: 1

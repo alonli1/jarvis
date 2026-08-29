@@ -1,0 +1,8 @@
+id: qft-one-loop-action
+category: qft
+mode: retrieval
+question: Locate a local QFT source on the universal one-loop effective action.
+expected_evidence:
+  - source_path: knowledge/papers/uolea-2015__1512.03003.pdf
+criteria:
+  minimum_matches: 1

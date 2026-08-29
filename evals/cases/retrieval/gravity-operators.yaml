@@ -1,0 +1,8 @@
+id: retrieval-gravity-operators
+category: retrieval
+mode: retrieval
+question: Locate local evidence for an all-orders gravity EFT operator basis.
+expected_evidence:
+  - source_path: knowledge/papers/gravity-all-orders-2019__1908.08050.pdf
+criteria:
+  minimum_matches: 1

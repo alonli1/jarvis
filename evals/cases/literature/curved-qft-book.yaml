@@ -1,0 +1,8 @@
+id: literature-curved-qft-book
+category: literature
+mode: retrieval
+question: Locate the local canonical book on quantum fields in curved space.
+expected_evidence:
+  - source_path: knowledge/books/birrell-davies-book.pdf
+criteria:
+  minimum_matches: 1

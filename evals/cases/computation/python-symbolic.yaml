@@ -1,0 +1,7 @@
+id: computation-python-symbolic
+category: computation
+mode: tool_status
+expected_evidence:
+  - tool_id: python
+criteria:
+  minimum_matches: 1

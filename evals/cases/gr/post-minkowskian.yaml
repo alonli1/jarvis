@@ -1,0 +1,8 @@
+id: gr-post-minkowskian
+category: gr
+mode: retrieval
+question: Locate the local source for post-Minkowskian EFT binary dynamics.
+expected_evidence:
+  - source_path: knowledge/papers/pm-eft-2020__2006.01184.pdf
+criteria:
+  minimum_matches: 1

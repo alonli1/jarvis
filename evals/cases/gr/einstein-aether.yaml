@@ -1,0 +1,8 @@
+id: gr-einstein-aether
+category: gr
+mode: retrieval
+question: Locate the local Einstein-Aether theory review.
+expected_evidence:
+  - source_path: knowledge/papers/einstein-aether-review__gr-qc_0410001.pdf
+criteria:
+  minimum_matches: 1

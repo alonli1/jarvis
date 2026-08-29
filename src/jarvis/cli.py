@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import webbrowser
 from datetime import date, timedelta
@@ -24,6 +25,7 @@ from .dropbox_client import (
     save_refresh_token,
     save_settings,
 )
+from .evaluation import evaluate_cases, load_cases
 from .graph_server import create_graph_server
 from .graph_view import render_graph_html
 from .index import HybridIndex
@@ -53,9 +55,11 @@ console = Console()
 library_app = typer.Typer(no_args_is_help=True, help="Manage the shared research library.")
 run_app = typer.Typer(no_args_is_help=True, help="Prepare provider-neutral research workflows.")
 compute_app = typer.Typer(no_args_is_help=True, help="Execute explicit computation workbenches.")
+eval_app = typer.Typer(no_args_is_help=True, help="Run deterministic evidence/tool evaluations.")
 app.add_typer(library_app, name="library")
 app.add_typer(run_app, name="run")
 app.add_typer(compute_app, name="compute")
+app.add_typer(eval_app, name="eval")
 
 
 def _print_cloud_result(result, dry_run: bool = False) -> None:
@@ -321,6 +325,27 @@ def retrieve(
     cfg = load_config()
     hits = retrieve_hits(cfg, question, limit=limit, tags=tag)
     console.print(render_retrieval_prompt(question, hits), markup=False)
+
+
+@eval_app.command("run")
+def eval_run(
+    cases: Path = typer.Option(Path("evals/cases"), "--cases"),  # noqa: B008
+    output: Path | None = typer.Option(None, "--output"),  # noqa: B008
+) -> None:
+    """Run source-evidence and registered-tool checks without model calls."""
+    try:
+        config = load_config()
+        report = evaluate_cases(
+            config, load_cases(cases if cases.is_absolute() else config.root / cases)
+        )
+        text = json.dumps(report, indent=2, sort_keys=True) + "\n"
+        if output:
+            output.write_text(text, encoding="utf-8")
+        else:
+            typer.echo(text, nl=False)
+    except (OSError, TypeError, ValueError) as exc:
+        typer.echo(f"Evaluation failed: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
 
 
 @run_app.command("literature")

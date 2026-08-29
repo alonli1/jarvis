@@ -1,0 +1,7 @@
+id: computation-matchete-matching
+category: computation
+mode: tool_status
+expected_evidence:
+  - tool_id: matchete
+criteria:
+  minimum_matches: 1

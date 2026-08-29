@@ -1,0 +1,7 @@
+id: computation-feyncalc-amplitudes
+category: computation
+mode: tool_status
+expected_evidence:
+  - tool_id: feyncalc
+criteria:
+  minimum_matches: 1
