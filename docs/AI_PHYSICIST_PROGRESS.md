@@ -144,3 +144,13 @@ withheld until post-hoc validation.
   Critique, finalization, oracle validation, import, and F05 remain pending.
 - Earlier capsule/Bubblewrap/Landlock findings are retained as architectural
   evidence, not as blockers under this approved normal-information-flow policy.
+
+## 2026-08-30 — Phase F complete
+
+- F04 and F05 completed with fresh-role derivations, computations, reviews,
+  critiques, answer artifacts, and post-hoc private-oracle checks.
+- F05's critique caught an initial symbolic MGF assumption; C-001 was repaired
+  to integrate the normalized density directly and received a new review.
+- All five cases have selected provisional imports and truthful role telemetry.
+  See [PHASE_F_EVALUATION.md](PHASE_F_EVALUATION.md) for the case table and
+  scope-limited acceptance decision.
