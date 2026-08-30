@@ -68,10 +68,10 @@ experiments after Codex's model-catalog runtime defect is repaired.
 
 ## Current blocker
 
-Phase F remains in progress. Under the subsequently approved normal
-PhysicsIntern information-flow policy, shared-workspace filesystem visibility is
-not an execution blocker; private expected-answer/oracle material remains
-withheld until post-hoc validation.
+No active Phase F blocker remains. Under the approved normal PhysicsIntern
+information-flow policy, shared-workspace filesystem visibility was not an
+execution blocker; private expected-answer/oracle material remained withheld
+until post-hoc validation.
 
 ## 2026-08-29 — Phase F runtime recovery and F01 complete
 
