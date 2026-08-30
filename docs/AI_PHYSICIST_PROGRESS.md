@@ -68,8 +68,10 @@ experiments after Codex's model-catalog runtime defect is repaired.
 
 ## Current blocker
 
-Phase F remains in progress: F01 is complete and provisionally imported; F02--F05
-remain to be run in independent disposable workspaces.
+Phase F remains in progress. Under the subsequently approved normal
+PhysicsIntern information-flow policy, shared-workspace filesystem visibility is
+not an execution blocker; private expected-answer/oracle material remains
+withheld until post-hoc validation.
 
 ## 2026-08-29 — Phase F runtime recovery and F01 complete
 
@@ -125,3 +127,20 @@ remain to be run in independent disposable workspaces.
   app-server client needs denied global Codex IPC/state. Granting it would break
   the required dedicated-state confidentiality boundary.
 - F02--F05 cannot run locally under the contract; see `BLOCKER.md`.
+
+## 2026-08-30 — Phase F normal PhysicsIntern execution resumed
+
+- The recovered plugin-disabled runtime was used with separate fresh role
+  contexts and normal PhysicsIntern artefact flow; Honey remained disabled.
+- F02 (EFT power counting) and F03 (FLRW curvature) completed in disposable
+  workspaces and were post-hoc checked against private deterministic oracles.
+  Selected artifacts, execution outputs, reviews, critiques, validation records,
+  and truthful `not-reported-by-runtime` role telemetry were imported into
+  provisional runs `20260830T035710Z-literature-phase-f-f02-eft-power-counting-calib`
+  and `20260830T035720Z-literature-phase-f-f03-flrw-curvature-calibrati`.
+- F04 (Schwarzschild entropy) has completed separate derivation and computation
+  routes. The first computation review caught a real pre-repair execution defect;
+  a fresh R2 review confirmed the repaired, explicitly dependency-pinned run.
+  Critique, finalization, oracle validation, import, and F05 remain pending.
+- Earlier capsule/Bubblewrap/Landlock findings are retained as architectural
+  evidence, not as blockers under this approved normal-information-flow policy.
