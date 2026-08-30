@@ -11,7 +11,7 @@
 ## Next milestone
 
 Phase H native planner and task packets: define bounded reproducible planning
-records and deterministic task-packet validation without executing model roles.
+records, then add dependency-readiness packet generation without executing model roles.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -187,3 +187,15 @@ until post-hoc validation.
   [PHASE_G_BENCHMARKS_SPEC.md](PHASE_G_BENCHMARKS_SPEC.md).
 - Validation: focused capability/benchmark/CLI tests and full suite (`81
   passed`), plus explicitly executed run bundles with raw logs.
+
+## 2026-08-30 — Phase H deterministic plan foundation (H1) complete
+
+- Added provider-neutral `ResearchPlan` and `TaskPacket` records while keeping
+  existing `ResearchTask` fields compatible.
+- Plans reject duplicate/unknown/self dependencies, cycles, and leaf-task budget
+  overruns before any run mutation. Plan persistence writes deterministic
+  `plan.json` digests into Manifest v2 runs; packet generation emits only
+  dependency-free leaves and makes no model call.
+- Task-packet validation rejects absolute or parent-traversal artifact paths.
+- Validation: focused planner/manifest/workflow/router tests and full suite
+  (`84 passed`). Specification: [PHASE_H_PLANNER_SPEC.md](PHASE_H_PLANNER_SPEC.md).

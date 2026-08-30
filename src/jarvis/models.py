@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime
+from pathlib import Path
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field, model_validator
@@ -130,8 +131,69 @@ class ResearchTask(BaseModel):
     id: str
     description: str
     status: str
+    kind: str = "analysis"
+    objective: str | None = None
     dependencies: list[str] = Field(default_factory=list)
     artifacts: list[str] = Field(default_factory=list)
+    verification_method: str | None = None
+    budget_units: int = Field(default=1, ge=1)
+    stop_conditions: list[str] = Field(default_factory=list)
+    route: dict[str, Any] = Field(default_factory=dict)
+
+
+class ResearchPlan(BaseModel):
+    id: str
+    research_question: str
+    success_criteria: list[str] = Field(min_length=1)
+    conventions: dict[str, Any] = Field(default_factory=dict)
+    tasks: list[ResearchTask] = Field(min_length=1)
+    stop_conditions: list[str] = Field(min_length=1)
+    max_leaf_tasks: int = Field(default=12, ge=1)
+
+    @model_validator(mode="after")
+    def valid_dependency_graph(self) -> ResearchPlan:
+        task_ids = [task.id for task in self.tasks]
+        if len(set(task_ids)) != len(task_ids):
+            raise ValueError("ResearchPlan task ids must be unique")
+        known = set(task_ids)
+        for task in self.tasks:
+            if task.id in task.dependencies:
+                raise ValueError(f"ResearchPlan task {task.id!r} cannot depend on itself")
+            unknown = set(task.dependencies) - known
+            if unknown:
+                raise ValueError(
+                    f"ResearchPlan task {task.id!r} has unknown dependencies: {sorted(unknown)}"
+                )
+        if len(self.tasks) > self.max_leaf_tasks:
+            raise ValueError("ResearchPlan exceeds max_leaf_tasks")
+        remaining = {task.id: set(task.dependencies) for task in self.tasks}
+        resolved = set()
+        while remaining:
+            ready = {
+                task_id for task_id, dependencies in remaining.items() if dependencies <= resolved
+            }
+            if not ready:
+                raise ValueError("ResearchPlan dependency graph contains a cycle")
+            resolved.update(ready)
+            for task_id in ready:
+                del remaining[task_id]
+        return self
+
+
+class TaskPacket(BaseModel):
+    run_id: str
+    task: ResearchTask
+    dependency_artifacts: dict[str, list[str]] = Field(default_factory=dict)
+    plan_sha256: str
+
+    @model_validator(mode="after")
+    def contains_only_run_relative_artifacts(self) -> TaskPacket:
+        for artifacts in self.dependency_artifacts.values():
+            for artifact in artifacts:
+                path = Path(artifact)
+                if path.is_absolute() or ".." in path.parts:
+                    raise ValueError("TaskPacket artifacts must be run-relative")
+        return self
 
 
 class DecisionRecord(BaseModel):
