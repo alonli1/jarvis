@@ -193,6 +193,8 @@ class TaskPacket(BaseModel):
                 path = Path(artifact)
                 if path.is_absolute() or ".." in path.parts:
                     raise ValueError("TaskPacket artifacts must be run-relative")
+                if any("review" in part.lower() for part in path.parts):
+                    raise ValueError("TaskPacket cannot include reviewer artifacts")
         return self
 
 

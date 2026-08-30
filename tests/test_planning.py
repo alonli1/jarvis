@@ -104,3 +104,37 @@ def test_task_packet_rejects_absolute_or_parent_artifact_paths():
             dependency_artifacts={"T000": ["../outside.txt"]},
             plan_sha256="0" * 64,
         )
+
+
+def test_dependent_packet_requires_completed_dependency_and_existing_artifact(
+    tmp_path, monkeypatch
+):
+    cfg = config_for(tmp_path)
+    monkeypatch.setattr("jarvis.tool_registry.importlib.metadata.version", lambda _: "1.0")
+    bundle = prepare_computation(cfg, "Planner dependency test", "python")
+    artifact = bundle.path / "outputs" / "evidence.json"
+    artifact.write_text("{}", encoding="utf-8")
+    research_plan = ResearchPlan(
+        id="PLAN-2",
+        research_question="q",
+        success_criteria=["done"],
+        stop_conditions=["stop"],
+        tasks=[
+            ResearchTask(
+                id="T001",
+                description="source",
+                status="completed",
+                artifacts=["outputs/evidence.json"],
+            ),
+            ResearchTask(id="T002", description="check", status="pending", dependencies=["T001"]),
+        ],
+    )
+
+    packets = create_task_packets(cfg.root, bundle.id, research_plan)
+
+    assert [packet.name for packet in packets] == ["T002.json"]
+    packet = json.loads(packets[0].read_text())
+    assert packet["dependency_artifacts"] == {"T001": ["outputs/evidence.json"]}
+    research_plan.tasks[0].artifacts = ["outputs/missing.json"]
+    with pytest.raises(ValueError, match="missing artifact"):
+        create_task_packets(cfg.root, bundle.id, research_plan)

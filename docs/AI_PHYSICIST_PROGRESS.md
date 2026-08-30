@@ -10,8 +10,8 @@
 
 ## Next milestone
 
-Phase H native planner and task packets: define bounded reproducible planning
-records, then add dependency-readiness packet generation without executing model roles.
+Phase I verification policy and claim ledger: add deterministic promotion guards
+without executing model roles.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -199,3 +199,13 @@ until post-hoc validation.
 - Task-packet validation rejects absolute or parent-traversal artifact paths.
 - Validation: focused planner/manifest/workflow/router tests and full suite
   (`84 passed`). Specification: [PHASE_H_PLANNER_SPEC.md](PHASE_H_PLANNER_SPEC.md).
+
+## 2026-08-30 — Phase H dependency-ready task packets (H2) complete
+
+- Dependent tasks receive packets only after every dependency is complete and
+  each declared upstream artifact exists under the same run directory.
+- Completed tasks are never re-packeted; conflicting existing packets are
+  rejected rather than overwritten. Packet validation also excludes reviewer
+  artifact paths.
+- Validation: focused planner/manifest/workflow tests and full suite (`85
+  passed`).

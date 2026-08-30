@@ -28,9 +28,10 @@ and explicit stop conditions; it does not call or schedule a model.
   plans exceeding their declared budget.
 - `TaskPacket` is a run-relative leaf-execution input with dependency artifact
   references, selected route metadata, and an immutable plan digest.
-- `create_research_plan()` persists a plan and task records into a Manifest v2
-  run. `create_task_packets()` writes task JSON only after deterministic graph
-  validation and never performs a model call.
+- `persist_plan()` persists a plan and task records into a Manifest v2 run.
+  `create_task_packets()` writes ready task JSON only after deterministic graph
+  validation; dependent packets require completed dependencies and existing,
+  run-contained artifacts. It never performs a model call.
 
 ## Constraints and invariants
 
