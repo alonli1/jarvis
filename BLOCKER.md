@@ -1,4 +1,8 @@
-# Phase F runtime blocker
+# Historical Phase F runtime blocker
+
+> Phase F completed on 2026-08-30. The retained material below records the
+> runtime and containment investigations that informed its eventual normal
+> PhysicsIntern execution; it is not an active Phase F blocker.
 
 Phase F cannot complete in the current Codex CLI runtime. The PhysicsIntern
 bootstrap and Honey isolation succeeded, but the isolated process cannot sustain

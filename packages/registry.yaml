@@ -1,4 +1,4 @@
-version: 1
+version: 2
 tools:
   - id: wolfram
     ecosystem: mathematica
@@ -6,6 +6,10 @@ tools:
     version_args: [--version]
     purpose: Wolfram Language symbolic and numerical calculations
     related_topics: [computational_qft_tools, curved_spacetime_qft]
+    capabilities: [symbolic_algebra, numerical_calculation]
+    domains: [QFT, GR, quantum_gravity]
+    execution: {environment: wolfram}
+    verification: {strength: high, templates: [symbolic_identity, numerical_limit]}
   - id: xact
     ecosystem: mathematica
     executable: wolframscript
@@ -14,6 +18,10 @@ tools:
     version_regex: '\$Version=\{"([0-9.]+)"'
     purpose: Tensor algebra and perturbation theory for GR
     related_topics: [curved_spacetime_qft, gravitational_eft]
+    capabilities: [tensor_algebra, curvature, perturbation_theory, action_variation]
+    domains: [GR, gravitational_EFT]
+    execution: {environment: wolfram, package: xAct`xTensor`}
+    verification: {strength: high, templates: [tensor_symmetry, bianchi_identity, flat_limit]}
   - id: feyncalc
     ecosystem: mathematica
     executable: wolframscript
@@ -22,6 +30,10 @@ tools:
     version_regex: '\$FeynCalcVersion = "([0-9.]+)"'
     purpose: Perturbative QFT and amplitude calculations
     related_topics: [computational_qft_tools]
+    capabilities: [dirac_algebra, loop_integrals, amplitude_simplification]
+    domains: [QFT]
+    execution: {environment: wolfram, package: FeynCalc`}
+    verification: {strength: high, templates: [ward_identity, dimensional_check, known_limit]}
   - id: matchete
     ecosystem: mathematica
     executable: wolframscript
@@ -30,6 +42,10 @@ tools:
     version_file: Matchete/version
     purpose: Automated effective-field-theory matching
     related_topics: [automated_eft_matching, one_loop_effective_action]
+    capabilities: [eft_matching, operator_basis_reduction]
+    domains: [QFT, EFT]
+    execution: {environment: wolfram, package: Matchete`}
+    verification: {strength: high, templates: [dimension_counting, operator_symmetry, known_limit]}
   - id: fire7
     ecosystem: mathematica
     executable: wolframscript
@@ -38,9 +54,17 @@ tools:
     version_regex: 'FIRE, version ([0-9.]+)'
     purpose: Integration-by-parts reduction of loop integrals
     related_topics: [computational_qft_tools]
+    capabilities: [ibp_reduction, loop_integrals]
+    domains: [QFT]
+    execution: {environment: wolfram, package: FIRE`}
+    verification: {strength: high, templates: [master_integral_count, numerical_spot_check]}
   - id: python
     ecosystem: python
     executable: python
     package: sympy
     purpose: Reproducible symbolic and numerical cross-checks
     related_topics: [computational_qft_tools]
+    capabilities: [symbolic_algebra, numerical_calculation, tensor_components]
+    domains: [QFT, GR, quantum_gravity]
+    execution: {environment: python, package: sympy}
+    verification: {strength: medium, templates: [symbolic_identity, numerical_spot_check]}

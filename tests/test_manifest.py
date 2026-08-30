@@ -117,7 +117,7 @@ def test_load_manifest_normalizes_v1_without_rewriting(tmp_path):
 def test_new_runs_write_v2_manifest_defaults(tmp_path, monkeypatch):
     cfg = config_for(tmp_path)
     monkeypatch.setattr("jarvis.workflows.retrieve_hits", lambda *args, **kwargs: [])
-    monkeypatch.setattr("jarvis.workflows.importlib.metadata.version", lambda _: "1.0")
+    monkeypatch.setattr("jarvis.tool_registry.importlib.metadata.version", lambda _: "1.0")
 
     literature = json.loads(
         (prepare_literature(cfg, "Question").path / "manifest.json").read_text()

@@ -53,7 +53,7 @@ def test_literature_run_and_browser_handoff_are_grounded(tmp_path, monkeypatch):
 
 def test_python_computation_requires_explicit_execution_and_records_log(tmp_path, monkeypatch):
     cfg = config_for(tmp_path)
-    monkeypatch.setattr("jarvis.workflows.importlib.metadata.version", lambda _: "1.0")
+    monkeypatch.setattr("jarvis.tool_registry.importlib.metadata.version", lambda _: "1.0")
     bundle = prepare_computation(cfg, "Check a symbolic identity", "python")
     script = bundle.path / "scripts/main.py"
     script.write_text("print('checked')\n")

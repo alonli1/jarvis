@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import hashlib
-import importlib.metadata
 import json
 import os
 import re
@@ -15,7 +14,6 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
-import yaml
 from pypdf import PdfReader
 
 from .config import Config
@@ -23,6 +21,7 @@ from .literature_graph import build_graph
 from .models import Chunk, ModelUsage, ProvisionalArtifact, SearchHit
 from .parsing import discover_documents, iter_document_chunks, load_sidecar
 from .retrieval import retrieve_hits
+from .tool_registry import tool_status
 
 
 @dataclass(frozen=True)
@@ -417,87 +416,6 @@ def prepare_ideation(
         + f"\n\n## Host instructions\n\n{INSTRUCTIONS['ideation']}"
     )
     return _write_bundle(bundle, manifest, evidence)
-
-
-def tool_status(root: Path) -> list[dict]:
-    registry = yaml.safe_load((root / "packages" / "registry.yaml").read_text(encoding="utf-8"))
-    tools = []
-    application_roots = [
-        Path(os.environ["JARVIS_WOLFRAM_APPLICATIONS"]).expanduser()
-        if os.getenv("JARVIS_WOLFRAM_APPLICATIONS")
-        else None,
-        Path.home() / ".Wolfram" / "Applications",
-        Path.home() / ".Mathematica" / "Applications",
-    ]
-    application_roots = [path for path in application_roots if path and path.is_dir()]
-    wolfram_runtime_ok = False
-    for entry in registry.get("tools", []):
-        item = dict(entry)
-        executable = "python" if entry["id"] == "python" else entry["executable"]
-        item["path"] = sys.executable if executable == "python" else shutil.which(executable)
-        item["status"] = "available" if item["path"] else "missing"
-        if entry["id"] == "python":
-            item["version"] = sys.version.split()[0]
-            try:
-                item["package_version"] = importlib.metadata.version(entry["package"])
-            except importlib.metadata.PackageNotFoundError:
-                item["status"] = "missing-package"
-        elif entry.get("marker"):
-            marker = next(
-                (
-                    base / entry["marker"]
-                    for base in application_roots
-                    if (base / entry["marker"]).is_file()
-                ),
-                None,
-            )
-            item["path"] = str(marker) if marker else None
-            item["status"] = "available" if marker else "missing-package"
-            if marker and entry.get("version_file"):
-                version_file = next(
-                    (
-                        base / entry["version_file"]
-                        for base in application_roots
-                        if (base / entry["version_file"]).is_file()
-                    ),
-                    None,
-                )
-                if version_file:
-                    item["version"] = version_file.read_text(encoding="utf-8").strip()
-            elif marker and entry.get("version_regex"):
-                match = re.search(
-                    entry["version_regex"], marker.read_text(encoding="utf-8", errors="ignore")
-                )
-                if match:
-                    item["version"] = match.group(1)
-            if marker and not wolfram_runtime_ok:
-                item["status"] = "blocked-runtime"
-        elif item["path"] and entry.get("version_args"):
-            version = subprocess.run(
-                [item["path"], *entry["version_args"]],
-                capture_output=True,
-                text=True,
-                timeout=10,
-                check=False,
-            )
-            item["version"] = (version.stdout or version.stderr).strip()
-            try:
-                smoke = subprocess.run(
-                    [item["path"], "-code", "Print[2+2]"],
-                    capture_output=True,
-                    text=True,
-                    timeout=20,
-                    check=False,
-                )
-                wolfram_runtime_ok = smoke.returncode == 0 and "4" in smoke.stdout
-                diagnostic = smoke.stderr
-            except subprocess.TimeoutExpired:
-                diagnostic = "Wolfram kernel smoke test timed out"
-            if not wolfram_runtime_ok:
-                item["status"] = "broken"
-                item["diagnostic"] = (diagnostic or "Wolfram kernel smoke test failed").strip()
-        tools.append(item)
-    return tools
 
 
 def prepare_computation(config: Config, task: str, engine: str = "auto") -> RunBundle:

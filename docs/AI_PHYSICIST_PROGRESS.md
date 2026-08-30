@@ -10,8 +10,9 @@
 
 ## Next milestone
 
-Phase F execution: resume the five bounded PhysicsIntern/Jarvis known-answer
-experiments after Codex's model-catalog runtime defect is repaired.
+Phase G capability workflows: add executable, provenance-preserving scientific
+check templates and run the QFT/GR registered-tool benchmarks when their
+runtime gate is available.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -154,3 +155,18 @@ until post-hoc validation.
 - All five cases have selected provisional imports and truthful role telemetry.
   See [PHASE_F_EVALUATION.md](PHASE_F_EVALUATION.md) for the case table and
   scope-limited acceptance decision.
+
+## 2026-08-30 — Phase G capability registry (G1) complete
+
+- Evolved `packages/registry.yaml` to version 2 with declared capabilities,
+  domains, execution environments, verification strength, and check templates
+  for the existing Wolfram/xAct/FeynCalc/Matchete/FIRE7/Python surface.
+- Added a validated, v1-compatible registry loader and deterministic selector
+  that returns only runtime-available tools for requested capabilities; it
+  never silently substitutes an unrelated tool.
+- Current runtime evidence: Python/SymPy is available. WolframScript exits 255
+  without output, so the installed Wolfram packages are correctly reported as
+  `broken`/`blocked-runtime`, not usable merely because their markers exist.
+- Validation: focused registry/workflow/evaluation/CLI tests and full suite
+  (`75 passed`), plus live capability selection and `jarvis doctor`.
+- Specification: [PHASE_G_CAPABILITY_REGISTRY_SPEC.md](PHASE_G_CAPABILITY_REGISTRY_SPEC.md).
