@@ -66,6 +66,62 @@ def test_python_computation_requires_explicit_execution_and_records_log(tmp_path
     assert manifest["status"] == "executed"
 
 
+def test_capability_selected_computation_records_tools_and_check_templates(tmp_path, monkeypatch):
+    cfg = config_for(tmp_path)
+    tools = [
+        {
+            "id": "python",
+            "status": "available",
+            "execution": {"environment": "python"},
+            "capabilities": ["symbolic_algebra"],
+            "verification": {"strength": "medium", "templates": ["symbolic_identity"]},
+        },
+        {
+            "id": "xact",
+            "status": "blocked-runtime",
+            "execution": {"environment": "wolfram"},
+            "capabilities": ["curvature"],
+            "verification": {"strength": "high", "templates": ["flat_limit"]},
+        },
+    ]
+    monkeypatch.setattr("jarvis.workflows.tool_status", lambda _: tools)
+
+    bundle = prepare_computation(cfg, "Check an identity", capabilities=["symbolic_algebra"])
+    manifest = json.loads((bundle.path / "manifest.json").read_text())
+
+    assert manifest["engine"] == "python"
+    assert manifest["requested_capabilities"] == ["symbolic_algebra"]
+    assert manifest["selected_tools"][0]["id"] == "python"
+    assert "python / symbolic_identity" in (bundle.path / "checks.md").read_text()
+    with pytest.raises(RuntimeError, match="No available registered tool"):
+        prepare_computation(cfg, "Check curvature", capabilities=["curvature"])
+
+
+def test_wolfram_capability_workbench_loads_the_selected_package(tmp_path, monkeypatch):
+    cfg = config_for(tmp_path)
+    tools = [
+        {
+            "id": "wolfram",
+            "status": "available",
+            "execution": {"environment": "wolfram"},
+            "capabilities": [],
+            "verification": {"strength": "high", "templates": []},
+        },
+        {
+            "id": "feyncalc",
+            "status": "available",
+            "execution": {"environment": "wolfram", "package": "FeynCalc`"},
+            "capabilities": ["dirac_algebra"],
+            "verification": {"strength": "high", "templates": ["ward_identity"]},
+        },
+    ]
+    monkeypatch.setattr("jarvis.workflows.tool_status", lambda _: tools)
+
+    bundle = prepare_computation(cfg, "Trace check", capabilities=["dirac_algebra"])
+
+    assert bundle.path.joinpath("scripts/main.wls").read_text().count('Needs["FeynCalc`"];') == 1
+
+
 def test_imported_provisional_artifact_is_copied_and_in_zip_handoff(tmp_path, monkeypatch):
     cfg = config_for(tmp_path)
     monkeypatch.setattr("jarvis.workflows.retrieve_hits", lambda *args, **kwargs: [])

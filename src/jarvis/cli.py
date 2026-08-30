@@ -422,10 +422,11 @@ def run_ideation(
 def run_computation(
     task: str = typer.Option(..., "--task"),
     engine: str = typer.Option("auto", "--engine"),
+    capability: list[str] | None = typer.Option(None, "--capability"),  # noqa: B008
 ) -> None:
-    """Prepare a Python or Wolfram workbench with provenance."""
+    """Prepare a capability-selected Python or Wolfram workbench with provenance."""
     try:
-        bundle = prepare_computation(load_config(), task, engine)
+        bundle = prepare_computation(load_config(), task, engine, capability)
     except (FileNotFoundError, RuntimeError, TypeError, ValueError) as exc:
         console.print(f"[red]Could not prepare computation run:[/red] {exc}")
         raise typer.Exit(code=1) from exc

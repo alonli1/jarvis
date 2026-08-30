@@ -10,9 +10,8 @@
 
 ## Next milestone
 
-Phase G capability workflows: add executable, provenance-preserving scientific
-check templates and run the QFT/GR registered-tool benchmarks when their
-runtime gate is available.
+Phase H native planner and task packets: define bounded reproducible planning
+records and deterministic task-packet validation without executing model roles.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -170,3 +169,21 @@ until post-hoc validation.
 - Validation: focused registry/workflow/evaluation/CLI tests and full suite
   (`75 passed`), plus live capability selection and `jarvis doctor`.
 - Specification: [PHASE_G_CAPABILITY_REGISTRY_SPEC.md](PHASE_G_CAPABILITY_REGISTRY_SPEC.md).
+
+## 2026-08-30 — Phase G capability workflows and benchmarks (G2) complete
+
+- `jarvis run computation --capability CAPABILITY` now selects only available
+  registered tools, persists requested/selected metadata, and renders each
+  selected tool's declared scientific checks into the workbench.
+- Wolfram capability workbenches load each selected package with an explicit
+  `Needs[...]` directive. Unit coverage verifies the generic registered-package
+  path is capability-driven; current runtime diagnostics still prevent actual
+  execution rather than hiding that limitation.
+- Reproducible QFT and GR calibration workbenches passed explicit execution:
+  zero-dimensional Gaussian moments used direct symbolic plus independent
+  high-precision numerical integration, and flat-FLRW curvature used direct
+  Christoffel/Ricci plus Hubble-form checks. Both reject seeded mistakes.
+- Evidence and scope: [PHASE_G_BENCHMARKS.md](PHASE_G_BENCHMARKS.md) and
+  [PHASE_G_BENCHMARKS_SPEC.md](PHASE_G_BENCHMARKS_SPEC.md).
+- Validation: focused capability/benchmark/CLI tests and full suite (`81
+  passed`), plus explicitly executed run bundles with raw logs.

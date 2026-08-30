@@ -21,7 +21,12 @@ from .literature_graph import build_graph
 from .models import Chunk, ModelUsage, ProvisionalArtifact, SearchHit
 from .parsing import discover_documents, iter_document_chunks, load_sidecar
 from .retrieval import retrieve_hits
-from .tool_registry import tool_status
+from .tool_registry import (
+    check_templates_for_tools,
+    select_tools,
+    tool_status,
+    wolfram_package_loads,
+)
 
 
 @dataclass(frozen=True)
@@ -418,20 +423,48 @@ def prepare_ideation(
     return _write_bundle(bundle, manifest, evidence)
 
 
-def prepare_computation(config: Config, task: str, engine: str = "auto") -> RunBundle:
+def prepare_computation(
+    config: Config,
+    task: str,
+    engine: str = "auto",
+    capabilities: list[str] | None = None,
+) -> RunBundle:
     if engine not in {"auto", "wolfram", "python"}:
         raise ValueError("engine must be auto, wolfram, or python")
     tools = tool_status(config.root)
     available = {tool["id"]: tool["status"] == "available" for tool in tools}
+    requested_capabilities = capabilities or []
+    selected_tools = (
+        select_tools(config.root, requested_capabilities, status_provider=lambda _: tools)
+        if requested_capabilities
+        else []
+    )
+    if requested_capabilities and not selected_tools:
+        requested = ", ".join(requested_capabilities)
+        raise RuntimeError(
+            f"No available registered tool provides requested capabilities: {requested}"
+        )
     selected = engine
     if engine == "auto":
         selected = "wolfram" if available.get("wolfram") else "python"
+        if selected_tools:
+            environments = {tool["execution"]["environment"] for tool in selected_tools}
+            if "python" in environments:
+                selected = "python"
+            elif "wolfram" in environments:
+                selected = "wolfram"
     if selected == "wolfram" and not available.get("wolfram"):
         raise RuntimeError(
             "wolframscript is unavailable; install Wolfram Engine or use --engine python"
         )
     if selected == "python" and not available.get("python"):
         raise RuntimeError("Python computation dependencies are unavailable; run `uv sync`")
+    selected_tools = [
+        tool for tool in selected_tools if tool["execution"]["environment"] == selected
+    ]
+    if requested_capabilities and not selected_tools:
+        requested = ", ".join(requested_capabilities)
+        raise RuntimeError(f"No selected registered tool supports {selected} for: {requested}")
     bundle, manifest = _new_run(config, "computation", task)
     for folder in ("scripts", "inputs", "outputs", "logs"):
         (bundle.path / folder).mkdir()
@@ -442,17 +475,27 @@ def prepare_computation(config: Config, task: str, engine: str = "auto") -> RunB
         "- Additional assumptions:\n",
         encoding="utf-8",
     )
+    checks = check_templates_for_tools(selected_tools)
+    tool_checks = "".join(
+        f"- [ ] {check['tool_id']} / {check['template']}: {check['instruction']}\n"
+        for check in checks
+    )
     (bundle.path / "checks.md").write_text(
         "# Scientific checks\n\n- [ ] Dimensions\n- [ ] Symmetries\n- [ ] Known limits\n"
         "- [ ] Signs and normalizations\n- [ ] Independent analytic, symbolic, or numerical check\n",
         encoding="utf-8",
     )
+    if tool_checks:
+        with (bundle.path / "checks.md").open("a", encoding="utf-8") as checks_file:
+            checks_file.write("\n## Registered-tool checks\n\n" + tool_checks)
     if selected == "wolfram":
         script = bundle.path / "scripts" / "main.wls"
+        package_loads = "\n".join(wolfram_package_loads(selected_tools))
         script.write_text(
             "(* State conventions and assumptions before the calculation. *)\n"
             'Print["Wolfram version: ", $Version];\n'
-            "(* Implement the derivation and its independent checks here. *)\n",
+            + (package_loads + "\n" if package_loads else "")
+            + "(* Implement the derivation and its independent checks here. *)\n",
             encoding="utf-8",
         )
     else:
@@ -466,6 +509,16 @@ def prepare_computation(config: Config, task: str, engine: str = "auto") -> RunB
         )
     manifest["engine"] = selected
     manifest["tools"] = tools
+    manifest["requested_capabilities"] = requested_capabilities
+    manifest["selected_tools"] = [
+        {
+            "id": tool["id"],
+            "matched_capabilities": tool["matched_capabilities"],
+            "version": tool.get("version"),
+            "verification": tool["verification"],
+        }
+        for tool in selected_tools
+    ]
     manifest["artifacts"].extend(
         [
             str(script.relative_to(bundle.path)),
@@ -482,6 +535,17 @@ def prepare_computation(config: Config, task: str, engine: str = "auto") -> RunB
         + "\n".join(
             f"- {tool['id']}: {tool['status']} ({tool.get('path') or 'not found'})"
             for tool in tools
+        )
+        + (
+            "\n\n## Requested capabilities\n\n"
+            + ", ".join(requested_capabilities)
+            + "\n\n## Selected tools\n\n"
+            + "\n".join(
+                f"- {tool['id']}: {', '.join(tool['matched_capabilities'])}"
+                for tool in selected_tools
+            )
+            if requested_capabilities
+            else ""
         )
         + f"\n\n## Host instructions\n\n{INSTRUCTIONS['computation']}"
     )

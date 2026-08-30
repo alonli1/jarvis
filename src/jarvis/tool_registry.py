@@ -18,6 +18,20 @@ class ToolRegistryError(ValueError):
 
 
 _REGISTRY_VERSIONS = {1, 2}
+_CHECK_TEMPLATES = {
+    "symbolic_identity": "Simplify the target identity and record any assumptions used.",
+    "numerical_limit": "Evaluate a representative numerical or asymptotic limit independently.",
+    "tensor_symmetry": "Verify every declared tensor symmetry and index convention.",
+    "bianchi_identity": "Check the applicable Bianchi identity under the declared curvature convention.",
+    "flat_limit": "Check the flat-space or zero-curvature limit.",
+    "ward_identity": "Check the applicable Ward identity or gauge-invariance condition.",
+    "dimensional_check": "Check dimensions and normalization of every reported term.",
+    "known_limit": "Check a documented special or decoupling limit.",
+    "dimension_counting": "Check operator and coefficient dimensions in the stated spacetime dimension.",
+    "operator_symmetry": "Check the operator basis against its declared symmetries.",
+    "master_integral_count": "Check the reduction's master-integral count against an independent route.",
+    "numerical_spot_check": "Check a non-singular numerical point independently.",
+}
 
 
 def _string_list(value: object, field: str, tool_id: str) -> list[str]:
@@ -158,6 +172,40 @@ def tool_status(root: Path) -> list[dict[str, Any]]:
                 item["diagnostic"] = (diagnostic or "Wolfram kernel smoke test failed").strip()
         tools.append(item)
     return tools
+
+
+def check_templates_for_tools(tools: Iterable[dict[str, Any]]) -> list[dict[str, str]]:
+    """Return ordered, tool-attributed scientific check instructions."""
+    checks = []
+    seen = set()
+    for tool in tools:
+        for template_id in tool["verification"]["templates"]:
+            if template_id not in _CHECK_TEMPLATES:
+                raise ToolRegistryError(f"Unknown scientific check template: {template_id}")
+            key = (tool["id"], template_id)
+            if key not in seen:
+                checks.append(
+                    {
+                        "tool_id": tool["id"],
+                        "template": template_id,
+                        "instruction": _CHECK_TEMPLATES[template_id],
+                    }
+                )
+                seen.add(key)
+    return checks
+
+
+def wolfram_package_loads(tools: Iterable[dict[str, Any]]) -> list[str]:
+    """Return declared package loads for selected Wolfram workflows."""
+    packages = []
+    for tool in tools:
+        execution = tool["execution"]
+        package = execution.get("package") if execution["environment"] == "wolfram" else None
+        if package and package not in packages:
+            if not isinstance(package, str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9`]*", package):
+                raise ToolRegistryError(f"Tool {tool['id']!r} has an invalid Wolfram package name")
+            packages.append(package)
+    return [f'Needs["{package}"];' for package in packages]
 
 
 def select_tools(

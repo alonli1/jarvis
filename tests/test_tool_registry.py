@@ -2,7 +2,13 @@ from pathlib import Path
 
 import pytest
 
-from jarvis.tool_registry import ToolRegistryError, load_tool_registry, select_tools
+from jarvis.tool_registry import (
+    ToolRegistryError,
+    check_templates_for_tools,
+    load_tool_registry,
+    select_tools,
+    wolfram_package_loads,
+)
 
 
 def write_registry(root: Path, text: str) -> None:
@@ -95,3 +101,23 @@ def test_selection_is_capability_specific_and_excludes_unavailable_tools(tmp_pat
     assert select_tools(tmp_path, ["curvature"], status_provider=status) == []
     with pytest.raises(ValueError, match="non-empty capability"):
         select_tools(tmp_path, [], status_provider=status)
+
+
+def test_declared_checks_and_wolfram_loads_are_tool_attributed():
+    tool = {
+        "id": "feyncalc",
+        "execution": {"environment": "wolfram", "package": "FeynCalc`"},
+        "verification": {"templates": ["ward_identity"]},
+    }
+
+    assert check_templates_for_tools([tool]) == [
+        {
+            "tool_id": "feyncalc",
+            "template": "ward_identity",
+            "instruction": "Check the applicable Ward identity or gauge-invariance condition.",
+        }
+    ]
+    assert wolfram_package_loads([tool]) == ['Needs["FeynCalc`"];']
+    tool["execution"]["package"] = "bad;name"
+    with pytest.raises(ToolRegistryError, match="invalid Wolfram package"):
+        wolfram_package_loads([tool])
