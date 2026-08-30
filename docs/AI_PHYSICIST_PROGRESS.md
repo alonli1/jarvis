@@ -10,8 +10,8 @@
 
 ## Next milestone
 
-Phase I verification policy and claim ledger: add deterministic promotion guards
-without executing model roles.
+Phase I verification and claim ledger: extend deterministic policy with
+contradiction and reviewer-state handling, without executing model roles.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -209,3 +209,15 @@ until post-hoc validation.
   artifact paths.
 - Validation: focused planner/manifest/workflow tests and full suite (`85
   passed`).
+
+## 2026-08-30 — Phase I claim-promotion guard (I1) complete
+
+- Added claim-scoped verification records and a deterministic promotion policy.
+  `ai_verified` requires a passed contained artifact and an independent check
+  for derivation/computation claims; contradicted, missing, failing, unrelated,
+  or escaping evidence cannot promote a claim.
+- Successful promotion persists the claim and a policy rationale in the Manifest
+  v2 decision log. The implementation does not call a model and cannot grant
+  human verification.
+- Validation: focused ledger/manifest tests and full suite (`87 passed`).
+  Specification: [PHASE_I_CLAIM_LEDGER_SPEC.md](PHASE_I_CLAIM_LEDGER_SPEC.md).

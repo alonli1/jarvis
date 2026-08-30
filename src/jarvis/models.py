@@ -106,6 +106,8 @@ class VerificationRecord(BaseModel):
     outcome: str
     artifact: str
     notes: str | None = None
+    claim_id: str | None = None
+    independent: bool = False
 
 
 class ModelUsage(BaseModel):
