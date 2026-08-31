@@ -247,6 +247,22 @@ Other MCP-compatible clients can launch:
 uv run jarvis-mcp
 ```
 
+### Dispatch a task to this IDE or extension host
+
+Jarvis can also exchange a validated task packet with the current IDE host without
+calling a model API. Given a validated `PLAN.json` and an existing Jarvis run:
+
+```bash
+jarvis dispatch schedule RUN_ID PLAN.json
+jarvis dispatch export RUN_ID TASK_ID
+# Start a fresh IDE-agent context, then write RESULT.md.
+jarvis dispatch import-result RUN_ID TASK_ID RESULT.md --host codex --fresh-context
+```
+
+The imported result is provisional evidence only. It cannot complete a task or
+promote a scientific claim; include `--provider` and `--model` only when the host
+truthfully exposes them.
+
 MCP tools search the full corpus. Retrieved text may be sent to the IDE agent's model provider,
 so grant repository and shared-library access only to intended group members.
 

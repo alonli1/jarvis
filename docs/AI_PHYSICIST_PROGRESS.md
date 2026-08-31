@@ -250,7 +250,7 @@ until post-hoc validation.
 - Remaining Phase J acceptance gap: no configured pair of provider-backed native
   runs has been evaluated against PhysicsIntern, so parity is not claimed. The
   sole `ollama/qwen3:14b` profile refused the 2026-08-31 local-provider health
-  check, and the scheduler has no provider-execution adapter; see `BLOCKER.md`.
+  check. Phase J host-neutral dispatch is recorded separately; see `BLOCKER.md`.
 
 ## 2026-08-31 — Phase K reproduction contract (K1) complete
 
@@ -343,3 +343,14 @@ material; no local code-only substitute is treated as evidence.
 - Validation: focused referee-evaluation tests and the full suite (`97 passed`).
   This demonstrates record integrity, not human review, publication fitness, or
   a novelty assessment.
+
+## 2026-09-01 — Phase J host-neutral dispatch (J2) complete
+
+- Added explicit schedule, export, and provisional-import commands for IDE and
+  extension hosts, including this Codex workspace. No model API or Ollama
+  service is required for that transport.
+- Packet identity and plan digests are revalidated; imports require a declared
+  fresh context and cannot promote claims or complete tasks. Provider/model
+  telemetry is optional and never inferred.
+- Validation: focused orchestration and workflow tests. Specification:
+  [PHASE_J_HOST_DISPATCH_SPEC.md](PHASE_J_HOST_DISPATCH_SPEC.md).

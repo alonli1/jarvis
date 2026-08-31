@@ -37,8 +37,12 @@ from .literature_graph import (
     render_graph_markdown,
     save_graph,
 )
+from .models import ResearchPlan
+from .orchestrator import export_host_task, import_host_task_result, schedule_ready_tasks
+from .planning import persist_plan
 from .retrieval import render_retrieval_prompt, retrieve_hits
-from .routing import TaskFeatures, route as route_task
+from .routing import TaskFeatures
+from .routing import route as route_task
 from .taxonomy import normalize_tag
 from .workflows import (
     execute_computation,
@@ -57,10 +61,12 @@ library_app = typer.Typer(no_args_is_help=True, help="Manage the shared research
 run_app = typer.Typer(no_args_is_help=True, help="Prepare provider-neutral research workflows.")
 compute_app = typer.Typer(no_args_is_help=True, help="Execute explicit computation workbenches.")
 eval_app = typer.Typer(no_args_is_help=True, help="Run deterministic evidence/tool evaluations.")
+dispatch_app = typer.Typer(no_args_is_help=True, help="Exchange fresh-context task packets with hosts.")
 app.add_typer(library_app, name="library")
 app.add_typer(run_app, name="run")
 app.add_typer(compute_app, name="compute")
 app.add_typer(eval_app, name="eval")
+app.add_typer(dispatch_app, name="dispatch")
 
 
 def _print_cloud_result(result, dry_run: bool = False) -> None:
@@ -449,6 +455,63 @@ def compute_execute(
     console.print(f"Execution exit code {code}; log: {log}")
     if code:
         raise typer.Exit(code=code)
+
+
+@dispatch_app.command("export")
+def dispatch_export(run_id: str = typer.Argument(...), task_id: str = typer.Argument(...)) -> None:
+    """Export a validated task packet for an IDE or extension host."""
+    try:
+        output = export_host_task(load_config().root, run_id, task_id)
+    except (FileNotFoundError, TypeError, ValueError) as exc:
+        console.print(f"[red]Could not export task packet:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Exported[/green] {output}")
+
+
+@dispatch_app.command("schedule")
+def dispatch_schedule(
+    run_id: str = typer.Argument(...), plan: Path = typer.Argument(...)  # noqa: B008
+) -> None:
+    """Persist a validated plan and materialize its ready task packets."""
+    try:
+        config = load_config()
+        research_plan = ResearchPlan.model_validate_json(plan.read_text(encoding="utf-8"))
+        persist_plan(config.root, run_id, research_plan)
+        batch = schedule_ready_tasks(config.root, run_id, research_plan)
+    except (FileNotFoundError, OSError, TypeError, ValueError) as exc:
+        console.print(f"[red]Could not schedule task packets:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Scheduled[/green] {len(batch.packets)} task packet(s)")
+    for packet in batch.packets:
+        console.print(packet)
+
+
+@dispatch_app.command("import-result")
+def dispatch_import_result(
+    run_id: str = typer.Argument(...),
+    task_id: str = typer.Argument(...),
+    result: Path = typer.Argument(...),  # noqa: B008
+    host: str = typer.Option(..., "--host"),
+    fresh_context: bool = typer.Option(True, "--fresh-context/--no-fresh-context"),
+    provider: str | None = typer.Option(None, "--provider"),
+    model: str | None = typer.Option(None, "--model"),
+) -> None:
+    """Import a host result as provisional evidence only."""
+    try:
+        artifact = import_host_task_result(
+            load_config().root,
+            run_id,
+            task_id,
+            result,
+            host,
+            fresh_context=fresh_context,
+            provider=provider,
+            model=model,
+        )
+    except (FileNotFoundError, OSError, TypeError, ValueError) as exc:
+        console.print(f"[red]Could not import host result:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+    console.print(f"[green]Imported provisional artifact[/green] {artifact.path}")
 
 
 @app.command()

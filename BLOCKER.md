@@ -23,16 +23,17 @@ sandbox and through the scoped host permission. The host-visible attempt reached
 the provider endpoint and failed with `OllamaException: [Errno 111] Connection
 refused`; no provider response, model telemetry, or research result was recorded.
 
-In addition, `schedule_ready_tasks()` deliberately materializes task packets only;
-the repository has no native provider adapter that can consume a packet and return
-a Manifest-v2-governed result. The current coordinator session also has Honey
-instructions visible, so the repository routing policy forbids spawning
-PhysicsIntern or other scientific agents for a comparison run.
+Phase J now has a host-neutral packet adapter for IDE/Codex/extension contexts,
+which copies declared fresh-context output back as provisional evidence. It does
+not provide a direct model-provider loop or establish native/PhysicsIntern
+parity. The current coordinator session also has Honey instructions visible, so
+the repository routing policy forbids spawning PhysicsIntern or other scientific
+agents for a comparison run.
 
 Completing the remaining non-cross-provider part of Phase J therefore requires a
-reachable configured provider and a separately specified provider-execution adapter
-with fresh-context/provenance semantics. Jarvis did not start Ollama, alter the
-existing routing configuration, or fabricate an evaluation result.
+reachable configured provider for direct-provider evaluation and a verified
+plugin-disabled PhysicsIntern context for comparison. Jarvis did not start Ollama,
+alter the existing routing configuration, or fabricate an evaluation result.
 
 ## Phase G FIRE7 package-content recovery (resolved)
 
