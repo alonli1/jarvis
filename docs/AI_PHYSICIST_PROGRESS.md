@@ -14,7 +14,8 @@ Phase J native orchestration: provide deterministic packet scheduling and
 provider-neutral leaf-execution contracts; Phase K reproduction specifications
 and Phase L referee structures follow. Provider-backed orchestration evaluation,
 three source-grounded published reproductions, and seeded/historical Phase L
-evaluation remain explicit acceptance gaps.
+evaluation remain explicit acceptance gaps. Phase M/N implement safe
+configuration and admission boundaries, not unsupported unattended research.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -271,3 +272,13 @@ until post-hoc validation.
   Specification: [PHASE_L_REFEREE_SPEC.md](PHASE_L_REFEREE_SPEC.md).
 - Remaining Phase L acceptance gap: no seeded or historical manuscript/referee
   evaluation has yet been selected and run.
+
+## 2026-08-31 — Phase M profile-compatibility calibration (M1) complete
+
+- Added deterministic capability compatibility records across configured model
+  profiles. Compatible profiles may be swapped without changing a run, corpus,
+  or Manifest v2 scientific-state format.
+- Validation: focused calibration tests and full suite (`93 passed`).
+  Specification: [PHASE_M_CALIBRATION_SPEC.md](PHASE_M_CALIBRATION_SPEC.md).
+- Remaining Phase M acceptance gap: no two configured providers have completed
+  comparable scientific runs, so quality/cost calibration is not claimed.
