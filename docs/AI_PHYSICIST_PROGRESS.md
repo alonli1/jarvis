@@ -10,12 +10,10 @@
 
 ## Next milestone
 
-Phase J native orchestration: provide deterministic packet scheduling and
-provider-neutral leaf-execution contracts; Phase K reproduction specifications
-and Phase L referee structures follow. Provider-backed orchestration evaluation,
-three source-grounded published reproductions, and seeded/historical Phase L
-evaluation remain explicit acceptance gaps. Phase M/N implement safe
-configuration and admission boundaries, not unsupported unattended research.
+Post-Phase-N acceptance evaluation: provider-backed native-vs-PhysicsIntern
+runs, three source-grounded published reproductions, seeded/historical referee
+cases, and comparable configured cross-provider scientific runs. These require
+real evaluation inputs and are not claimed from local code alone.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -282,3 +280,21 @@ until post-hoc validation.
   Specification: [PHASE_M_CALIBRATION_SPEC.md](PHASE_M_CALIBRATION_SPEC.md).
 - Remaining Phase M acceptance gap: no two configured providers have completed
   comparable scientific runs, so quality/cost calibration is not claimed.
+
+## 2026-08-31 — Phase N bounded-autonomy admission (N1) complete
+
+- Added a deterministic admission policy for small plans with stop conditions.
+  It rejects disallowed task types and publication, submission, or manuscript
+  editing actions, and admission itself never executes a plan.
+- Validation: focused autonomy tests and full suite (`94 passed`).
+  Specification: [PHASE_N_AUTONOMY_SPEC.md](PHASE_N_AUTONOMY_SPEC.md).
+
+## Roadmap status through Phase N
+
+The deterministic, provider-neutral implementation surface through Phase N is
+present. The following acceptance evidence remains intentionally open rather
+than claimed: native-vs-PhysicsIntern provider-backed evaluations (J), three
+source-grounded published reproductions (K), seeded/historical referee
+evaluation (L), and comparable runs on two configured providers (M). Those
+require real configured model/provider access and selected scientific evaluation
+material; no local code-only substitute is treated as evidence.

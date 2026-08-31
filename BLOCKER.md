@@ -4,6 +4,18 @@
 > runtime and containment investigations that informed its eventual normal
 > PhysicsIntern execution; it is not an active Phase F blocker.
 
+## Post-Phase-N acceptance evidence still unavailable
+
+The provider-neutral implementation surface through Phase N is committed, but
+the remaining roadmap acceptance gates require evidence that cannot be safely
+invented from local code: configured provider-backed native-vs-PhysicsIntern
+evaluations, three source-grounded published reproductions, seeded/historical
+referee cases, and comparable scientific runs on two providers. The current
+repository configuration contains only its local default profile and no
+completed cross-provider scientific-run record. These are evaluation inputs,
+not implementation defects; progress and contracts are recorded in
+`docs/AI_PHYSICIST_PROGRESS.md`.
+
 Phase F cannot complete in the current Codex CLI runtime. The PhysicsIntern
 bootstrap and Honey isolation succeeded, but the isolated process cannot sustain
 the fresh-context research workflow.
