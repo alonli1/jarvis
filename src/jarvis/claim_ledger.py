@@ -73,3 +73,67 @@ def promote_claim(root: Path, run_id: str, claim: ScientificClaim) -> PromotionA
     )
     _write_json(manifest_path, manifest)
     return assessment
+
+
+def record_verification(root: Path, run_id: str, record: VerificationRecord) -> None:
+    run = _run_path(type("Config", (), {"root": root})(), run_id)
+    manifest_path = run / "manifest.json"
+    manifest = load_manifest(manifest_path)
+    if manifest["version"] != 2:
+        raise ValueError("Verification records require a Manifest v2 run")
+    artifact = (run / record.artifact).resolve()
+    try:
+        artifact.relative_to(run)
+    except ValueError as exc:
+        raise ValueError("Verification artifact must remain within the run") from exc
+    if not artifact.is_file():
+        raise FileNotFoundError(f"Verification artifact is missing: {record.artifact}")
+    if any(item.get("id") == record.id for item in manifest["verification"]):
+        raise ValueError(f"Verification record already exists: {record.id}")
+    manifest["verification"].append(record.model_dump(mode="json"))
+    _write_json(manifest_path, manifest)
+
+
+def contradict_claim(
+    root: Path, run_id: str, claim: ScientificClaim, record: VerificationRecord
+) -> None:
+    if record.claim_id != claim.id or record.outcome != "contradicted":
+        raise ValueError("Contradiction record must be claim-scoped with outcome=contradicted")
+    record_verification(root, run_id, record)
+    run = _run_path(type("Config", (), {"root": root})(), run_id)
+    manifest_path = run / "manifest.json"
+    manifest = load_manifest(manifest_path)
+    contradicted = claim.model_copy(update={"status": "contradicted"})
+    manifest["claims"] = [item for item in manifest["claims"] if item.get("id") != claim.id]
+    manifest["claims"].append(contradicted.model_dump(mode="json"))
+    manifest["decision_log"].append(
+        {
+            "id": f"CONTRADICT-{claim.id}",
+            "decision": "contradicted",
+            "rationale": f"verification={record.id}",
+            "artifacts": [record.artifact],
+        }
+    )
+    _write_json(manifest_path, manifest)
+
+
+def mark_human_verified(root: Path, run_id: str, claim: ScientificClaim, reviewer: str) -> None:
+    if not reviewer.strip():
+        raise ValueError("Human verification requires a non-empty reviewer identity")
+    run = _run_path(type("Config", (), {"root": root})(), run_id)
+    manifest_path = run / "manifest.json"
+    manifest = load_manifest(manifest_path)
+    if manifest["version"] != 2:
+        raise ValueError("Human verification requires a Manifest v2 run")
+    verified = claim.model_copy(update={"status": "human_verified", "human_reviewed": True})
+    manifest["claims"] = [item for item in manifest["claims"] if item.get("id") != claim.id]
+    manifest["claims"].append(verified.model_dump(mode="json"))
+    manifest["decision_log"].append(
+        {
+            "id": f"HUMAN-VERIFY-{claim.id}",
+            "decision": "human_verified",
+            "rationale": f"reviewer={reviewer}",
+            "artifacts": [],
+        }
+    )
+    _write_json(manifest_path, manifest)

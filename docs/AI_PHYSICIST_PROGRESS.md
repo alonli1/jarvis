@@ -11,7 +11,7 @@
 ## Next milestone
 
 Phase I verification and claim ledger: extend deterministic policy with
-contradiction and reviewer-state handling, without executing model roles.
+research-memory indexing, without executing model roles.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -221,3 +221,13 @@ until post-hoc validation.
   human verification.
 - Validation: focused ledger/manifest tests and full suite (`87 passed`).
   Specification: [PHASE_I_CLAIM_LEDGER_SPEC.md](PHASE_I_CLAIM_LEDGER_SPEC.md).
+
+## 2026-08-31 — Phase I contradiction and human-review actions (I2) complete
+
+- Verification records now persist only when their artifacts are contained in
+  the run. Claim-scoped contradiction records explicitly set a claim to
+  `contradicted` and record the action in the decision log.
+- `human_verified` is reachable only through an explicit action with a non-empty
+  human reviewer identity; the action sets `human_reviewed=True` and is not an
+  AI inference.
+- Validation: focused ledger/manifest tests and full suite (`88 passed`).

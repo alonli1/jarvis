@@ -1,7 +1,15 @@
 import json
 from dataclasses import replace
 
-from jarvis.claim_ledger import promote_claim, promotion_assessment
+import pytest
+
+from jarvis.claim_ledger import (
+    contradict_claim,
+    mark_human_verified,
+    promote_claim,
+    promotion_assessment,
+    record_verification,
+)
 from jarvis.config import load_config
 from jarvis.models import ScientificClaim, VerificationRecord
 from jarvis.workflows import prepare_computation
@@ -81,3 +89,33 @@ def test_promotion_rejects_missing_failing_unrelated_or_escaping_evidence(tmp_pa
     assert not assessment.eligible
     assert "verification artifact escapes run: escape" in assessment.reasons
     assert not promotion_assessment(claim("contradicted"), [], run).eligible
+
+
+def test_contradiction_and_human_verification_are_explicit_actions(tmp_path, monkeypatch):
+    cfg = config_for(tmp_path)
+    monkeypatch.setattr("jarvis.tool_registry.importlib.metadata.version", lambda _: "1.0")
+    bundle = prepare_computation(cfg, "Ledger state test", "python")
+    artifact = bundle.path / "outputs" / "counterexample.txt"
+    artifact.write_text("counterexample", encoding="utf-8")
+    contradiction = VerificationRecord(
+        id="VERIFY-CONTRA",
+        claim_id="CLAIM-1",
+        method="counterexample",
+        outcome="contradicted",
+        artifact="outputs/counterexample.txt",
+        independent=True,
+    )
+
+    contradict_claim(cfg.root, bundle.id, claim(), contradiction)
+    manifest = json.loads((bundle.path / "manifest.json").read_text())
+
+    assert manifest["claims"][0]["status"] == "contradicted"
+    assert manifest["verification"][0]["outcome"] == "contradicted"
+    mark_human_verified(cfg.root, bundle.id, claim(), "Researcher A")
+    manifest = json.loads((bundle.path / "manifest.json").read_text())
+    assert manifest["claims"][0]["status"] == "human_verified"
+    assert manifest["claims"][0]["human_reviewed"] is True
+    with pytest.raises(ValueError, match="reviewer identity"):
+        mark_human_verified(cfg.root, bundle.id, claim(), " ")
+    with pytest.raises(ValueError, match="already exists"):
+        record_verification(cfg.root, bundle.id, contradiction)

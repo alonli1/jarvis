@@ -22,12 +22,17 @@ artifacts and satisfy the claim kind's independent-check policy.
   requirements without mutation.
 - `promote_claim()` writes a Manifest v2 claim only after assessment passes;
   it cannot alter `human_verified` state.
+- `contradict_claim()` requires a claim-scoped contradiction record and writes
+  the state transition plus evidence to the decision log. `mark_human_verified()`
+  requires a non-empty human reviewer identity and records the human action.
 
 ## Invariants
 
 - `ai_verified` requires a passed, claim-scoped record, an existing contained
   artifact, and independence when policy requires it.
 - Contradicted claims and failing verification records cannot be promoted.
+- Human verification is an explicit recorded action, never an automatic or AI
+  state transition.
 - A policy decision records its rationale in the run decision log; normal
   manifests and legacy v1 views remain compatible.
 
