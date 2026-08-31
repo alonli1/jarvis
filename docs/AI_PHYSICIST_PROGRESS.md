@@ -12,8 +12,8 @@
 
 Phase J native orchestration: provide deterministic packet scheduling and
 provider-neutral leaf-execution contracts; Phase K reproduction specifications
-and regression reporting follow. Provider-backed orchestration evaluation
-remains an explicit acceptance gap.
+and regression reporting follow. Provider-backed orchestration evaluation and
+three source-grounded published reproductions remain explicit acceptance gaps.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -250,3 +250,13 @@ until post-hoc validation.
   Specification: [PHASE_J_ORCHESTRATOR_SPEC.md](PHASE_J_ORCHESTRATOR_SPEC.md).
 - Remaining Phase J acceptance gap: no configured pair of provider-backed native
   runs has been evaluated against PhysicsIntern, so parity is not claimed.
+
+## 2026-08-31 — Phase K reproduction contract (K1) complete
+
+- Added structured paper specifications with source locators, equation and
+  convention maps, implementation scripts, required checks, and a reproduction
+  report generator.
+- Validation: focused reproduction tests and full suite (`91 passed`).
+  Specification: [PHASE_K_REPRODUCTION_SPEC.md](PHASE_K_REPRODUCTION_SPEC.md).
+- Remaining Phase K acceptance gap: no three published results in distinct
+  categories have been selected, source-grounded, executed, and reviewed.
