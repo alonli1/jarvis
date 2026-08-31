@@ -10,8 +10,9 @@
 
 ## Next milestone
 
-Phase I verification and claim ledger: extend deterministic policy with
-research-memory indexing, without executing model roles.
+Phase J native orchestration: provide deterministic packet scheduling and
+provider-neutral leaf-execution contracts; benchmarked model execution remains
+subject to configured providers and approved scientific evaluation.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -231,3 +232,10 @@ until post-hoc validation.
   human reviewer identity; the action sets `human_reviewed=True` and is not an
   AI inference.
 - Validation: focused ledger/manifest tests and full suite (`88 passed`).
+
+## 2026-08-31 — Phase I research-memory index (I3) complete
+
+- Added a read-only index over persisted Manifest v2 claims, statuses,
+  conventions, and claim-scoped verification IDs. It creates no claim and does
+  not mutate source manifests.
+- Validation: focused memory/ledger tests and full suite (`89 passed`).
