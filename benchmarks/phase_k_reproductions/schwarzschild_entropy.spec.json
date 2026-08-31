@@ -1,0 +1,34 @@
+{
+  "checks": [
+    "Check S_BH = pi r_s^2/G after substituting A = 4 pi r_s^2.",
+    "Check S_BH = 4 pi G M^2 for r_s = 2 G M.",
+    "Check quadratic mass scaling for positive G and M."
+  ],
+  "engine": "python",
+  "paper": {
+    "assumptions": [
+      "c = hbar = k_B = 1.",
+      "Four-dimensional Schwarzschild geometry.",
+      "Positive Newton constant and mass."
+    ],
+    "equations": [
+      {
+        "conventions": {"units": "c = hbar = k_B = 1"},
+        "expression": "S_BH = A/(4G)",
+        "label": "Bekenstein-Hawking entropy",
+        "locator": "PDF p. 232 (printed p. 219), eq. (7.23)"
+      },
+      {
+        "conventions": {"geometry": "Schwarzschild"},
+        "expression": "S_BH = pi r_s^2/G",
+        "label": "Schwarzschild specialization",
+        "locator": "PDF p. 232 (printed p. 219), eq. (7.24)"
+      }
+    ],
+    "paper_id": "kiefer-qg-book",
+    "source_locator": "PDF p. 232 (printed p. 219), section 7.1.3, eqs. (7.23)--(7.24)",
+    "source_path": "knowledge/books/kiefer-qg-book.pdf",
+    "target_result": "For r_s = 2 G M, S_BH = 4 pi G M^2."
+  },
+  "scripts": ["benchmarks/phase_k_reproductions/schwarzschild_entropy.py"]
+}

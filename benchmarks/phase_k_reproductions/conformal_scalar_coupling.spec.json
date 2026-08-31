@@ -1,0 +1,34 @@
+{
+  "checks": [
+    "Check xi(4) = 1/6.",
+    "Check the n = 2 limit xi(2) = 0.",
+    "Record the massless flat-space R = 0 limit without translating source sign conventions."
+  ],
+  "engine": "python",
+  "paper": {
+    "assumptions": [
+      "Massless scalar.",
+      "Conformal coupling.",
+      "The source's Box and curvature conventions are retained verbatim."
+    ],
+    "equations": [
+      {
+        "conventions": {"source_convention": "[Box + m^2 + xi R(x)] phi(x) = 0"},
+        "expression": "[Box + m^2 + xi R(x)] phi(x) = 0",
+        "label": "scalar equation",
+        "locator": "PDF p. 54 (printed p. 44), eq. (3.26)"
+      },
+      {
+        "conventions": {"spacetime_dimension": "n"},
+        "expression": "xi(n) = (n-2)/(4(n-1))",
+        "label": "conformal coupling",
+        "locator": "PDF p. 54 (printed p. 44), eq. (3.27)"
+      }
+    ],
+    "paper_id": "birrell-davies-book",
+    "source_locator": "PDF p. 54 (printed p. 44), section 3.2, eqs. (3.26)--(3.27)",
+    "source_path": "knowledge/books/birrell-davies-book.pdf",
+    "target_result": "The four-dimensional conformal coupling is xi = 1/6."
+  },
+  "scripts": ["benchmarks/phase_k_reproductions/conformal_scalar_coupling.py"]
+}

@@ -1,0 +1,34 @@
+{
+  "checks": [
+    "Check [phi] = 1 and [phi^6] = 6 in d = 4.",
+    "Check [C6] + [phi^6] = 4.",
+    "Reject a dimensionless C6 in four dimensions."
+  ],
+  "engine": "python",
+  "paper": {
+    "assumptions": [
+      "Dimensionless action.",
+      "Canonical scalar kinetic term.",
+      "No anomalous dimensions."
+    ],
+    "equations": [
+      {
+        "conventions": {"units": "natural units"},
+        "expression": "[L] = d and [c_i] = d - D",
+        "label": "canonical dimensions",
+        "locator": "PDF p. 22, eqs. (4.2)--(4.4)"
+      },
+      {
+        "conventions": {"spacetime_dimension": "d = 4"},
+        "expression": "[phi] = 1",
+        "label": "scalar dimension",
+        "locator": "PDF p. 23, eq. (4.9)"
+      }
+    ],
+    "paper_id": "manohar-eft-lectures",
+    "source_locator": "PDF pp. 22--24, section 4 Power Counting, eqs. (4.2)--(4.14)",
+    "source_path": "knowledge/papers/manohar-eft-lectures__1804.05863.pdf",
+    "target_result": "For C6 phi^6 in d = 4, [C6] = -2."
+  },
+  "scripts": ["benchmarks/phase_k_reproductions/eft_phi6_dimensions.py"]
+}

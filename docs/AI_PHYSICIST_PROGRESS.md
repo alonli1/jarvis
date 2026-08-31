@@ -257,8 +257,6 @@ until post-hoc validation.
   report generator.
 - Validation: focused reproduction tests and full suite (`91 passed`).
   Specification: [PHASE_K_REPRODUCTION_SPEC.md](PHASE_K_REPRODUCTION_SPEC.md).
-- Remaining Phase K acceptance gap: no three published results in distinct
-  categories have been selected, source-grounded, executed, and reviewed.
 
 ## 2026-08-31 — Phase L structured referee records (L1) complete
 
@@ -292,9 +290,9 @@ until post-hoc validation.
 
 The deterministic, provider-neutral implementation surface through Phase N is
 present. The following acceptance evidence remains intentionally open rather
-than claimed: native-vs-PhysicsIntern provider-backed evaluations (J), three
-source-grounded published reproductions (K), seeded/historical referee
-evaluation (L), and comparable runs on two configured providers (M). Those
+than claimed: native-vs-PhysicsIntern provider-backed evaluations (J),
+seeded/historical referee evaluation (L), and comparable runs on two configured
+providers (M). Those
 require real configured model/provider access and selected scientific evaluation
 material; no local code-only substitute is treated as evidence.
 
@@ -321,3 +319,16 @@ material; no local code-only substitute is treated as evidence.
   selected smoke workbench `20260831T183504Z-computation-fire7-package-load-smoke`
   passed. This establishes package availability only, not an IBP-reduction
   result or scientific validation.
+
+## 2026-08-31 — Phase K source-grounded reproductions (K2) complete
+
+- Closed the Phase K acceptance gate with three bounded, explicitly executed
+  reproductions in distinct categories: scalar-EFT power counting,
+  curved-spacetime conformal scalar coupling, and Schwarzschild
+  Bekenstein--Hawking entropy.
+- The tracked artifacts in `benchmarks/phase_k_reproductions/` retain validated
+  source/page/equation maps, conventions, assumptions, scripts, and independent
+  checks. Their run bundles retain literature evidence and execution logs.
+- Validation: focused reproduction tests plus the full suite (`96 passed`).
+  These are source-statement reproductions only, not full-paper reproductions,
+  novel results, or human verification.
