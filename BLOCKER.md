@@ -15,6 +15,25 @@ completed cross-provider scientific-run record. These are evaluation inputs,
 not implementation defects; progress and contracts are recorded in
 `docs/AI_PHYSICIST_PROGRESS.md`.
 
+## Phase J provider-execution blocker
+
+The only configured profile is `local` (`ollama/qwen3:14b`). On 2026-08-31,
+the minimal `jarvis ask --profile local` health check was attempted both in the
+sandbox and through the scoped host permission. The host-visible attempt reached
+the provider endpoint and failed with `OllamaException: [Errno 111] Connection
+refused`; no provider response, model telemetry, or research result was recorded.
+
+In addition, `schedule_ready_tasks()` deliberately materializes task packets only;
+the repository has no native provider adapter that can consume a packet and return
+a Manifest-v2-governed result. The current coordinator session also has Honey
+instructions visible, so the repository routing policy forbids spawning
+PhysicsIntern or other scientific agents for a comparison run.
+
+Completing the remaining non-cross-provider part of Phase J therefore requires a
+reachable configured provider and a separately specified provider-execution adapter
+with fresh-context/provenance semantics. Jarvis did not start Ollama, alter the
+existing routing configuration, or fabricate an evaluation result.
+
 ## Phase G FIRE7 package-content recovery (resolved)
 
 The Wolfram launcher issue was recovered on 2026-08-31 using the healthy direct

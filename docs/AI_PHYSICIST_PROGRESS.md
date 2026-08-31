@@ -248,7 +248,9 @@ until post-hoc validation.
 - Validation: focused orchestration/planning tests and full suite (`90 passed`).
   Specification: [PHASE_J_ORCHESTRATOR_SPEC.md](PHASE_J_ORCHESTRATOR_SPEC.md).
 - Remaining Phase J acceptance gap: no configured pair of provider-backed native
-  runs has been evaluated against PhysicsIntern, so parity is not claimed.
+  runs has been evaluated against PhysicsIntern, so parity is not claimed. The
+  sole `ollama/qwen3:14b` profile refused the 2026-08-31 local-provider health
+  check, and the scheduler has no provider-execution adapter; see `BLOCKER.md`.
 
 ## 2026-08-31 — Phase K reproduction contract (K1) complete
 
