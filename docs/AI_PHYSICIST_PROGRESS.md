@@ -11,8 +11,9 @@
 ## Next milestone
 
 Phase J native orchestration: provide deterministic packet scheduling and
-provider-neutral leaf-execution contracts; benchmarked model execution remains
-subject to configured providers and approved scientific evaluation.
+provider-neutral leaf-execution contracts; Phase K reproduction specifications
+and regression reporting follow. Provider-backed orchestration evaluation
+remains an explicit acceptance gap.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -239,3 +240,13 @@ until post-hoc validation.
   conventions, and claim-scoped verification IDs. It creates no claim and does
   not mutate source manifests.
 - Validation: focused memory/ledger tests and full suite (`89 passed`).
+
+## 2026-08-31 — Phase J deterministic scheduling boundary (J1) complete
+
+- Added a native scheduler that materializes only ready, run-contained task
+  packets and marks leaf execution as requiring a fresh context. It does not
+  call a model, infer scientific success, or bypass Phase H/I provenance guards.
+- Validation: focused orchestration/planning tests and full suite (`90 passed`).
+  Specification: [PHASE_J_ORCHESTRATOR_SPEC.md](PHASE_J_ORCHESTRATOR_SPEC.md).
+- Remaining Phase J acceptance gap: no configured pair of provider-backed native
+  runs has been evaluated against PhysicsIntern, so parity is not claimed.
