@@ -12,8 +12,9 @@
 
 Phase J native orchestration: provide deterministic packet scheduling and
 provider-neutral leaf-execution contracts; Phase K reproduction specifications
-and regression reporting follow. Provider-backed orchestration evaluation and
-three source-grounded published reproductions remain explicit acceptance gaps.
+and Phase L referee structures follow. Provider-backed orchestration evaluation,
+three source-grounded published reproductions, and seeded/historical Phase L
+evaluation remain explicit acceptance gaps.
 
 ## 2026-08-29 — Phase B evaluation-suite foundation complete
 
@@ -260,3 +261,13 @@ until post-hoc validation.
   Specification: [PHASE_K_REPRODUCTION_SPEC.md](PHASE_K_REPRODUCTION_SPEC.md).
 - Remaining Phase K acceptance gap: no three published results in distinct
   categories have been selected, source-grounded, executed, and reviewed.
+
+## 2026-08-31 — Phase L structured referee records (L1) complete
+
+- Added evidence-attributed technical findings, report limitations, and
+  research-idea records with falsifiers, cheapest decisive tests, and explicit
+  corpus-relative novelty scope.
+- Validation: focused referee tests and full suite (`92 passed`).
+  Specification: [PHASE_L_REFEREE_SPEC.md](PHASE_L_REFEREE_SPEC.md).
+- Remaining Phase L acceptance gap: no seeded or historical manuscript/referee
+  evaluation has yet been selected and run.
