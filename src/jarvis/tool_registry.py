@@ -34,6 +34,44 @@ _CHECK_TEMPLATES = {
 }
 
 
+def _wolfram_runtime() -> tuple[str | None, str | None]:
+    candidates = [
+        (shutil.which("WolframKernel"), "-run"),
+        (shutil.which("wolframscript"), "-code"),
+    ]
+    for executable, mode in candidates:
+        if not executable:
+            continue
+        try:
+            result = subprocess.run(
+                [executable, mode, 'Print["JARVIS_WOLFRAM_OK"]; Quit[]'],
+                capture_output=True,
+                text=True,
+                timeout=20,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            continue
+        if result.returncode == 0 and "JARVIS_WOLFRAM_OK" in result.stdout:
+            return executable, result.stdout.strip()
+    return None, None
+
+
+def _package_available(runtime: str, package: str) -> bool:
+    result = subprocess.run(
+        [
+            runtime,
+            "-run",
+            f'Needs["{package}"]; Print[MemberQ[$Packages, "{package}"]]; Quit[]',
+        ],
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+    return result.returncode == 0 and "True" in result.stdout
+
+
 def _string_list(value: object, field: str, tool_id: str) -> list[str]:
     if not isinstance(value, list) or not all(isinstance(item, str) and item for item in value):
         raise ToolRegistryError(f"Tool {tool_id!r} requires a non-empty string list for {field}")
@@ -104,7 +142,7 @@ def tool_status(root: Path) -> list[dict[str, Any]]:
         Path.home() / ".Mathematica" / "Applications",
     ]
     application_roots = [path for path in application_roots if path and path.is_dir()]
-    wolfram_runtime_ok = False
+    wolfram_runtime, wolfram_probe = _wolfram_runtime()
     for entry in load_tool_registry(root):
         item = dict(entry)
         executable = "python" if entry["id"] == "python" else entry["executable"]
@@ -144,8 +182,23 @@ def tool_status(root: Path) -> list[dict[str, Any]]:
                 )
                 if match:
                     item["version"] = match.group(1)
-            if marker and not wolfram_runtime_ok:
+            if marker and not wolfram_runtime:
                 item["status"] = "blocked-runtime"
+            elif (
+                marker
+                and entry.get("package")
+                and not _package_available(wolfram_runtime, entry["package"])
+            ):
+                item["status"] = "broken"
+                item["diagnostic"] = "Wolfram package failed its context smoke test"
+        elif entry["id"] == "wolfram":
+            item["path"] = wolfram_runtime
+            item["runtime_command"] = wolfram_runtime
+            item["status"] = "available" if wolfram_runtime else "broken"
+            if wolfram_probe:
+                item["version"] = wolfram_probe.splitlines()[0]
+            if not wolfram_runtime:
+                item["diagnostic"] = "No healthy Wolfram kernel runtime was found"
         elif item["path"] and entry.get("version_args"):
             version = subprocess.run(
                 [item["path"], *entry["version_args"]],
@@ -155,21 +208,6 @@ def tool_status(root: Path) -> list[dict[str, Any]]:
                 check=False,
             )
             item["version"] = (version.stdout or version.stderr).strip()
-            try:
-                smoke = subprocess.run(
-                    [item["path"], "-code", "Print[2+2]"],
-                    capture_output=True,
-                    text=True,
-                    timeout=20,
-                    check=False,
-                )
-                wolfram_runtime_ok = smoke.returncode == 0 and "4" in smoke.stdout
-                diagnostic = smoke.stderr
-            except subprocess.TimeoutExpired:
-                diagnostic = "Wolfram kernel smoke test timed out"
-            if not wolfram_runtime_ok:
-                item["status"] = "broken"
-                item["diagnostic"] = (diagnostic or "Wolfram kernel smoke test failed").strip()
         tools.append(item)
     return tools
 
@@ -206,6 +244,14 @@ def wolfram_package_loads(tools: Iterable[dict[str, Any]]) -> list[str]:
                 raise ToolRegistryError(f"Tool {tool['id']!r} has an invalid Wolfram package name")
             packages.append(package)
     return [f'Needs["{package}"];' for package in packages]
+
+
+def wolfram_runtime_command(root: Path) -> str | None:
+    """Return the healthy registered Wolfram runtime command, if any."""
+    for tool in tool_status(root):
+        if tool["id"] == "wolfram" and tool["status"] == "available":
+            return tool.get("runtime_command") or tool.get("path")
+    return None
 
 
 def select_tools(

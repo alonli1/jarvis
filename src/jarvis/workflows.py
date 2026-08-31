@@ -26,6 +26,7 @@ from .tool_registry import (
     select_tools,
     tool_status,
     wolfram_package_loads,
+    wolfram_runtime_command,
 )
 
 
@@ -567,9 +568,9 @@ def execute_computation(
     if target.suffix == ".py":
         command = [sys.executable, str(target)]
     elif target.suffix in {".wls", ".wl", ".m"}:
-        executable = shutil.which("wolframscript")
+        executable = wolfram_runtime_command(config.root)
         if not executable:
-            raise RuntimeError("wolframscript is unavailable")
+            raise RuntimeError("No healthy Wolfram runtime is available")
         command = [executable, "-file", str(target)]
     else:
         raise ValueError("Computation scripts must be Python or Wolfram Language files")

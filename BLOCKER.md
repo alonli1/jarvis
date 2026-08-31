@@ -16,6 +16,16 @@ completed cross-provider scientific-run record. These are evaluation inputs,
 not implementation defects; progress and contracts are recorded in
 `docs/AI_PHYSICIST_PROGRESS.md`.
 
+## Phase G FIRE7 package-content blocker
+
+The Wolfram launcher issue was recovered on 2026-08-31 using the healthy direct
+`WolframKernel` runtime. xAct, FeynCalc, and Matchete context smokes pass.
+FIRE7 cannot load because the installed package directory lacks
+`mm/Reconstruction.m` and `mm/LeeRule.m`; no alternate local copy or archived
+installer is present. Installing a complete FIRE7 distribution is an external
+package-management action, so Jarvis retains a truthful `broken` diagnostic and
+does not synthesize a workflow result.
+
 Phase F cannot complete in the current Codex CLI runtime. The PhysicsIntern
 bootstrap and Honey isolation succeeded, but the isolated process cannot sustain
 the fresh-context research workflow.

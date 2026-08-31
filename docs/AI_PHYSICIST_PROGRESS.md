@@ -165,9 +165,8 @@ until post-hoc validation.
 - Added a validated, v1-compatible registry loader and deterministic selector
   that returns only runtime-available tools for requested capabilities; it
   never silently substitutes an unrelated tool.
-- Current runtime evidence: Python/SymPy is available. WolframScript exits 255
-  without output, so the installed Wolfram packages are correctly reported as
-  `broken`/`blocked-runtime`, not usable merely because their markers exist.
+- Initial runtime evidence recorded the broken `wolframscript` launcher; see
+  the 2026-08-31 recovery entry below for the current direct-kernel state.
 - Validation: focused registry/workflow/evaluation/CLI tests and full suite
   (`75 passed`), plus live capability selection and `jarvis doctor`.
 - Specification: [PHASE_G_CAPABILITY_REGISTRY_SPEC.md](PHASE_G_CAPABILITY_REGISTRY_SPEC.md).
@@ -298,3 +297,13 @@ source-grounded published reproductions (K), seeded/historical referee
 evaluation (L), and comparable runs on two configured providers (M). Those
 require real configured model/provider access and selected scientific evaluation
 material; no local code-only substitute is treated as evidence.
+
+## 2026-08-31 — Phase G Wolfram runtime recovery (G3) complete
+
+- Jarvis now selects a healthy `WolframKernel` runtime instead of relying on
+  the failing `wolframscript` launcher; explicit Wolfram workbench execution
+  completed successfully.
+- xAct, FeynCalc, and Matchete pass package-context smokes and are available to
+  capability selection. FIRE7 stays `broken` because its installed directory
+  lacks required `mm/Reconstruction.m` and `mm/LeeRule.m` files.
+- Validation: focused registry/workflow tests and full suite (`94 passed`).

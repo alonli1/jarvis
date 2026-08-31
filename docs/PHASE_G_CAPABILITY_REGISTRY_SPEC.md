@@ -19,9 +19,10 @@ orchestration code can query without hard-coding package names.
   topics, but no capability or verification metadata.
 - `jarvis.workflows.tool_status()` performs the only registry interpretation;
   `prepare_computation()` persists its diagnostics in a computation manifest.
-- `uv run jarvis doctor` on 2026-08-30 found Python/SymPy available and the
-  installed Wolfram, xAct, FeynCalc, Matchete, and FIRE7 surface blocked by a
-  failed Wolfram runtime smoke test.
+- Initial diagnostics found Python/SymPy available but the `wolframscript`
+  launcher failed. A 2026-08-31 recovery verified `/usr/local/bin/WolframKernel`
+  and xAct, FeynCalc, and Matchete package-context smokes; FIRE7 remains
+  incomplete because required `mm/` package files are absent.
 - The Phase G roadmap requires capability-based selection and tool-specific
   scientific check templates before native planning begins.
 
@@ -52,8 +53,8 @@ orchestration code can query without hard-coding package names.
 - Validate that selection is deterministic, capability-specific, and excludes
   missing or runtime-blocked tools.
 - Preserve existing computation workflow and evaluation tests.
-- Record the Wolfram runtime limitation as an execution-gate outcome, not as
-  package absence.
+- Record package-specific execution limitations as diagnostics, not as package
+  absence inferred from a marker alone.
 
 ## Routing and review limitation
 

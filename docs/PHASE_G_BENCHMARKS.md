@@ -15,8 +15,10 @@ scripts, conventions, checks, stdout/stderr logs, runtime package diagnostics,
 and exit status under `.jarvis/runs/`. The tracked scripts in `benchmarks/`
 emit JSON, so their output requires no fragile package-specific parser.
 
-The installed WolframScript runtime exited with status 255 and no output during
-its `Print[2+2]` smoke test. xAct, FeynCalc, Matchete, and FIRE7 therefore
-remain intentionally unavailable to capability selection despite their
-installed package markers. Their execution workflows are not claimed tested by
-these Python calibrations.
+The `wolframscript` launcher exited with status 255, but the direct
+`/usr/local/bin/WolframKernel` runtime was recovered and explicitly executed
+through a Jarvis workbench on 2026-08-31. xAct, FeynCalc, and Matchete now pass
+package-context smoke checks. FIRE7 remains `broken`: its installation lacks
+required `mm/Reconstruction.m` and `mm/LeeRule.m` files. Package-specific
+scientific workflows are still distinct from these Python calibrations and
+must retain their own checks.
