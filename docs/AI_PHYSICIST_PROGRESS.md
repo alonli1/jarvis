@@ -265,8 +265,6 @@ until post-hoc validation.
   corpus-relative novelty scope.
 - Validation: focused referee tests and full suite (`92 passed`).
   Specification: [PHASE_L_REFEREE_SPEC.md](PHASE_L_REFEREE_SPEC.md).
-- Remaining Phase L acceptance gap: no seeded or historical manuscript/referee
-  evaluation has yet been selected and run.
 
 ## 2026-08-31 — Phase M profile-compatibility calibration (M1) complete
 
@@ -290,9 +288,8 @@ until post-hoc validation.
 
 The deterministic, provider-neutral implementation surface through Phase N is
 present. The following acceptance evidence remains intentionally open rather
-than claimed: native-vs-PhysicsIntern provider-backed evaluations (J),
-seeded/historical referee evaluation (L), and comparable runs on two configured
-providers (M). Those
+than claimed: native-vs-PhysicsIntern provider-backed evaluations (J) and
+comparable runs on two configured providers (M). Those
 require real configured model/provider access and selected scientific evaluation
 material; no local code-only substitute is treated as evidence.
 
@@ -332,3 +329,15 @@ material; no local code-only substitute is treated as evidence.
 - Validation: focused reproduction tests plus the full suite (`96 passed`).
   These are source-statement reproductions only, not full-paper reproductions,
   novel results, or human verification.
+
+## 2026-08-31 — Phase L seeded referee evaluation (L2) complete
+
+- Closed the Phase L acceptance gate with a deliberately flawed, clearly labelled
+  non-manuscript fixture and a deterministic structured technical review.
+- The review identifies the seeded factor-of-two entropy normalization error from
+  Kiefer, PDF p. 232 (printed p. 219), eqs. (7.23)--(7.24); separately records
+  absent source/conventions; and preserves limitations. Its literature evidence is
+  in `20260831T192115Z-literature-technical-review-evidence-for-a-seed`.
+- Validation: focused referee-evaluation tests and the full suite (`97 passed`).
+  This demonstrates record integrity, not human review, publication fitness, or
+  a novelty assessment.

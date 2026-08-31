@@ -9,11 +9,11 @@
 The provider-neutral implementation surface through Phase N is committed. The
 remaining roadmap acceptance gates require evidence that cannot be safely
 invented from local code: configured provider-backed native-vs-PhysicsIntern
-evaluations, seeded/historical referee cases, and comparable scientific runs on
-two providers. The current repository configuration contains only its local
-default profile and no completed cross-provider scientific-run record. These
-are evaluation inputs, not implementation defects; progress and contracts are
-recorded in `docs/AI_PHYSICIST_PROGRESS.md`.
+evaluations and comparable scientific runs on two providers. The current
+repository configuration contains only its local default profile and no
+completed cross-provider scientific-run record. These are evaluation inputs,
+not implementation defects; progress and contracts are recorded in
+`docs/AI_PHYSICIST_PROGRESS.md`.
 
 ## Phase G FIRE7 package-content recovery (resolved)
 
