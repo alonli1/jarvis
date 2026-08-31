@@ -307,3 +307,17 @@ material; no local code-only substitute is treated as evidence.
   capability selection. FIRE7 stays `broken` because its installed directory
   lacks required `mm/Reconstruction.m` and `mm/LeeRule.m` files.
 - Validation: focused registry/workflow tests and full suite (`94 passed`).
+
+## 2026-08-31 — Phase G FIRE7 package recovery (G4) complete
+
+- Recovered the incomplete local FIRE 7.1 installation from official upstream
+  source revision `d132e5365dd2a13db9cd9dbaf5c200b53d489cfd`. The repair added
+  only the previously absent `mm/` modules; it did not replace the local
+  launcher, binaries, or Wolfram configuration.
+- Registry v2 now supports an explicit Wolfram marker loader. FIRE7 loads its
+  registered `FIRE7.m` entry point rather than incorrectly assuming that
+  `Needs["FIRE`"]` is available on `$Path`.
+- `jarvis doctor` reports FIRE7 7.1 available, and the explicit capability-
+  selected smoke workbench `20260831T183504Z-computation-fire7-package-load-smoke`
+  passed. This establishes package availability only, not an IBP-reduction
+  result or scientific validation.

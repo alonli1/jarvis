@@ -121,3 +121,19 @@ def test_declared_checks_and_wolfram_loads_are_tool_attributed():
     tool["execution"]["package"] = "bad;name"
     with pytest.raises(ToolRegistryError, match="invalid Wolfram package"):
         wolfram_package_loads([tool])
+
+
+def test_marker_loaded_wolfram_packages_require_an_available_marker(tmp_path):
+    marker = tmp_path / "FIRE7.m"
+    marker.write_text("", encoding="utf-8")
+    tool = {
+        "id": "fire7",
+        "path": str(marker),
+        "execution": {"environment": "wolfram", "package": "FIRE`", "loader": "marker"},
+        "verification": {"templates": []},
+    }
+
+    assert wolfram_package_loads([tool]) == [f'Get["{marker}"];']
+    marker.unlink()
+    with pytest.raises(ToolRegistryError, match="available package marker"):
+        wolfram_package_loads([tool])

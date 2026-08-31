@@ -57,12 +57,13 @@ def _wolfram_runtime() -> tuple[str | None, str | None]:
     return None, None
 
 
-def _package_available(runtime: str, package: str) -> bool:
+def _package_available(runtime: str, package: str, marker: Path | None = None) -> bool:
+    load = f'Get["{marker}"];' if marker else f'Needs["{package}"];'
     result = subprocess.run(
         [
             runtime,
             "-run",
-            f'Needs["{package}"]; Print[MemberQ[$Packages, "{package}"]]; Quit[]',
+            f'{load} Print[MemberQ[$Packages, "{package}"]]; Quit[]',
         ],
         capture_output=True,
         text=True,
@@ -100,6 +101,11 @@ def _normalize_tool(entry: object, version: int) -> dict[str, Any]:
     execution = item.get("execution")
     if not isinstance(execution, dict) or not isinstance(execution.get("environment"), str):
         raise ToolRegistryError(f"Tool {tool_id!r} requires execution.environment")
+    loader = execution.get("loader", "needs")
+    if loader not in {"needs", "marker"}:
+        raise ToolRegistryError(f"Tool {tool_id!r} has invalid Wolfram package loader")
+    if loader == "marker" and execution["environment"] != "wolfram":
+        raise ToolRegistryError(f"Tool {tool_id!r} may use marker loader only for Wolfram")
     verification = item.get("verification")
     if not isinstance(verification, dict):
         raise ToolRegistryError(f"Tool {tool_id!r} requires verification metadata")
@@ -187,7 +193,11 @@ def tool_status(root: Path) -> list[dict[str, Any]]:
             elif (
                 marker
                 and entry.get("package")
-                and not _package_available(wolfram_runtime, entry["package"])
+                and not _package_available(
+                    wolfram_runtime,
+                    entry["package"],
+                    marker if entry["execution"].get("loader") == "marker" else None,
+                )
             ):
                 item["status"] = "broken"
                 item["diagnostic"] = "Wolfram package failed its context smoke test"
@@ -236,14 +246,22 @@ def check_templates_for_tools(tools: Iterable[dict[str, Any]]) -> list[dict[str,
 def wolfram_package_loads(tools: Iterable[dict[str, Any]]) -> list[str]:
     """Return declared package loads for selected Wolfram workflows."""
     packages = []
+    seen = set()
     for tool in tools:
         execution = tool["execution"]
         package = execution.get("package") if execution["environment"] == "wolfram" else None
-        if package and package not in packages:
+        if package and package not in seen:
             if not isinstance(package, str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9`]*", package):
                 raise ToolRegistryError(f"Tool {tool['id']!r} has an invalid Wolfram package name")
-            packages.append(package)
-    return [f'Needs["{package}"];' for package in packages]
+            if execution.get("loader", "needs") == "marker":
+                marker = tool.get("path")
+                if not isinstance(marker, str) or not Path(marker).is_file():
+                    raise ToolRegistryError(f"Tool {tool['id']!r} requires an available package marker")
+                packages.append((package, f'Get["{marker}"];'))
+            else:
+                packages.append((package, f'Needs["{package}"];'))
+            seen.add(package)
+    return [load for _, load in packages]
 
 
 def wolfram_runtime_command(root: Path) -> str | None:

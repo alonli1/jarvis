@@ -21,8 +21,10 @@ orchestration code can query without hard-coding package names.
   `prepare_computation()` persists its diagnostics in a computation manifest.
 - Initial diagnostics found Python/SymPy available but the `wolframscript`
   launcher failed. A 2026-08-31 recovery verified `/usr/local/bin/WolframKernel`
-  and xAct, FeynCalc, and Matchete package-context smokes; FIRE7 remains
-  incomplete because required `mm/` package files are absent.
+  and xAct, FeynCalc, and Matchete package-context smokes. The locally installed
+  FIRE 7.1 launcher was completed from official upstream source revision
+  `d132e5365dd2a13db9cd9dbaf5c200b53d489cfd`: only its missing `mm/` modules
+  were added, and a marker-loaded package smoke and explicit workbench run pass.
 - The Phase G roadmap requires capability-based selection and tool-specific
   scientific check templates before native planning begins.
 
@@ -34,6 +36,9 @@ orchestration code can query without hard-coding package names.
   registries remain readable for existing clones.
 - `tool_status(root)` retains its current diagnostic fields and augments them
   with normalized capability metadata.
+- A Wolfram entry may declare `execution.loader: marker` when the package must
+  be loaded from its registered marker rather than through `Needs`; FIRE7 uses
+  this mode, so a selected workbench records its exact package entry point.
 - `select_tools(root, capabilities)` returns only available matching tools,
   ordered by registry order, and records the capabilities matched by each
   result. A missing capability is represented by an empty result, not a

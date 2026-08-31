@@ -18,7 +18,10 @@ emit JSON, so their output requires no fragile package-specific parser.
 The `wolframscript` launcher exited with status 255, but the direct
 `/usr/local/bin/WolframKernel` runtime was recovered and explicitly executed
 through a Jarvis workbench on 2026-08-31. xAct, FeynCalc, and Matchete now pass
-package-context smoke checks. FIRE7 remains `broken`: its installation lacks
-required `mm/Reconstruction.m` and `mm/LeeRule.m` files. Package-specific
-scientific workflows are still distinct from these Python calibrations and
-must retain their own checks.
+package-context smoke checks. The FIRE7 7.1 installation was completed from
+the official upstream source revision `d132e5365dd2a13db9cd9dbaf5c200b53d489cfd`:
+only the absent `mm/` modules were added, without replacing the local launcher,
+binaries, or Wolfram configuration. `20260831T183504Z-computation-fire7-package-load-smoke`
+records successful marker loading and explicit execution. This package-load
+smoke is not an IBP reduction benchmark; package-specific scientific workflows
+remain distinct from these Python calibrations and must retain their own checks.
