@@ -1,0 +1,44 @@
+{
+  "checks": [
+    "Use exact rational arithmetic to verify B2 and the R^2 part of B4.",
+    "Check xi = 1/6, where B2 and the R^2 coefficient in B4 vanish.",
+    "Check g = eta + kappa h has [kappa h] = 0 with [h] = 1 and [kappa] = -1.",
+    "Check [R] = 2 and that B6/m^2 and B8/m^4 have Lagrangian dimension four."
+  ],
+  "engine": "python",
+  "paper": {
+    "assumptions": [
+      "One real scalar.",
+      "D_E = -nabla^2 + m^2 + xi R.",
+      "Vassilevich convention L = -(nabla^2 + E), hence E = -xi R.",
+      "Dimensional regularization in d = 4 - 2 epsilon and MS-bar subtraction."
+    ],
+    "equations": [
+      {
+        "conventions": {
+          "heat_kernel_operator": "L = -(nabla^2 + E)",
+          "endomorphism": "E = -xi R",
+          "bundle_curvature": "Omega_mu_nu = 0"
+        },
+        "expression": "B2 = (1/6 - xi) R",
+        "label": "scalar B2",
+        "locator": "electronic PDF p. 40, eq. (4.27)"
+      },
+      {
+        "conventions": {
+          "total_derivative": "retained"
+        },
+        "expression": "B4 = 1/2 (xi-1/6)^2 R^2 + (Riemann^2-Ricci^2)/180 + (1/30-xi/6) Box R",
+        "label": "scalar B4",
+        "locator": "electronic PDF p. 40, eq. (4.28)"
+      }
+    ],
+    "paper_id": "vassilevich-heat-kernel-2003",
+    "source_locator": "electronic PDF p. 40, eqs. (4.26)--(4.28)",
+    "source_path": "knowledge/papers/vassilevich-heat-kernel-2003__hep-th_0306138.pdf",
+    "target_result": "Reproduce the low-order MS-bar threshold and graviton-field dimensional normalization."
+  },
+  "scripts": [
+    "benchmarks/phase_k_reproductions/sakharov_scalar_msbar_low_order.py"
+  ]
+}

@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\title{One Real Scalar: Low-Order Induced-Gravity EFT}
+\author{Jarvis reproducibility artifact}
+\date{}
+\begin{document}
+\maketitle
+
+\section*{Scope}
+This report verifies the local one-loop threshold through curvature-squared
+order for one real scalar on a smooth, compact, boundaryless Euclidean
+background. It does not claim an expanded $B_6$ or $B_8$ operator basis.
+The source is Vassilevich,
+\url{knowledge/papers/vassilevich-heat-kernel-2003__hep-th_0306138.pdf},
+electronic PDF p.~40, eqs.~(4.26)--(4.28).
+
+\section*{Conventions}
+\[
+ S_E=\frac12\int d^4x\sqrt g\,\phi D_E\phi,\qquad
+ D_E=-\nabla^2+m^2+\xi R.
+\]
+There is one real scalar, $m>0$, $d=4-2\epsilon$, and
+$\overline{\mathrm{MS}}$ subtraction. In the source convention
+$L=-(\nabla^2+E)$, so $E=-\xi R$ and $\Omega_{\mu\nu}=0$.
+
+For mostly-minus Lorentzian signature,
+\[
+ g_{\mu\nu}=\eta_{\mu\nu}+\kappa h_{\mu\nu},\qquad
+ [h_{\mu\nu}]=1,\qquad [\kappa]=-1.
+\]
+Hence $[\kappa h]=0$ and
+$R\sim\kappa\partial^2h+\cdots$ has dimension two. Therefore
+$B_6/m^2$ and $B_8/m^4$ have Lagrangian dimension four.
+
+\section*{Result}
+With $L_m=\ln(m^2/\mu^2)$,
+\[
+ \Gamma_{E,\overline{\mathrm{MS}}}^{(1)}
+ =\int d^4x\sqrt g\left[
+ \frac{m^4}{64\pi^2}(L_m-\tfrac32)
+ +\frac{m^2}{32\pi^2}(\xi-\tfrac16)(L_m-1)R
+ +\frac{L_m}{32\pi^2}B_4+O(\mathcal R^3/m^2)\right],
+\]
+\[
+ B_2=(\tfrac16-\xi)R,
+\]
+\[
+ B_4=\frac12(\xi-\tfrac16)^2R^2
+ +\frac1{180}(R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}
+ -R_{\mu\nu}R^{\mu\nu})
+ +\left(\frac1{30}-\frac{\xi}{6}\right)\Box R.
+\]
+At $\xi=1/6$, $B_2$ and the $R^2$ coefficient in $B_4$ vanish.
+Finite local gravitational counterterms remain adjustable, so these are
+threshold contributions rather than absolute gravitational couplings.
+
+For a parity-even scalar determinant on a boundaryless background, the local
+metric expansion has canonical curvature dimensions $0,2,4,6,8,\ldots$;
+there is no dimension-nine term. The next prefactors are
+$-B_6/(32\pi^2m^2)$ and $-B_8/(32\pi^2m^4)$. Their expanded tables require a
+separately declared dimension-six/eight invariant basis.
+
+\section*{Reproduction}
+The companion source is
+\texttt{sakharov\_scalar\_msbar\_low\_order.py}. It uses only the Python
+standard library and checks exact rational coefficients, the conformal limit,
+and the $g=\eta+\kappa h$ dimensional normalization.
+\end{document}

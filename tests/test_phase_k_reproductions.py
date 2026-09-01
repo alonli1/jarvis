@@ -14,6 +14,9 @@ def test_phase_k_reproduction_specs_and_scripts_are_reproducible():
         "eft_phi6_dimensions": {"coefficient_dimension": "-2"},
         "conformal_scalar_coupling": {"xi_four_dimensions": "1/6"},
         "schwarzschild_entropy": {"entropy": "4*pi*G*M**2"},
+        "sakharov_scalar_msbar_low_order": {
+            "B2_xi_polynomial": ["1/6", "-1"],
+        },
     }
 
     for name, values in expected.items():

@@ -13,3 +13,11 @@ and each script was explicitly executed in the listed computation run.
 
 The `*.spec.json` files conform to `ImplementationSpecification`; the scripts emit
 JSON containing their assumptions, target values, and independent checks.
+
+The scalar induced-gravity entry is
+sakharov_scalar_msbar_low_order.py. Its source locator is Vassilevich,
+electronic PDF p. 40, eqs. (4.26)--(4.28); its explicit run is
+20260901T113846Z-computation-independently-verify-the-one-real-sc. Parallel
+Markdown and LaTeX reports record the \(g=\eta+\kappa h\), \([h]=1\),
+\([\kappa]=-1\) normalization. It is a low-order reproduction, not an
+expanded \(B_6\) or \(B_8\) coefficient table.

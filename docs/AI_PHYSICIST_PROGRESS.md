@@ -371,3 +371,20 @@ material; no local code-only substitute is treated as evidence.
   workspace remains necessary; the official bootstrap was safety-gated before any
   write because its Git commit could not be mechanically confined to the requested
   `/tmp` target. No historical Phase F artifact is reused.
+
+## 2026-09-01 — Scalar induced-gravity reproducibility artifact
+
+- Added a tracked, standard-library reproduction of the one-real-scalar
+  \(B_2,B_4\) heat-kernel specialization and low-order
+  \(\overline{\rm MS}\) threshold normalization, sourced to Vassilevich,
+  electronic PDF p. 40, eqs. (4.26)--(4.28).
+- The artifact explicitly checks the local graviton normalization
+  \(g=\eta+\kappa h\), \([h]=1\), \([\kappa]=-1\), hence \([R]=2\), as well
+  as the \(\xi=1/6\) limit. Parallel Markdown and compilable LaTeX reports
+  preserve conventions, scope, and the distinction between threshold and
+  absolute gravitational couplings.
+- Validation: explicit Jarvis computation run
+  20260901T202333Z-computation-reproduce-one-real-scalar-low-order-,
+  focused reproduction tests, specification validation, and a successful
+  LaTeX compile. This is low-order normalization evidence, not an expanded
+  dimension-six or dimension-eight coefficient table.
