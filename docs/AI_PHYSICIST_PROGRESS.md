@@ -250,7 +250,9 @@ until post-hoc validation.
 - Remaining Phase J acceptance gap: no configured pair of provider-backed native
   runs has been evaluated against PhysicsIntern, so parity is not claimed. The
   sole `ollama/qwen3:14b` profile refused the 2026-08-31 local-provider health
-  check. Phase J host-neutral dispatch is recorded separately; see `BLOCKER.md`.
+  check. A 2026-09-01 plugin-disabled extension-runtime audit also failed before
+  isolation verification because its workspace-managed cloud config could not
+  load. Phase J host-neutral dispatch is recorded separately; see `BLOCKER.md`.
 
 ## 2026-08-31 — Phase K reproduction contract (K1) complete
 
