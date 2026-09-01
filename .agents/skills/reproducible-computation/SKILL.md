@@ -5,6 +5,12 @@ description: Prepare, execute, and verify reproducible QFT, GR, or quantum-gravi
 
 # Reproducible computation
 
+First establish the research intent: literature, computation, or both. A
+computation workbench already selects computation; otherwise, if the user has
+not made the intended mode clear, ask once rather than presenting a
+literature-derived formula as an independent result. For both, create and
+read a literature evidence bundle before accepting source formulas as inputs.
+
 Create a workbench with `jarvis run computation --task "..." --engine auto|wolfram|python`.
 Write scripts only inside that run's `scripts/` directory and execute them explicitly with
 `jarvis compute execute RUN_ID SCRIPT`.

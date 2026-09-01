@@ -409,3 +409,15 @@ material; no local code-only substitute is treated as evidence.
   20260901T211018Z-literature-extract-the-general-scalar-laplace-t,
   explicit artifact execution, focused reproduction tests (2 passed), and
   Ruff on the changed Python and test files.
+
+## 2026-09-02 — Research-intent gate
+
+- Made research intent a repository-wide host contract: before a scientific
+  answer, Jarvis establishes literature, computation, or both, and asks once
+  only when the user's request is ambiguous.
+- Added the same gate to each foundational skill, browser-handoff-visible
+  workflow instructions, and the legacy provider-backed ask prompt. The
+  combined mode explicitly requires the answer to distinguish literature
+  statements from independently executed checks.
+- Validation: prompt-routing regression test plus the relevant skill and
+  workflow test suites.

@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from jarvis import llm
+from jarvis import answering, llm
 
 
 def _response(text="answer", usage=None, response_ms=None):
@@ -39,3 +39,28 @@ def test_complete_keeps_text_api_without_usage(monkeypatch):
     assert result.usage is None
     assert result.latency_ms is not None
     assert llm.complete("model", "system", "user") == "answer"
+
+
+def test_answer_question_passes_research_intent_gate_to_model(monkeypatch):
+    captured = {}
+    expected = llm.CompletionResult("test", "model", "answer")
+
+    monkeypatch.setattr(answering, "retrieve_hits", lambda *args, **kwargs: [])
+    monkeypatch.setattr(
+        answering,
+        "complete_result",
+        lambda model, system, prompt: (
+            captured.update(model=model, system=system, prompt=prompt) or expected
+        ),
+    )
+
+    config = SimpleNamespace(assistant=SimpleNamespace(max_context_chunks=3))
+    result, hits = answering.answer_question(config, "What is the result?", "model")
+
+    assert result is expected
+    assert hits == []
+    assert captured["model"] == "model"
+    assert "QUESTION:\nWhat is the result?" in captured["prompt"]
+    instruction = " ".join(captured["system"].split())
+    assert "research intent" in instruction
+    assert "do not present a source formula as independently verified" in instruction

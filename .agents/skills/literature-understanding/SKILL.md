@@ -5,6 +5,13 @@ description: Read, compare, synthesize, or review QFT, GR, and quantum-gravity l
 
 # Literature understanding
 
+First establish the research intent: literature, computation, or both. A
+literature run already selects literature; otherwise, if the user has not made
+the intended mode clear, ask once rather than silently substituting a
+literature answer for an independent calculation. For both, prepare
+page-grounded evidence and hand the exact source formulas, conventions, and
+scope to the computation workflow for independent checking.
+
 Prepare evidence with `jarvis run literature --question "..." [--paper ID]` and read the run's
 `evidence.md` and `manifest.json` before answering.
 

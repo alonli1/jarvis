@@ -28,6 +28,16 @@ The root `AGENTS.md` routes agents to exactly four canonical Agent Skills under
 reproducible computation. Provider files are thin pointers. Browser providers receive a
 sanitized Markdown or ZIP export from `jarvis handoff`.
 
+## Research intent gate
+
+Before a host begins a scientific answer, it establishes whether the user wants
+a literature-grounded answer, an independent computation, or both. It asks once
+when that is ambiguous; an explicit run command already establishes the
+corresponding intent. A literature result reports source evidence, while a
+computation result requires executable provenance and checks. In the combined
+mode, literature provides inputs or a comparison target and the host records
+the boundary between source statements and independently verified results.
+
 ## Shared-library path
 
 ```text

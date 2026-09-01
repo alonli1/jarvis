@@ -5,6 +5,11 @@ description: Develop evidence-grounded, testable research directions from the Ja
 
 # Research ideation
 
+First establish whether the user wants a literature-only map of the field, a
+computation-led research direction, or both. If this is not clear, ask once.
+For both, distinguish reported literature gaps from hypotheses that need a new
+derivation or computation.
+
 Start with `jarvis run ideation --topic "..." [--project PATH]`. Use its evidence and graph
 summary to generate candidate directions.
 
