@@ -356,3 +356,18 @@ material; no local code-only substitute is treated as evidence.
   telemetry is optional and never inferred.
 - Validation: focused orchestration and workflow tests. Specification:
   [PHASE_J_HOST_DISPATCH_SPEC.md](PHASE_J_HOST_DISPATCH_SPEC.md).
+
+## 2026-09-01 — Phase J extension-runtime recovery verified
+
+- The IDE-bundled Codex runtime `0.151.0-alpha.7.1` now completes the
+  plugin-disabled feature audit (`plugins=false`) and a fresh authenticated native
+  `exec` smoke (`JARVIS_NATIVE_RUNTIME_OK`; 10 output tokens).
+- A second fresh read-only `exec` with only `honey@greenpt` disabled by an
+  invocation-scoped configuration override completed a PhysicsIntern-context
+  smoke (`PHYSICSINTERN_CONTEXT_OK`; 11 output tokens). The installed PhysicsIntern
+  plugin and persistent user configuration were not changed.
+- This establishes live host/runtime availability, but is not a scientific result
+  or a native-versus-PhysicsIntern comparison. A fresh disposable PhysicsIntern
+  workspace remains necessary; the official bootstrap was safety-gated before any
+  write because its Git commit could not be mechanically confined to the requested
+  `/tmp` target. No historical Phase F artifact is reused.

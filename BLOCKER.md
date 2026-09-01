@@ -30,18 +30,24 @@ parity. The current coordinator session also has Honey instructions visible, so
 the repository routing policy forbids spawning PhysicsIntern or other scientific
 agents for a comparison run.
 
-Completing the remaining non-cross-provider part of Phase J therefore requires a
-reachable configured provider for direct-provider evaluation and a verified
-plugin-disabled PhysicsIntern context for comparison. Jarvis did not start Ollama,
-alter the existing routing configuration, or fabricate an evaluation result.
+On 2026-09-01, the recovered Antigravity extension executable
+`/home/alonli/.antigravity-ide/extensions/openai.chatgpt-26.825.41651-linux-x64/bin/linux-x86_64/codex`
+reported `codex-cli 0.151.0-alpha.7.1` and its `--disable plugins features list`
+audit reported `plugins ... false`. A fresh plugin-disabled native `exec` process
+returned `JARVIS_NATIVE_RUNTIME_OK` (10 output tokens). A separate fresh read-only
+process with the invocation-only override
+`plugins."honey@greenpt".enabled=false` returned `PHYSICSINTERN_CONTEXT_OK` (11
+output tokens); the official PhysicsIntern plugin remains installed and enabled in
+the untouched user configuration. This resolves the former IDE-managed runtime
+configuration failure without starting Ollama or changing routing configuration.
 
-On 2026-09-01, the previously recovered Antigravity extension executable was
-re-audited with `--disable plugins`. It reports `codex-cli 0.151.0-alpha.7.1`,
-but fails before feature inspection with `Failed to load cloud config bundle
-(workspace-managed policies)`. The current shell therefore cannot verify that
-plugins/Honey are disabled or launch a fresh PhysicsIntern context. This is an
-IDE-managed runtime configuration failure; Jarvis did not modify that config or
-reuse historical PhysicsIntern artifacts as a new comparison.
+The remaining non-cross-provider Phase J acceptance action is a new, disposable
+native-versus-PhysicsIntern evaluation. Historical Phase F artefacts cannot be
+reused. The official PhysicsIntern initializer for
+`/tmp/jarvis-phase-j-physicsintern` was safety-gated before execution because its
+`git add -A`/commit could not be mechanically proven to be confined to that target.
+No workspace was created or modified. A user-approved, explicitly scoped bootstrap
+is required before this fresh evaluation can proceed.
 
 ## Phase G FIRE7 package-content recovery (resolved)
 
