@@ -388,3 +388,24 @@ material; no local code-only substitute is treated as evidence.
   focused reproduction tests, specification validation, and a successful
   LaTeX compile. This is low-order normalization evidence, not an expanded
   dimension-six or dimension-eight coefficient table.
+
+## 2026-09-02 — Scalar induced-gravity independent-validation upgrade
+
+- Replaced the hand-entered low-order specialization with exact rational
+  substitution of the complete general \(a_2,a_4\) Laplace-type source table
+  for \(E=-\xi R\), \(\Omega_{\mu\nu}=0\).
+- Added two independent computational checks: numerical
+  \(\overline{\rm MS}\) finite-part extraction from regulated proper-time
+  Gamma integrals, and direct spectral heat-trace extraction on \(S^4\) plus
+  two \(S^2\times S^2\) backgrounds. The three-background spectral system
+  resolves the \(R^2\), Ricci-squared, and Riemann-squared coefficients
+  independently of their local source transcription.
+- The reports now distinguish what the spectral checks establish from what
+  they cannot: an integrated closed-manifold trace cannot constrain the
+  total-derivative \(\Box R\) term, which remains a source-specialization
+  result. This is still limited to the curvature-squared milestone; it makes
+  no claim about expanded \(B_6\) or \(B_8\) bases.
+- Validation: fresh literature evidence bundle
+  20260901T211018Z-literature-extract-the-general-scalar-laplace-t,
+  explicit artifact execution, focused reproduction tests (2 passed), and
+  Ruff on the changed Python and test files.

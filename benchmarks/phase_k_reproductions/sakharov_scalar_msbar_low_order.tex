@@ -10,12 +10,13 @@
 \maketitle
 
 \section*{Scope}
-This report verifies the local one-loop threshold through curvature-squared
-order for one real scalar on a smooth, compact, boundaryless Euclidean
-background. It does not claim an expanded $B_6$ or $B_8$ operator basis.
-The source is Vassilevich,
-\url{knowledge/papers/vassilevich-heat-kernel-2003__hep-th_0306138.pdf},
-electronic PDF p.~40, eqs.~(4.26)--(4.28).
+This report derives and independently validates the local one-loop threshold
+through curvature-squared order for one real scalar on smooth compact
+Euclidean backgrounds. It does not claim an expanded $B_6$ or $B_8$ operator
+basis.
+The source is D.V.~Vassilevich, \emph{Heat kernel expansion: user's manual},
+electronic PDF p.~40, eqs.~(4.26)--(4.28). The companion Markdown report and
+JSON specification give its local corpus path.
 
 \section*{Conventions}
 \[
@@ -44,6 +45,43 @@ With $L_m=\ln(m^2/\mu^2)$,
  +\frac{m^2}{32\pi^2}(\xi-\tfrac16)(L_m-1)R
  +\frac{L_m}{32\pi^2}B_4+O(\mathcal R^3/m^2)\right],
 \]
+
+\section*{Independent computation and validation}
+The companion Python script does not merely print the result. First, it
+encodes the source's general $a_2,a_4$ tables and uses exact rational
+arithmetic to substitute $E=-\xi R$ and $\Omega_{\mu\nu}=0$. Second, it
+computes the proper-time Gamma integrals at nonzero $\epsilon$, subtracts the
+$\overline{\rm MS}$ pole
+$1/\epsilon-\gamma+\ln(4\pi)$, and Richardson-extrapolates their finite
+parts. At $m=2.7,\mu=1.3$, its absolute finite-part disagreements for
+$B_0,B_2,B_4$ are below
+$9.0\times10^{-9},2.1\times10^{-10},3.3\times10^{-13}$.
+
+Third, an independent spectral calculation obtains the heat trace on the
+unit four-sphere from
+\[
+ \operatorname{Tr}e^{-t(-\Delta+\xi R)}
+ =\sum_{\ell\geq0}\frac{(2\ell+3)(\ell+2)(\ell+1)}6
+ e^{-t[\ell(\ell+3)+12\xi]}.
+\]
+The same code uses the product spectrum
+$\lambda_\ell=A\ell(\ell+1)$, $d_\ell=2\ell+1$ on each factor of
+$S^2(A)\mathbin{\times}S^2(B)$. A ninth-order forward Lagrange stencil
+extracts $B_2,B_4$ from the normalized traces. The three backgrounds
+$S^4$, $S^2(1)\mathbin{\times}S^2(1)$, and
+$S^2(1)\mathbin{\times}S^2(2)$ then resolve the local $R^2$,
+$R_{\mu\nu}^2$, and $R_{\mu\nu\rho\sigma}^2$ coefficients. For
+$\xi=0$ and $0.23$, those independently recovered coefficients agree with
+the exact specialization to better than $1.6\times10^{-7}$ and
+$2.6\times10^{-8}$, respectively.
+
+The spectral input follows from scalar harmonic homogeneous polynomials on
+spheres; it is also stated in H. Casini, \emph{Lectures on entanglement in
+quantum field theory}, exercise 3, p.~42,
+\url{https://inspirehep.net/files/19a199a6a26b5847549045339dba86ee}.
+On every closed validation background the integrated $\Box R$ term vanishes.
+The script therefore retains that source-specialized coefficient but does not
+mislabel it as independently spectral-validated.
 \[
  B_2=(\tfrac16-\xi)R,
 \]
@@ -66,6 +104,7 @@ separately declared dimension-six/eight invariant basis.
 \section*{Reproduction}
 The companion source is
 \texttt{sakharov\_scalar\_msbar\_low\_order.py}. It uses only the Python
-standard library and checks exact rational coefficients, the conformal limit,
-and the $g=\eta+\kappa h$ dimensional normalization.
+standard library and emits the source table, exact specialization, raw
+spectral reconstructions, Gamma-integral finite parts, numerical errors, and
+all checks.
 \end{document}

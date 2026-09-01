@@ -1,7 +1,10 @@
 {
   "checks": [
-    "Use exact rational arithmetic to verify B2 and the R^2 part of B4.",
+    "Use exact rational arithmetic to specialize every B2 and B4 term from the general Laplace-type formula, with E = -xi R and Omega = 0.",
     "Check xi = 1/6, where B2 and the R^2 coefficient in B4 vanish.",
+    "Numerically evaluate and MS-bar-subtract the proper-time Gamma integrals for B0, B2, and B4, then compare their finite parts with the analytic threshold factors.",
+    "Extract B2 and B4 from the scalar spectra on S4 and on two S2 x S2 backgrounds; solve the three-background system for R^2, Ricci^2, and Riemann^2 coefficients.",
+    "Retain Box R in the local source specialization while recording that no integrated closed-manifold spectral test can constrain a total derivative.",
     "Check g = eta + kappa h has [kappa h] = 0 with [h] = 1 and [kappa] = -1.",
     "Check [R] = 2 and that B6/m^2 and B8/m^4 have Lagrangian dimension four."
   ],
@@ -31,12 +34,21 @@
         "expression": "B4 = 1/2 (xi-1/6)^2 R^2 + (Riemann^2-Ricci^2)/180 + (1/30-xi/6) Box R",
         "label": "scalar B4",
         "locator": "electronic PDF p. 40, eq. (4.28)"
+      },
+      {
+        "conventions": {
+          "backgrounds": "unit S4; S2 x S2 with inverse squared radii (1,1) and (1,2)",
+          "scope": "independent global spectral check; Box R integrates to zero on each closed background"
+        },
+        "expression": "S4: lambda_l=l(l+3), d_l=(2l+3)(l+2)(l+1)/6; S2(A): lambda_l=A l(l+1), d_l=2l+1",
+        "label": "independent spectral validation input",
+        "locator": "derived from scalar spherical harmonics; see artifact report for the derivation and limits"
       }
     ],
     "paper_id": "vassilevich-heat-kernel-2003",
     "source_locator": "electronic PDF p. 40, eqs. (4.26)--(4.28)",
     "source_path": "knowledge/papers/vassilevich-heat-kernel-2003__hep-th_0306138.pdf",
-    "target_result": "Reproduce the low-order MS-bar threshold and graviton-field dimensional normalization."
+    "target_result": "Independently specialize and spectrally verify the low-order MS-bar threshold and graviton-field dimensional normalization."
   },
   "scripts": [
     "benchmarks/phase_k_reproductions/sakharov_scalar_msbar_low_order.py"

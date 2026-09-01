@@ -35,3 +35,14 @@ def test_phase_k_reproduction_specs_and_scripts_are_reproducible():
         assert result["checks"]
         assert all(value is True for value in result["checks"].values() if isinstance(value, bool))
         assert all(result[key] == value for key, value in values.items())
+
+        if name == "sakharov_scalar_msbar_low_order":
+            assert result["general_source_coefficients"]["a4"]["Omega2"] == "1/12"
+            for spectral_check in result["spectral_S4_check"].values():
+                assert spectral_check["S4"]["B2_agrees"]
+                assert spectral_check["S4"]["B4_agrees"]
+                assert spectral_check["local_B4"]["agrees"]
+            assert all(
+                error < 2.0e-8
+                for error in result["msbar_dimreg_check"]["absolute_errors"].values()
+            )
