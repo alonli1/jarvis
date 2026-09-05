@@ -1,0 +1,23 @@
+{
+  "engine": "wolfram",
+  "calculation_mode": "symbolic",
+  "scope": "Exact local one-real-scalar determinant through B6; B8 is explicitly not supplied.",
+  "assumptions": [
+    "D_E = -nabla^2 + m^2 + xi R on a smooth boundaryless Euclidean background.",
+    "One real scalar; d = 4 - 2 epsilon; MS-bar subtraction.",
+    "Vassilevich curvature convention R^mu{}_{nu rho sigma} = partial_sigma Gamma^mu_{nu rho} - partial_rho Gamma^mu_{nu sigma} + ... .",
+    "The Lorentzian metric convention is mostly minus with g = eta + kappa h, [h] = 1, [kappa] = -1."
+  ],
+  "source": {
+    "path": "knowledge/papers/vassilevich-heat-kernel-2003__hep-th_0306138.pdf",
+    "locator": "electronic PDF p. 40, eqs. (4.26)-(4.29)",
+    "mapping": "L = -(nabla^2 + E), hence E = -xi R and Omega_mu_nu = 0."
+  },
+  "checks": [
+    "Exact Wolfram specialization of the a2, a4, and a6 source tables.",
+    "Independent exact Euler--Maclaurin expansion of the S4 scalar spectrum through t^3.",
+    "The source and spectral B6 polynomials agree exactly: 74/63 - 116 xi/5 + 144 xi^2 - 288 xi^3.",
+    "Conformal limits for B2 and the B4 R^2 term, and canonical dimensions."
+  ],
+  "blocker": "The requested dimension-eight B8 is not in the local corpus. No installed registered tool generates generic off-shell a8 heat-kernel coefficients or reduces their dimension-eight curvature basis."
+}

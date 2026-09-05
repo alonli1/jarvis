@@ -2,6 +2,7 @@ import hashlib
 import json
 import zipfile
 from dataclasses import replace
+from pathlib import Path
 
 import pytest
 
@@ -66,6 +67,35 @@ def test_python_computation_requires_explicit_execution_and_records_log(tmp_path
     assert "checked" in log.read_text()
     assert manifest["status"] == "executed"
     assert manifest["calculation_mode"] == "symbolic"
+
+
+def test_wolfram_kernel_execution_uses_script_mode(tmp_path, monkeypatch):
+    cfg = config_for(tmp_path)
+    run = cfg.root / ".jarvis/runs/wolfram-run"
+    script = run / "scripts/main.wls"
+    script.parent.mkdir(parents=True)
+    (run / "logs").mkdir()
+    (run / "manifest.json").write_text('{"workflow":"computation","artifacts":[]}')
+    script.write_text('Print["checked"];\n', encoding="utf-8")
+    monkeypatch.setattr("jarvis.workflows.wolfram_runtime_command", lambda _: "WolframKernel")
+
+    captured = {}
+
+    class Completed:
+        returncode = 0
+        stdout = "checked\n"
+        stderr = ""
+
+    def fake_run(command, **kwargs):
+        captured["command"] = command
+        return Completed()
+
+    monkeypatch.setattr("jarvis.workflows.subprocess.run", fake_run)
+    code, log = execute_computation(cfg, "wolfram-run", Path("main.wls"))
+
+    assert code == 0
+    assert captured["command"] == ["WolframKernel", "-script", str(script)]
+    assert "checked" in log.read_text(encoding="utf-8")
 
 
 def test_capability_selected_computation_records_tools_and_check_templates(tmp_path, monkeypatch):

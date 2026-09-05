@@ -1,0 +1,30 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\title{One real scalar: exact induced-gravity EFT through $B_6$}
+\author{Jarvis reproducible symbolic workbench}
+\date{2026-09-05}
+\begin{document}
+\maketitle
+\paragraph{Status.} This exact symbolic result stops at curvature dimension six. A parity-even pure-metric local expansion has dimensions $0,2,4,6,8,\ldots$, so no dimension-nine scalar exists; $B_8$ is nevertheless required for the requested truncation and is not asserted here.
+\paragraph{Conventions.} For one real scalar, $S_E=\tfrac12\int d^dx\sqrt g\,\phi(-\nabla^2+m^2+\xi R)\phi$, $d=4-2\epsilon$, and $m>0$. Vassilevich uses $L=-(\nabla^2+E)$, so $E=-\xi R$ and $\Omega_{\mu\nu}=0$. Its curvature convention is $R^\mu{}_{\nu\rho\sigma}=\partial_\sigma\Gamma^\mu_{\nu\rho}-\partial_\rho\Gamma^\mu_{\nu\sigma}+\cdots$, with $R=2$ on unit $S^2$. The Lorentzian convention is mostly minus, $g_{\mu\nu}=\eta_{\mu\nu}+\kappa h_{\mu\nu}$, $[h]=1$, $[\kappa]=-1$; the determinant below is Euclidean.
+\[
+\Gamma^{(1)}_{E,\overline{\rm MS}}=\int d^4x\sqrt g\left[\frac{m^4}{64\pi^2}(L_m-\tfrac32)+\frac{m^2}{32\pi^2}(\xi-\tfrac16)(L_m-1)R+\frac{L_m}{32\pi^2}B_4-\frac{B_6}{32\pi^2m^2}+O(B_8/m^4)\right],\quad L_m=\log(m^2/\mu^2),
+\]
+\[
+B_4=\tfrac12(\xi-\tfrac16)^2R^2+\tfrac1{180}(R_{\mu\nu\rho\sigma}^2-R_{\mu\nu}^2)+(\tfrac1{30}-\tfrac\xi6)\Box R.
+\]
+\paragraph{Exact unreduced $B_6$.}
+\begin{align*}
+B_6={}&(\tfrac1{280}-\tfrac\xi{60})\Box^2R+(\tfrac{17}{5040}-\tfrac\xi{30}+\tfrac{\xi^2}{12})(\nabla R)^2-\tfrac1{2520}(\nabla R_{\mu\nu})^2-\tfrac1{1260}\nabla_\alpha R_{\mu\nu}\nabla^\nu R^{\mu\alpha}+\tfrac1{560}(\nabla R_{\mu\nu\rho\sigma})^2\\
+&+(\tfrac1{180}-\tfrac{11\xi}{180}+\tfrac{\xi^2}{6})R\Box R-\tfrac1{630}R_{\mu\nu}\Box R^{\mu\nu}+\tfrac1{210}R_{\mu\nu}\nabla^\nu\nabla_\rho R^{\mu\rho}+\tfrac1{420}R_{\mu\nu\rho\sigma}\Box R^{\mu\nu\rho\sigma}-\tfrac\xi{90}R_{\mu\nu}\nabla^\mu\nabla^\nu R\\
+&+(\tfrac1{1296}-\tfrac\xi{72}+\tfrac{\xi^2}{12}-\tfrac{\xi^3}{6})R^3+(-\tfrac1{1080}+\tfrac\xi{180})RR_{\mu\nu}^2+(\tfrac1{1080}-\tfrac\xi{180})RR_{\mu\nu\rho\sigma}^2-\tfrac{13}{2835}R_\mu{}^\nu R_\nu{}^\rho R_\rho{}^\mu\\
+&-\tfrac4{945}R_{\mu\nu}R_{\rho\sigma}R^{\mu\rho\nu\sigma}-\tfrac1{945}R_{\mu\nu}R^\mu{}_{\rho\sigma\tau}R^{\nu\rho\sigma\tau}-\tfrac{11}{11340}R_{\mu\nu\rho\sigma}R^{\mu\nu\alpha\beta}R^{\rho\sigma}{}_{\alpha\beta}-\tfrac1{567}R_{\mu\nu\rho\sigma}R^{\mu\alpha\rho\beta}R^\nu{}_{\alpha}{}^\sigma{}_{\beta}.
+\end{align*}
+Set $\xi=0$ for minimal coupling. Integrations by parts and Bianchi identities translate this density to other dimension-six bases.
+\paragraph{Independent exact check.} The executable workbench specializes the source table with Wolfram rationals and independently applies Euler--Maclaurin to the scalar spectrum on unit $S^4$. Both routes yield
+\[
+\frac{(4\pi t)^2}{\operatorname{Vol}(S^4)}\operatorname{Tr}e^{-tD_E}=1+(2-12\xi)t+(\tfrac{29}{15}-24\xi+72\xi^2)t^2+(\tfrac{74}{63}-\tfrac{116}{5}\xi+144\xi^2-288\xi^3)t^3+O(t^4).
+\]
+\paragraph{Evidence and blocker.} The source is D.V.~Vassilevich, \emph{Heat kernel expansion: user's manual}, electronic PDF p.~40, eqs.~(4.26)--(4.29), at \texttt{knowledge/papers/vassilevich-heat-kernel-2003\_\_hep-th\_0306138.pdf}. It refers $a_8$ to P.~Amsterdamski, A.L.~Berkin, and D.J.~O'Connor, \emph{Class. Quantum Grav.} \textbf{6} (1989) 1981--1991, DOI 10.1088/0264-9381/6/12/024. No accessible $a_8$ table or installed generic off-shell $a_8$ generator is available, so $B_8$ is not fabricated.
+\end{document}

@@ -389,6 +389,31 @@ material; no local code-only substitute is treated as evidence.
   LaTeX compile. This is low-order normalization evidence, not an expanded
   dimension-six or dimension-eight coefficient table.
 
+## 2026-09-05 — Exact scalar \(B_6\) workbench and Wolfram execution repair
+
+- Added a tracked Wolfram symbolic workbench and parallel Markdown, LaTeX, and
+  machine-readable specification artifacts for the one-real-scalar
+  \(\overline{\rm MS}\) determinant through \(B_6/m^2\). The source input is
+  Vassilevich, electronic PDF p. 40, eq. (4.29), specialized with
+  \(E=-\xi R\) and \(\Omega_{\mu\nu}=0\).
+- The workbench independently derives the \(S^4\) heat trace through \(t^3\)
+  by exact Euler--Maclaurin summation. Its \(B_6\) polynomial agrees with the
+  local source specialization identically for arbitrary \(\xi\), and the
+  report preserves curvature/sign and graviton-dimension conventions.
+- The requested dimension-nine truncation remains incomplete: no odd
+  parity-even pure-metric scalar occurs at dimension nine, but the necessary
+  dimension-eight \(B_8\) coefficient is absent from the local corpus and no
+  registered installed tool performs generic off-shell \(a_8\) generation or
+  basis reduction. This is recorded as a scientific capability blocker rather
+  than filled with a numerical approximation or unsupported transcription.
+- Repaired `jarvis compute execute` for `WolframKernel`: it now uses
+  `-script` rather than `-file`, which only supplied an initialization file and
+  could previously yield a false successful execution. Added a regression test.
+- Validation: explicit Jarvis computation run
+  `20260905T105050Z-computation-independently-specialize-the-one-rea`, direct
+  workbench execution, full test suite (104 passed), and successful LaTeX
+  compilation.
+
 ## 2026-09-02 — Scalar induced-gravity independent-validation upgrade
 
 - Replaced the hand-entered low-order specialization with exact rational

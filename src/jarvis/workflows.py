@@ -656,7 +656,10 @@ def execute_computation(
         executable = wolfram_runtime_command(config.root)
         if not executable:
             raise RuntimeError("No healthy Wolfram runtime is available")
-        command = [executable, "-file", str(target)]
+        # WolframKernel evaluates a file only in script mode; its -file option
+        # merely supplies an initialization file.  wolframscript uses -file.
+        mode = "-script" if Path(executable).name == "WolframKernel" else "-file"
+        command = [executable, mode, str(target)]
     else:
         raise ValueError("Computation scripts must be Python or Wolfram Language files")
     started = datetime.now(UTC)

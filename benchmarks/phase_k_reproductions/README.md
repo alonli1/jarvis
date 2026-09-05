@@ -21,3 +21,11 @@ electronic PDF p. 40, eqs. (4.26)--(4.28); its explicit run is
 Markdown and LaTeX reports record the \(g=\eta+\kappa h\), \([h]=1\),
 \([\kappa]=-1\) normalization. It is a low-order reproduction, not an
 expanded \(B_6\) or \(B_8\) coefficient table.
+
+`sakharov_scalar_msbar_dim6.wls` is the exact symbolic successor through
+\(B_6\). It specializes the full general \(a_6\) table using Wolfram rational
+algebra and independently checks the result against an analytic
+Euler--Maclaurin expansion of the scalar spectrum on \(S^4\). Its Markdown,
+LaTeX, and JSON specification artifacts make the unresolved \(B_8\) source
+and toolchain limitation explicit; it does not present a dimension-six result
+as a completed dimension-nine truncation.
