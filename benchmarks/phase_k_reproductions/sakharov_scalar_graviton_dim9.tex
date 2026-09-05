@@ -13,7 +13,32 @@ Use $g_{\mu\nu}=\eta_{\mu\nu}+\kappa h_{\mu\nu}$, $[h]=1$, $[\kappa]=-1$. A vert
 \[
 C_0=\frac{m^4}{64\pi^2}(L_m-\tfrac32),\quad C_R=-\frac{m^2}{192\pi^2}(L_m-1),\quad C_{R^2}=\frac{L_m}{3840\pi^2},\quad C_{R_{\mu\nu}^2}=\frac{L_m}{1920\pi^2},\quad C_6=-\frac1{32\pi^2m^2}.
 \]
-Here $L_m=\log(m^2/\mu^2)$. The curvature-squared result uses $E_4=R_{\mu\nu\rho\sigma}^2-4R_{\mu\nu}^2+R^2$: the minimal-scalar bulk combination is $R^2/120+R_{\mu\nu}^2/60$. The complete $\mathcal P_6$ basis, its exact coefficients, and its multiplication by $C_6$ are defined in the single canonical source \texttt{sakharov\_scalar\_graviton\_dim9.wls}.
+Here $L_m=\log(m^2/\mu^2)$. The curvature-squared result is, explicitly,
+\[
+B_4=\frac{R^2}{72}-\frac{R_{\mu\nu}R^{\mu\nu}}{180}+\frac{R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}}{180}+\frac{\Box R}{30}
+=\frac{R^2}{120}+\frac{R_{\mu\nu}R^{\mu\nu}}{60}+\frac{E_4}{180}+\frac{\Box R}{30},
+\qquad E_4=R_{\mu\nu\rho\sigma}^2-4R_{\mu\nu}^2+R^2.
+\]
+Modulo the pure boundary term $\Box\Box R$, the complete dimension-six polynomial used here is
+\begin{align*}
+\mathcal P_6^{(2)}={}&\frac{17}{5040}(\nabla_\alpha R)^2
+-\frac{1}{2520}(\nabla_\alpha R_{\mu\nu})^2
+-\frac{1}{1260}\nabla_\alpha R_{\mu\nu}\nabla^\nu R^{\mu\alpha}
++\frac{1}{560}(\nabla_\alpha R_{\mu\nu\rho\sigma})^2\\
+&+\frac{1}{180}R\Box R
+-\frac{1}{630}R_{\mu\nu}\Box R^{\mu\nu}
++\frac{1}{210}R_{\mu\nu}\nabla^\nu\nabla^\rho R^{\mu}{}_{\rho}
++\frac{1}{420}R_{\mu\nu\rho\sigma}\Box R^{\mu\nu\rho\sigma},\\
+\mathcal P_6^{(3)}={}&\frac{R^3}{1296}
+-\frac{R R_{\mu\nu}R^{\mu\nu}}{1080}
++\frac{R R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}}{1080}
+-\frac{13}{2835}R_{\mu\nu}R^{\nu}{}_{\rho}R^{\rho\mu}
+-\frac{4}{945}R_{\mu\nu}R_{\rho\sigma}R^{\mu\rho\nu\sigma}\\
+&-\frac{1}{945}R_{\mu\nu}R^{\mu}{}_{\rho\sigma\lambda}R^{\nu\rho\sigma\lambda}
+-\frac{11}{11340}R_{\mu\nu\rho\sigma}R^{\mu\nu}{}_{\alpha\beta}R^{\rho\sigma\alpha\beta}
+-\frac{1}{567}R_{\mu\nu\rho\sigma}R^{\mu\alpha\rho\beta}R^{\nu}{}_{\alpha}{}^{\sigma}{}_{\beta}.
+\end{align*}
+Thus $\mathcal P_6=\mathcal P_6^{(2)}+\mathcal P_6^{(3)}$, and every coefficient of either line in the effective action is its displayed coefficient times $C_6=-1/(32\pi^2m^2)$. This report is self-contained; \texttt{sakharov\_scalar\_graviton\_dim9.wls} is its executable, exact-symbolic counterpart.
 \[
 \begin{aligned}
 \mathcal L_{\leq9}={}&C_0\sum_{n=0}^{9}\kappa^n[\sqrt{-g}]_{h^n}+C_R\sum_{n=2}^{7}\kappa^n[\sqrt{-g}R]_{h^n}\\
