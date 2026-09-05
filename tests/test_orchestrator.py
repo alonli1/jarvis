@@ -19,7 +19,8 @@ def test_scheduler_materializes_fresh_context_packets(tmp_path, monkeypatch):
     config = load_config()
     (tmp_path / "packages").mkdir()
     (tmp_path / "packages" / "registry.yaml").write_text(
-        "version: 1\ntools:\n  - id: python\n    executable: python\n    ecosystem: python\n    package: sympy\n",
+        "version: 1\ntools:\n  - id: python\n    executable: python\n    ecosystem: python\n"
+        "    package: sympy\n    capabilities: [symbolic_algebra, numerical_calculation]\n",
         encoding="utf-8",
     )
     config = replace(config, root=tmp_path)
@@ -46,7 +47,7 @@ def test_host_dispatch_exports_a_packet_and_imports_only_provisional_output(tmp_
     (tmp_path / "packages").mkdir()
     (tmp_path / "packages" / "registry.yaml").write_text(
         "version: 1\ntools:\n  - id: python\n    executable: python\n    ecosystem: python\n"
-        "    package: sympy\n",
+        "    package: sympy\n    capabilities: [symbolic_algebra, numerical_calculation]\n",
         encoding="utf-8",
     )
     config = replace(config, root=tmp_path)
@@ -92,7 +93,7 @@ def test_host_dispatch_rejects_non_fresh_import_without_mutating_a_run(tmp_path,
     (tmp_path / "packages").mkdir()
     (tmp_path / "packages" / "registry.yaml").write_text(
         "version: 1\ntools:\n  - id: python\n    executable: python\n    ecosystem: python\n"
-        "    package: sympy\n",
+        "    package: sympy\n    capabilities: [symbolic_algebra, numerical_calculation]\n",
         encoding="utf-8",
     )
     config = replace(config, root=tmp_path)

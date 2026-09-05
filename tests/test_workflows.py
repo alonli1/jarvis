@@ -23,6 +23,7 @@ def config_for(tmp_path):
     (tmp_path / "packages/registry.yaml").write_text(
         "version: 1\ntools:\n  - id: python\n    ecosystem: python\n    executable: python\n"
         "    package: sympy\n    purpose: checks\n    related_topics: []\n"
+        "    capabilities: [symbolic_algebra, numerical_calculation]\n"
     )
     skill = tmp_path / ".agents/skills/literature-understanding"
     skill.mkdir(parents=True)
@@ -64,6 +65,7 @@ def test_python_computation_requires_explicit_execution_and_records_log(tmp_path
     assert code == 0
     assert "checked" in log.read_text()
     assert manifest["status"] == "executed"
+    assert manifest["calculation_mode"] == "symbolic"
 
 
 def test_capability_selected_computation_records_tools_and_check_templates(tmp_path, monkeypatch):
@@ -93,8 +95,56 @@ def test_capability_selected_computation_records_tools_and_check_templates(tmp_p
     assert manifest["requested_capabilities"] == ["symbolic_algebra"]
     assert manifest["selected_tools"][0]["id"] == "python"
     assert "python / symbolic_identity" in (bundle.path / "checks.md").read_text()
+    assert "numerical_spot_check" not in (bundle.path / "checks.md").read_text()
     with pytest.raises(RuntimeError, match="No available registered tool"):
         prepare_computation(cfg, "Check curvature", capabilities=["curvature"])
+
+
+def test_symbolic_mode_reports_a_blocker_without_numerical_fallback(tmp_path, monkeypatch):
+    cfg = config_for(tmp_path)
+    tools = [
+        {
+            "id": "python",
+            "status": "available",
+            "execution": {"environment": "python"},
+            "capabilities": ["numerical_calculation"],
+            "verification": {"strength": "medium", "templates": ["numerical_spot_check"]},
+        }
+    ]
+    monkeypatch.setattr("jarvis.workflows.tool_status", lambda _: tools)
+
+    with pytest.raises(RuntimeError, match="symbolic_algebra.*will not substitute"):
+        prepare_computation(cfg, "Derive exact coefficients")
+
+    bundle = prepare_computation(cfg, "Evaluate a numerical spectrum", calculation_mode="numerical")
+    manifest = json.loads((bundle.path / "manifest.json").read_text())
+
+    assert manifest["calculation_mode"] == "numerical"
+    assert manifest["mode_required_capabilities"] == ["numerical_calculation"]
+
+
+def test_mixed_mode_requires_both_capabilities_in_the_selected_engine(tmp_path, monkeypatch):
+    cfg = config_for(tmp_path)
+    tools = [
+        {
+            "id": "wolfram",
+            "status": "available",
+            "execution": {"environment": "wolfram"},
+            "capabilities": ["symbolic_algebra"],
+            "verification": {"strength": "high", "templates": ["symbolic_identity"]},
+        },
+        {
+            "id": "python",
+            "status": "available",
+            "execution": {"environment": "python"},
+            "capabilities": ["numerical_calculation"],
+            "verification": {"strength": "medium", "templates": ["numerical_spot_check"]},
+        },
+    ]
+    monkeypatch.setattr("jarvis.workflows.tool_status", lambda _: tools)
+
+    with pytest.raises(RuntimeError, match="wolfram cannot provide.*numerical_calculation"):
+        prepare_computation(cfg, "Symbolic derivation plus numerical fit", calculation_mode="mixed")
 
 
 def test_wolfram_capability_workbench_loads_the_selected_package(tmp_path, monkeypatch):
@@ -104,7 +154,7 @@ def test_wolfram_capability_workbench_loads_the_selected_package(tmp_path, monke
             "id": "wolfram",
             "status": "available",
             "execution": {"environment": "wolfram"},
-            "capabilities": [],
+            "capabilities": ["symbolic_algebra", "numerical_calculation"],
             "verification": {"strength": "high", "templates": []},
         },
         {

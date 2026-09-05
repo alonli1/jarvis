@@ -24,6 +24,7 @@ def config_for(tmp_path):
     (tmp_path / "packages/registry.yaml").write_text(
         "version: 1\ntools:\n  - id: python\n    ecosystem: python\n    executable: python\n"
         "    package: sympy\n    purpose: checks\n    related_topics: []\n"
+        "    capabilities: [symbolic_algebra, numerical_calculation]\n"
     )
     return replace(source, root=tmp_path)
 
@@ -143,3 +144,4 @@ def test_new_runs_write_v2_manifest_defaults(tmp_path, monkeypatch):
             )
         )
     assert computation["engine"] == "python"
+    assert computation["calculation_mode"] == "symbolic"

@@ -11,6 +11,18 @@ not made the intended mode clear, ask once rather than presenting a
 literature-derived formula as an independent result. For both, create and
 read a literature evidence bundle before accepting source formulas as inputs.
 
+Default to exact symbolic output for coefficients, bases, amplitudes, and
+derivations. Numerical work requires the user's explicit request. Use a
+registered symbolic package when applicable: SymPy for Python algebra,
+Wolfram Language for general symbolic work, xAct for tensor/curvature
+algebra, FeynCalc for perturbative QFT, Matchete for EFT matching, and FIRE
+for IBP reduction.
+
+If the requested symbolic calculation is blocked, identify the precise absent
+capability, unavailable package, or mathematical limitation and ask the user
+how to proceed. Do not silently provide a numerical approximation or a
+literature transcription as a symbolic derivation.
+
 Create a workbench with `jarvis run computation --task "..." --engine auto|wolfram|python`.
 Write scripts only inside that run's `scripts/` directory and execute them explicitly with
 `jarvis compute execute RUN_ID SCRIPT`.

@@ -78,9 +78,15 @@ def test_computation_command_passes_requested_capabilities(monkeypatch):
     monkeypatch.setattr(
         cli,
         "prepare_computation",
-        lambda config, task, engine, capability: (
+        lambda config, task, engine, capability, mode: (
             captured.update(
-                {"config": config, "task": task, "engine": engine, "capability": capability}
+                {
+                    "config": config,
+                    "task": task,
+                    "engine": engine,
+                    "capability": capability,
+                    "mode": mode,
+                }
             )
             or bundle
         ),
@@ -103,3 +109,31 @@ def test_computation_command_passes_requested_capabilities(monkeypatch):
     assert result.exit_code == 0
     assert captured["engine"] == "auto"
     assert captured["capability"] == ["tensor_algebra", "curvature"]
+    assert captured["mode"] == "symbolic"
+
+
+def test_computation_command_forwards_explicit_numerical_mode(monkeypatch):
+    captured = {}
+    bundle = type("Bundle", (), {"id": "run-1", "path": "/tmp/run-1"})()
+    monkeypatch.setattr(cli, "load_config", lambda: object())
+    monkeypatch.setattr(
+        cli,
+        "prepare_computation",
+        lambda config, task, engine, capability, mode: (
+            captured.update({"task": task, "engine": engine, "capability": capability, "mode": mode})
+            or bundle
+        ),
+    )
+
+    result = CliRunner().invoke(
+        cli.app,
+        ["run", "computation", "--task", "Evaluate a spectrum", "--mode", "numerical"],
+    )
+
+    assert result.exit_code == 0
+    assert captured == {
+        "task": "Evaluate a spectrum",
+        "engine": "auto",
+        "capability": None,
+        "mode": "numerical",
+    }

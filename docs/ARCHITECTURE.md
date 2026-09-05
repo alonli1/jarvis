@@ -38,6 +38,11 @@ computation result requires executable provenance and checks. In the combined
 mode, literature provides inputs or a comparison target and the host records
 the boundary between source statements and independently verified results.
 
+Symbolic is the default computation mode. A user must explicitly request
+numerical or mixed work. The workbench records that choice and requires an
+available registered capability for it; it reports the exact missing symbolic
+capability or tool rather than silently producing a numerical substitute.
+
 ## Shared-library path
 
 ```text

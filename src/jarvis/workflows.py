@@ -48,10 +48,20 @@ INSTRUCTIONS = {
         "from this corpus is not proof of global novelty."
     ),
     "computation": (
-        "State conventions and assumptions, inspect generated code, execute explicitly, retain "
-        "raw output, and check dimensions, symmetries, limits, and an independent method."
+        "Default to exact symbolic output. Use numerical evaluation only when the user explicitly "
+        "requested numerical or mixed work. State conventions and assumptions, inspect generated "
+        "code, execute explicitly, retain raw output, and check dimensions, symmetries, limits, "
+        "and an independent method. If the selected symbolic capability is unavailable or "
+        "insufficient, report the exact blocker and wait for the user's decision; do not silently "
+        "substitute a numerical calculation."
     ),
 }
+_CALCULATION_MODES = {
+    "symbolic": ("symbolic_algebra",),
+    "numerical": ("numerical_calculation",),
+    "mixed": ("symbolic_algebra", "numerical_calculation"),
+}
+_NUMERICAL_CHECK_TEMPLATES = {"numerical_limit", "numerical_spot_check"}
 
 
 def _slug(value: str) -> str:
@@ -429,61 +439,122 @@ def prepare_computation(
     task: str,
     engine: str = "auto",
     capabilities: list[str] | None = None,
+    calculation_mode: str = "symbolic",
 ) -> RunBundle:
     if engine not in {"auto", "wolfram", "python"}:
         raise ValueError("engine must be auto, wolfram, or python")
+    if calculation_mode not in _CALCULATION_MODES:
+        raise ValueError("calculation_mode must be symbolic, numerical, or mixed")
     tools = tool_status(config.root)
     available = {tool["id"]: tool["status"] == "available" for tool in tools}
     requested_capabilities = capabilities or []
-    selected_tools = (
+    mode_capabilities = _CALCULATION_MODES[calculation_mode]
+    mode_tools = [
+        {
+            **tool,
+            "matched_capabilities": [
+                capability for capability in mode_capabilities if capability in tool["capabilities"]
+            ],
+        }
+        for tool in tools
+        if tool["status"] == "available"
+        and any(capability in tool["capabilities"] for capability in mode_capabilities)
+    ]
+    missing_mode_capabilities = [
+        capability
+        for capability in mode_capabilities
+        if not any(capability in tool["matched_capabilities"] for tool in mode_tools)
+    ]
+    if missing_mode_capabilities:
+        missing = ", ".join(missing_mode_capabilities)
+        raise RuntimeError(
+            f"Cannot prepare {calculation_mode} computation: no available registered tool provides "
+            f"{missing}. Jarvis will not substitute another calculation mode. Repair or install a "
+            "tool with that capability, choose a supported engine/capability, or explicitly select "
+            "a different calculation mode."
+        )
+    capability_tools = (
         select_tools(config.root, requested_capabilities, status_provider=lambda _: tools)
         if requested_capabilities
         else []
     )
-    if requested_capabilities and not selected_tools:
+    if requested_capabilities and not capability_tools:
         requested = ", ".join(requested_capabilities)
         raise RuntimeError(
             f"No available registered tool provides requested capabilities: {requested}"
         )
     selected = engine
     if engine == "auto":
-        selected = "wolfram" if available.get("wolfram") else "python"
-        if selected_tools:
-            environments = {tool["execution"]["environment"] for tool in selected_tools}
-            if "python" in environments:
-                selected = "python"
-            elif "wolfram" in environments:
-                selected = "wolfram"
+        environments = {tool["execution"]["environment"] for tool in mode_tools}
+        selected = "wolfram" if "wolfram" in environments else "python"
     if selected == "wolfram" and not available.get("wolfram"):
         raise RuntimeError(
             "wolframscript is unavailable; install Wolfram Engine or use --engine python"
         )
     if selected == "python" and not available.get("python"):
         raise RuntimeError("Python computation dependencies are unavailable; run `uv sync`")
-    selected_tools = [
-        tool for tool in selected_tools if tool["execution"]["environment"] == selected
+    selected_mode_tools = [
+        tool for tool in mode_tools if tool["execution"]["environment"] == selected
     ]
-    if requested_capabilities and not selected_tools:
+    selected_missing_mode_capabilities = [
+        capability
+        for capability in mode_capabilities
+        if not any(capability in tool["matched_capabilities"] for tool in selected_mode_tools)
+    ]
+    if selected_missing_mode_capabilities:
+        required = ", ".join(selected_missing_mode_capabilities)
+        raise RuntimeError(
+            f"{selected} cannot provide the required {calculation_mode} capability: {required}. "
+            "Jarvis will not switch calculation mode automatically; choose how to proceed."
+        )
+    selected_capability_tools = [
+        tool for tool in capability_tools if tool["execution"]["environment"] == selected
+    ]
+    if requested_capabilities and not selected_capability_tools:
         requested = ", ".join(requested_capabilities)
-        raise RuntimeError(f"No selected registered tool supports {selected} for: {requested}")
+        raise RuntimeError(
+            f"No selected registered tool supports {selected} for: {requested}. "
+            "Choose another engine or capability; Jarvis will not change calculation mode."
+        )
+    selected_tools_by_id = {
+        tool["id"]: tool for tool in [*selected_mode_tools, *selected_capability_tools]
+    }
+    selected_tools = list(selected_tools_by_id.values())
     bundle, manifest = _new_run(config, "computation", task)
     for folder in ("scripts", "inputs", "outputs", "logs"):
         (bundle.path / folder).mkdir()
     (bundle.path / "conventions.md").write_text(
         "# Conventions and assumptions\n\n"
+        f"- Calculation mode: {calculation_mode}. "
+        + (
+            "Retain exact symbolic coefficients; do not introduce numerical substitutions."
+            if calculation_mode == "symbolic"
+            else "Numerical evaluation was explicitly requested by the user."
+        )
+        + "\n"
         "- Metric signature:\n- Curvature conventions:\n- Fourier conventions:\n"
         "- Units and dimensions:\n- Regulator/renormalization scheme:\n- Physical regime:\n"
         "- Additional assumptions:\n",
         encoding="utf-8",
     )
     checks = check_templates_for_tools(selected_tools)
+    if calculation_mode == "symbolic":
+        checks = [
+            check for check in checks if check["template"] not in _NUMERICAL_CHECK_TEMPLATES
+        ]
     tool_checks = "".join(
         f"- [ ] {check['tool_id']} / {check['template']}: {check['instruction']}\n"
         for check in checks
     )
     (bundle.path / "checks.md").write_text(
         "# Scientific checks\n\n- [ ] Dimensions\n- [ ] Symmetries\n- [ ] Known limits\n"
-        "- [ ] Signs and normalizations\n- [ ] Independent analytic, symbolic, or numerical check\n",
+        "- [ ] Signs and normalizations\n"
+        + (
+            "- [ ] Exact symbolic derivation and simplification\n"
+            "- [ ] Independent analytic or symbolic check\n"
+            if calculation_mode == "symbolic"
+            else "- [ ] Independent analytic, symbolic, or numerical check\n"
+        ),
         encoding="utf-8",
     )
     if tool_checks:
@@ -496,6 +567,11 @@ def prepare_computation(
             "(* State conventions and assumptions before the calculation. *)\n"
             'Print["Wolfram version: ", $Version];\n'
             + (package_loads + "\n" if package_loads else "")
+            + (
+                "(* Keep exact symbolic expressions unless numerical evaluation was explicitly requested. *)\n"
+                if calculation_mode == "symbolic"
+                else ""
+            )
             + "(* Implement the derivation and its independent checks here. *)\n",
             encoding="utf-8",
         )
@@ -505,10 +581,17 @@ def prepare_computation(
             '"""State conventions and assumptions before the calculation."""\n'
             "import platform\nimport sympy as sp\n\n"
             'print(f"Python: {platform.python_version()} SymPy: {sp.__version__}")\n'
-            "# Implement the calculation and independent checks here.\n",
+            + (
+                "# Keep SymPy objects exact; do not call evalf() or substitute numerical values.\n"
+                if calculation_mode == "symbolic"
+                else ""
+            )
+            + "# Implement the calculation and independent checks here.\n",
             encoding="utf-8",
         )
     manifest["engine"] = selected
+    manifest["calculation_mode"] = calculation_mode
+    manifest["mode_required_capabilities"] = list(mode_capabilities)
     manifest["tools"] = tools
     manifest["requested_capabilities"] = requested_capabilities
     manifest["selected_tools"] = [
@@ -531,7 +614,9 @@ def prepare_computation(
         ]
     )
     evidence = (
-        f"# Computation workbench\n\n**Task:** {task}\n\n**Selected engine:** {selected}\n\n"
+        f"# Computation workbench\n\n**Task:** {task}\n\n"
+        f"**Calculation mode:** {calculation_mode}\n\n"
+        f"**Selected engine:** {selected}\n\n"
         "## Tool diagnostics\n\n"
         + "\n".join(
             f"- {tool['id']}: {tool['status']} ({tool.get('path') or 'not found'})"

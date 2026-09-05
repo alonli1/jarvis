@@ -64,3 +64,4 @@ def test_answer_question_passes_research_intent_gate_to_model(monkeypatch):
     instruction = " ".join(captured["system"].split())
     assert "research intent" in instruction
     assert "do not present a source formula as independently verified" in instruction
+    assert "Default requested coefficients, bases, amplitudes, and derivations to exact symbolic output." in instruction

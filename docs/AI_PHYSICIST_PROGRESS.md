@@ -421,3 +421,19 @@ material; no local code-only substitute is treated as evidence.
   statements from independently executed checks.
 - Validation: prompt-routing regression test plus the relevant skill and
   workflow test suites.
+
+## 2026-09-05 — Symbolic-first computation policy
+
+- Made exact symbolic work the default for requested coefficients, bases,
+  amplitudes, and derivations. Numerical and mixed work now require an
+  explicit user choice recorded in each computation manifest.
+- The computation command defaults to symbolic mode; it selects an available
+  registered symbolic capability and templates exact symbolic checks. If that
+  capability is unavailable, or a selected engine cannot satisfy it, the
+  workbench reports the exact blocker and does not create a numerical
+  substitute.
+- Registered symbolic packages are now the stated default tools: SymPy for
+  Python algebra, Wolfram Language generally, xAct for curvature algebra,
+  FeynCalc for perturbative QFT, Matchete for EFT matching, and FIRE for IBP
+  reduction. Validation covers the default, explicitly numerical mode, and a
+  mixed-mode cross-engine blocker.
