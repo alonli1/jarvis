@@ -12,7 +12,7 @@ Modulo boundary terms and the four-dimensional Euler density,
 C_0=\frac{m^4}{64\pi^2}(L_m-\tfrac32),\quad C_R=-\frac{m^2}{192\pi^2}(L_m-1),\quad C_{R^2}=\frac{L_m}{3840\pi^2},\quad C_{R_{\mu\nu}^2}=\frac{L_m}{1920\pi^2},\quad C_6=-\frac1{32\pi^2m^2},
 \]
 
-where \(L_m=\log(m^2/\mu^2)\). The curvature-squared coefficients use \(E_4=R_{\mu\nu\rho\sigma}^2-4R_{\mu\nu}^2+R^2\): the original minimal-scalar heat-kernel result is \(R^2/120+R_{\mu\nu}^2/60\), plus \(E_4/180\) and a total derivative. \(\mathcal P_6\) is the exact curvature-dimension-six polynomial in `sakharov_scalar_msbar_dim6.md`, multiplied by \(C_6\); it is a vertex generator, not one operator.
+where \(L_m=\log(m^2/\mu^2)\). The curvature-squared coefficients use \(E_4=R_{\mu\nu\rho\sigma}^2-4R_{\mu\nu}^2+R^2\): the original minimal-scalar heat-kernel result is \(R^2/120+R_{\mu\nu}^2/60\), plus \(E_4/180\) and a total derivative. The complete \(\mathcal P_6\) basis, its exact coefficients, their multiplication by \(C_6\), and the independent check are defined in this artifact's single canonical source, `sakharov_scalar_graviton_dim9.wls`; it is a vertex generator, not one operator.
 
 For \([\sqrt{-g}\mathcal O]_{h^n}\), the term homogeneous in \(h\), the complete cutoff is
 
