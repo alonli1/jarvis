@@ -1,0 +1,21 @@
+{
+  "engine": "wolfram",
+  "calculation_mode": "symbolic",
+  "scope": "One minimally coupled real scalar; all boundaryless graviton vertices kappa^n h^n partial^d with n+d <= 9.",
+  "conventions": {
+    "metric": "g = eta + kappa h",
+    "dimensions": "[h]=1, [kappa]=-1",
+    "regulator": "d=4-2 epsilon; MS-bar",
+    "coupling": "xi=0"
+  },
+  "source": {
+    "path": "knowledge/papers/vassilevich-heat-kernel-2003__hep-th_0306138.pdf",
+    "locator": "electronic PDF p. 40, eqs. (4.26)-(4.29)"
+  },
+  "checks": [
+    "Exact trace-log expansion of sqrt(-g) through h^9.",
+    "Gauss-Bonnet reduction of the curvature-squared bulk basis.",
+    "Exact h-ranges for derivative orders 0, 2, 4, and 6.",
+    "B8 non-boundary terms start at h^2 partial^8 and canonical dimension 10."
+  ]
+}

@@ -29,3 +29,9 @@ Euler--Maclaurin expansion of the scalar spectrum on \(S^4\). Its Markdown,
 LaTeX, and JSON specification artifacts make the unresolved \(B_8\) source
 and toolchain limitation explicit; it does not present a dimension-six result
 as a completed dimension-nine truncation.
+
+`sakharov_scalar_graviton_dim9.wls` is the corrected output for the canonical
+graviton convention \(g=\eta+\kappa h\), \([h]=1\), \([\kappa]=-1\). It
+selects every \(\kappa^n h^n\partial^d\) vertex with \(n+d\leq9\), includes
+the exact Wilson coefficients and volume-vertex trace-log expansion, and
+shows that non-boundary \(B_8\) terms first enter at canonical dimension ten.

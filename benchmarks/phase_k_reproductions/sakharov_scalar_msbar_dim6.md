@@ -2,11 +2,11 @@
 
 ## Status
 
-This is an exact symbolic result through canonical curvature dimension six.
-It is not a complete answer through mass dimension nine: the pure-metric,
-parity-even local expansion has dimensions \(0,2,4,6,8,\ldots\), so there is
-no dimension-nine scalar but the dimension-eight \(B_8\) coefficient is still
-needed. It is deliberately not asserted here.
+This is an exact symbolic result through curvature dimension six. It is an
+intermediate heat-kernel result, not itself a graviton operator-dimension
+truncation. The separate `sakharov_scalar_graviton_dim9` artifact applies
+\([h]=1\), \([\kappa]=-1\) and shows that \(B_8\) is not needed when
+\(n_h+n_\partial\leq9\).
 
 The reproducible Wolfram calculation is
 `sakharov_scalar_msbar_dim6.wls`; its machine-readable provenance and checks
@@ -88,9 +88,9 @@ DOI 10.1088/0264-9381/6/12/024.
 
 The local corpus does not include that \(a_8\) table, and no installed
 registered tool provides a generic off-shell \(a_8\) generator or a
-dimension-eight curvature-basis reducer. Completing \(B_8\) requires a
-vetted accessible formula plus independent checks, or a new DeWitt-recursion
-implementation and fourth-order basis reduction.
+dimension-eight curvature-basis reducer. That blocks a curvature-dimension
+eight extension, but not the canonical graviton EFT through operator dimension
+nine.
 
 ## Reproduction
 

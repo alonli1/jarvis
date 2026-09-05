@@ -400,12 +400,10 @@ material; no local code-only substitute is treated as evidence.
   by exact Euler--Maclaurin summation. Its \(B_6\) polynomial agrees with the
   local source specialization identically for arbitrary \(\xi\), and the
   report preserves curvature/sign and graviton-dimension conventions.
-- The requested dimension-nine truncation remains incomplete: no odd
-  parity-even pure-metric scalar occurs at dimension nine, but the necessary
-  dimension-eight \(B_8\) coefficient is absent from the local corpus and no
-  registered installed tool performs generic off-shell \(a_8\) generation or
-  basis reduction. This is recorded as a scientific capability blocker rather
-  than filled with a numerical approximation or unsupported transcription.
+- A curvature-dimension-eight \(B_8\) extension remains absent from the local
+  corpus and registered tools. This does not block the subsequently clarified
+  canonical graviton truncation \(n_h+n_\partial\leq9\), for which the
+  non-boundary \(B_8\) sector first contributes at dimension ten.
 - Repaired `jarvis compute execute` for `WolframKernel`: it now uses
   `-script` rather than `-file`, which only supplied an initialization file and
   could previously yield a false successful execution. Added a regression test.
@@ -413,6 +411,25 @@ material; no local code-only substitute is treated as evidence.
   `20260905T105050Z-computation-independently-specialize-the-one-rea`, direct
   workbench execution, full test suite (104 passed), and successful LaTeX
   compilation.
+
+## 2026-09-05 — Canonical graviton dimension-nine scalar EFT
+
+- Corrected the scientific organization of the scalar result: heat-kernel
+  \(B_6\) is an intermediate curvature polynomial, not an EFT operator.
+- Added a symbolic graviton workbench that uses
+  \(g=\eta+\kappa h\), \([h]=1\), \([\kappa]=-1\), and retains precisely the
+  boundaryless \(\kappa^n h^n\partial^d\) vertices with \(n+d\leq9\).
+  The result supplies the minimal-scalar Wilson coefficients, the exact
+  trace-log volume expansion through \(h^9\), and the field ranges of the
+  Einstein, curvature-squared, and dimension-six sectors.
+- Applied the four-dimensional Gauss--Bonnet identity to the curvature-squared
+  bulk basis. The corrected counting establishes that \(B_8\) is unnecessary
+  for this cutoff: its non-boundary terms begin at
+  \(h^2\partial^8\), canonical dimension ten.
+- Validation: explicit Wolfram execution of
+  `sakharov_scalar_graviton_dim9.wls`, a fresh Jarvis symbolic computation run
+  `20260905T112112Z-computation-construct-the-exact-one-real-minimal`, and
+  successful LaTeX compilation.
 
 ## 2026-09-02 — Scalar induced-gravity independent-validation upgrade
 
